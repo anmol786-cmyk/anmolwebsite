@@ -1,0 +1,225 @@
+{
+  "timestamp": "2025-11-21T12:05:34.276Z",
+  "summary": {
+    "Products": 10,
+    "Categories": 27,
+    "Tags": 50,
+    "Attributes": 3,
+    "Reviews": 0,
+    "Shipping": 0,
+    "Coupons": 0,
+    "Orders": 0,
+    "Customers": 0,
+    "Payment Gateways": 3,
+    "Shipping Methods": 4,
+    "Tax Classes": 3
+  },
+  "sampleData": {
+    "product": {
+      "id": 1198,
+      "name": "Authentic Khoya Kulfi – Traditional Desi Frozen Dessert in Sweden",
+      "slug": "khoya-kulfi",
+      "permalink": "https://royalbr.se/product/khoya-kulfi/",
+      "date_created": "2025-11-05T21:56:59",
+      "date_created_gmt": "2025-11-05T20:56:59",
+      "date_modified": "2025-11-07T21:52:40",
+      "date_modified_gmt": "2025-11-07T20:52:40",
+      "type": "simple",
+      "status": "publish",
+      "featured": false,
+      "catalog_visibility": "visible",
+      "description": "<h3 class=\"ng-star-inserted\"><strong class=\"ng-star-inserted\"><span class=\"ng-star-inserted\">What Makes Our Khoya Kulfi Different?</span></strong></h3>\n<p class=\"ng-star-inserted\"><span class=\"ng-star-inserted\">Forget everything you know about modern, airy ice cream. Our Authentic Khoya Kulfi is a journey back in time to the grand kitchens of the Mughal emperors. Unlike ice cream, which is whipped to incorporate air, Kulfi is slow-cooked and slow-churned. This traditional process of reducing pure milk down to rich khoya creates a dessert that is dense, creamy, and packed with an intense, milky flavour.</span></p>\n<p class=\"ng-star-inserted\"><span class=\"ng-star-inserted\">Our Kulfi doesn't melt quickly; it slowly softens, allowing you to savour every rich, decadent bite. The texture is uniquely satisfying—not icy, but creamy and substantial. We flavour our Khoya Kulfi simply and elegantly with a touch of green cardamom and the luxurious aroma of genuine saffron, allowing the pure, caramelized flavour of the khoya to be the true star.</span></p>\n<h3 class=\"ng-star-inserted\"><strong class=\"ng-star-inserted\"><span class=\"ng-star-inserted\">The Royal Sweets &amp; Restaurant Promise: Authenticity in Every Bite</span></strong></h3>\n<p class=\"ng-star-inserted\"><span class=\"ng-star-inserted\">As Stockholm's premier destination for authentic Indo-Pakistani sweets, our Khoya Kulfi is a source of immense pride and a testament to our commitment to tradition.</span></p>\n<ul>\n<li class=\"ng-star-inserted\"><strong class=\"ng-star-inserted\"><span class=\"ng-star-inserted\">The Soul of Our Kulfi - Pure Khoya:</span></strong><span class=\"ng-star-inserted\"> We don't use shortcuts like condensed milk powder. The foundation of our Kulfi is pure, rich khoya, made in-house by slow-cooking high-quality milk for hours. This is the secret to its authentic taste and dense texture.</span></li>\n<li class=\"ng-star-inserted\"><strong class=\"ng-star-inserted\"><span class=\"ng-star-inserted\">A Celebration of Tradition:</span></strong><span class=\"ng-star-inserted\"> This is not just a dessert; it's a piece of our culinary heritage. We prepare it using the time-honoured methods that have been passed down for generations, ensuring a taste that is both authentic and nostalgic.</span></li>\n<li class=\"ng-star-inserted\"><strong class=\"ng-star-inserted\"><span class=\"ng-star-inserted\">The Perfect Flavour Balance:</span></strong><span class=\"ng-star-inserted\"> We sweeten our Kulfi just enough to enhance, not overpower, the natural richness of the milk. It is a sophisticated dessert for a discerning palate.</span></li>\n<li class=\"ng-star-inserted\"><strong class=\"ng-star-inserted\"><span class=\"ng-star-inserted\">Handcrafted in Stockholm:</span></strong><span class=\"ng-star-inserted\"> Each batch of our Kulfi is churned and frozen right here in our kitchen, guaranteeing a freshness and quality you can taste.</span></li>\n</ul>\n<h3 class=\"ng-star-inserted\"><strong class=\"ng-star-inserted\"><span class=\"ng-star-inserted\">Ingredients:</span></strong></h3>\n<p class=\"ng-star-inserted\"><span class=\"ng-star-inserted\">Pure Milk Solids (Khoya), Whole Milk, Sugar, Green Cardamom, Saffron.</span></p>\n",
+      "short_description": "<h2>Khoya Kulfi</h2>\n<p>The original royal dessert of the subcontinent. Our Khoya Kulfi is a rich, dense, and incredibly creamy traditional ice cream, slow-churned from pure, house-made khoya and delicately perfumed with cardamom and saffron.</p>\n",
+      "sku": "RK-1001",
+      "price": "30",
+      "regular_price": "30",
+      "sale_price": "",
+      "date_on_sale_from": null,
+      "date_on_sale_from_gmt": null,
+      "date_on_sale_to": null,
+      "date_on_sale_to_gmt": null,
+      "on_sale": false,
+      "purchasable": true,
+      "total_sales": 0,
+      "virtual": false,
+      "downloadable": false,
+      "downloads": [],
+      "download_limit": -1,
+      "download_expiry": -1,
+      "external_url": "",
+      "button_text": "",
+      "tax_status": "taxable",
+      "tax_class": "",
+      "manage_stock": true,
+      "stock_quantity": 90,
+      "backorders": "no",
+      "backorders_allowed": false,
+      "backordered": false,
+      "low_stock_amount": null,
+      "sold_individually": false,
+      "weight": "1",
+      "dimensions": {
+        "length": "",
+        "width": "",
+        "height": ""
+      },
+      "shipping_required": true,
+      "shipping_taxable": true,
+      "shipping_class": "",
+      "shipping_class_id": 0,
+      "reviews_allowed": true,
+      "average_rating": "0.00",
+      "rating_count": 0,
+      "upsell_ids": [
+        811,
+        980,
+        1180
+      ],
+      "cross_sell_ids": [],
+      "parent_id": 0,
+      "purchase_note": "",
+      "categories": [
+        {
+          "id": 429,
+          "name": "Desserts",
+          "slug": "desserts"
+        }
+      ],
+      "brands": [
+        {
+          "id": 311,
+          "name": "Royal Restaurant",
+          "slug": "royal-restaurant"
+        }
+      ],
+      "tags": [],
+      "images": [
+        {
+          "id": 1241,
+          "date_created": "2025-11-07T14:58:54",
+          "date_created_gmt": "2025-11-07T12:58:54",
+          "date_modified": "2025-11-07T14:59:32",
+          "date_modified_gmt": "2025-11-07T12:59:32",
+          "src": "https://royalbr.se/wp-content/uploads/2025/11/royal-kulfi-e1762520385384.jpg",
+          "name": "royal kulfi",
+          "alt": "Royal Kulfi",
+          "srcset": "https://royalbr.se/wp-content/uploads/2025/11/royal-kulfi-e1762520385384.jpg 1536w, https://royalbr.se/wp-content/uploads/2025/11/royal-kulfi-e1762520385384-450x450.jpg 450w, https://royalbr.se/wp-content/uploads/2025/11/royal-kulfi-e1762520385384-100x100.jpg 100w, https://royalbr.se/wp-content/uploads/2025/11/royal-kulfi-e1762520385384-600x600.jpg 600w, https://royalbr.se/wp-content/uploads/2025/11/royal-kulfi-e1762520385384-300x300.jpg 300w, https://royalbr.se/wp-content/uploads/2025/11/royal-kulfi-e1762520385384-1024x1024.jpg 1024w, https://royalbr.se/wp-content/uploads/2025/11/royal-kulfi-e1762520385384-150x150.jpg 150w, https://royalbr.se/wp-content/uploads/2025/11/royal-kulfi-e1762520385384-768x768.jpg 768w",
+          "sizes": "(max-width: 1536px) 100vw, 1536px",
+          "thumbnail": "https://royalbr.se/wp-content/uploads/2025/11/royal-kulfi-e1762520385384-450x450.jpg"
+        }
+      ],
+      "attributes": [],
+      "default_attributes": [],
+      "variations": [],
+      "grouped_products": [],
+      "menu_order": 0,
+      "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi><span class=\"woocommerce-Price-currencySymbol\">&#107;&#114;</span>30.00</bdi></span>",
+      "related_ids": [],
+      "meta_data": [
+        {
+          "id": 22364,
+          "key": "rank_math_internal_links_processed",
+          "value": "1"
+        },
+        {
+          "id": 22365,
+          "key": "rank_math_seo_score",
+          "value": "66"
+        },
+        {
+          "id": 22366,
+          "key": "rank_math_contentai_score",
+          "value": {
+            "keywords": "74.51",
+            "wordCount": "0",
+            "linkCount": "0",
+            "headingCount": "0",
+            "mediaCount": "0"
+          }
+        },
+        {
+          "id": 22367,
+          "key": "rank_math_title",
+          "value": "Authentic Khoya Kulfi in Stockholm | Royal Sweets "
+        },
+        {
+          "id": 22368,
+          "key": "rank_math_description",
+          "value": "Indulge in traditional Khoya Kulfi, the authentic Indian &amp; Pakistani ice cream. Slow-churned from pure khoya for a rich, creamy, and dense texture."
+        },
+        {
+          "id": 22369,
+          "key": "rank_math_focus_keyword",
+          "value": "khoya kulfi,kulfi,Royal Khoya kulfi in stokcholm,kulfi near me"
+        },
+        {
+          "id": 22374,
+          "key": "rank_math_primary_product_brand",
+          "value": "0"
+        },
+        {
+          "id": 22375,
+          "key": "rank_math_primary_product_cat",
+          "value": "0"
+        }
+      ],
+      "stock_status": "instock",
+      "has_options": false,
+      "post_password": "",
+      "global_unique_id": "",
+      "_links": {
+        "self": [
+          {
+            "href": "https://royalbr.se/wp-json/wc/v3/products/1198",
+            "targetHints": {
+              "allow": [
+                "GET",
+                "POST",
+                "PUT",
+                "PATCH",
+                "DELETE"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://royalbr.se/wp-json/wc/v3/products"
+          }
+        ]
+      }
+    },
+    "category": {
+      "id": 369,
+      "name": "Beef Rätter",
+      "slug": "beef-ratter",
+      "parent": 0,
+      "description": "",
+      "display": "default",
+      "image": null,
+      "menu_order": 0,
+      "count": 0,
+      "_links": {
+        "self": [
+          {
+            "href": "https://royalbr.se/wp-json/wc/v3/products/categories/369",
+            "targetHints": {
+              "allow": [
+                "GET",
+                "POST",
+                "PUT",
+                "PATCH",
+                "DELETE"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://royalbr.se/wp-json/wc/v3/products/categories"
+          }
+        ]
+      }
+    }
+  }
+}

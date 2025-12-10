@@ -1,0 +1,559 @@
+{
+  "timestamp": "2025-11-20T12:16:25.604Z",
+  "total": 91,
+  "successful": 0,
+  "failed": 91,
+  "skipped": 0,
+  "details": {
+    "successful": [],
+    "failed": [
+      {
+        "id": 1013,
+        "newSlug": "iftar-deal-2",
+        "name": "Affordable Iftar Deal for 95 kr by Royal Sweets Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1089,
+        "newSlug": "kaju-katli",
+        "name": "Kaju Katli | Premium Sweets in Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1184,
+        "newSlug": "boondi-phulkian-pakoria-light-delectable-savoury-delicacy",
+        "name": "Boondi | Phulkian | Pakoria | light delectable savoury delicacy",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 936,
+        "newSlug": "kulcha",
+        "name": "Kulcha",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1091,
+        "newSlug": "gajar-ka-halwa-carrot-halwa-sweets",
+        "name": "Gajar Halwa | Carrot Halwa Sweets",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 916,
+        "newSlug": "beef-karahi",
+        "name": "Beef Karahi",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 924,
+        "newSlug": "chappli-kebab",
+        "name": "Chappli Kebab",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 904,
+        "newSlug": "samosa-chaat-by-royal-sweets",
+        "name": "Samosa Chaat By Royal Sweets",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1029,
+        "newSlug": "double-cheese-burger",
+        "name": "Ultimate Double Cheese Burger",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 971,
+        "newSlug": "laam-gryta-best-of-lamb-cuisine",
+        "name": "Laam Gryta | Best of Lamb Cuisine",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1045,
+        "newSlug": "beef-pizza",
+        "name": "Beef Pizza",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 989,
+        "newSlug": "barfi-best-of-royal-sweets",
+        "name": "Mango Chicken | Best of Royal Sweets & Restaurant",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1021,
+        "newSlug": "catering-party-hall-deal-3",
+        "name": "Catering & Party hall Deal 3 (fr. 260 kr/person) | 30 Gäster",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 991,
+        "newSlug": "chicken-chilli-lamm-beef-chili-curry",
+        "name": "Chicken Chilli | Lamm | Beef Chili curry",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1092,
+        "newSlug": "daal-mash-roll-patisa-premium-sweets-of-stockholm",
+        "name": "Daal Mash Roll Patisa | Premium Sweets of Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 835,
+        "newSlug": "ras-malai-best-ras-malai-in-stockholm",
+        "name": "Ras Malai | Best Ras Malai In Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1032,
+        "newSlug": "lahori-shawarma-with-drink",
+        "name": "Lahori Shawarma with Drink",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1100,
+        "newSlug": "besan-patisa-premium-sweets-of-stockholm",
+        "name": "Besan Patisa Premium Sweets of Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 980,
+        "newSlug": "cutlus-gulab-jamun-the-royal-treat-by-royal-sweets",
+        "name": "Cutlus Gulab Jamun ",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1098,
+        "newSlug": "ballu-shahi-the-royal-treat-by-royal-sweets-restaurant",
+        "name": "Ballu Shahi The Royal Treat By Royal Sweets & Restaurant",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1017,
+        "newSlug": "party-deal-3",
+        "name": "Party Deal 3 |   Grand Indo-Pakistani Banquet Menu for 24 People",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 913,
+        "newSlug": "chicken-jalfrezi-best-jalfrezi-in-stockholm",
+        "name": "Chicken Jalfrezi | Best Jalfrezi in Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1037,
+        "newSlug": "chips-fries",
+        "name": "Crispy Golden Chips (French Fries)",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1106,
+        "newSlug": "rasgulla-ethnic-indo-pak-sweetmeat-delicacy",
+        "name": "Rasgulla | Ethnic Indo Pak sweetmeat delicacy",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 917,
+        "newSlug": "beef-jalfrezi",
+        "name": "Beef jalfrezi",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1099,
+        "newSlug": "besan-ladu-or-laddu-most-famous-subcontinental-sweet",
+        "name": "Besan Ladu or Laddu | Most famous Subcontinental Sweet",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 927,
+        "newSlug": "chana-cholle-lahori-channay-for-perfect-breakfast",
+        "name": "Chana Cholle | Lahori Channay for Perfect Breakfast",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1064,
+        "newSlug": "royal-kheer-creamy-cardamom-rice-pudding",
+        "name": "Royal Kheer - Creamy Cardamom Rice Pudding",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1179,
+        "newSlug": "vegetable-biryani-vegetarian-food-in-stockholm",
+        "name": "Vegetable Biryani | Vegetarian food in Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 944,
+        "newSlug": "lamm-nehari-most-famous-nihari-in-town",
+        "name": "Lamm Nehari | Most Famous Nihari in Town",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 941,
+        "newSlug": "keema-naan-best-mince-meat-nan-bread-in-stockholm",
+        "name": "Keema Naan | Best Mince Meat Nan Bread in Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 840,
+        "newSlug": "chocolate-roll-patisa-premium-sweets-of-stockholm",
+        "name": "Chocolate Roll Patisa | Premium Sweets of Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1108,
+        "newSlug": "cream-gullab-jamun-stuffed-desi-sweets",
+        "name": "Cream Gullab Jamun | Stuffed Desi Sweets",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1185,
+        "newSlug": "cream-chum-chum-stuffed-chum-chum-sweets",
+        "name": "Cream Chum Chum | Stuffed Chum Chum Sweets",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1034,
+        "newSlug": "kids-meal",
+        "name": "Kids Chicken Nuggets & Chips Meal",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 844,
+        "newSlug": "shaker-parey-shakar-para-best-sweets-in-town",
+        "name": "Shaker parey | Shakar Para | Best Sweets in Town",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1102,
+        "newSlug": "mysore-pak-sweets-by-royal-sweets-restaurant-stockholm",
+        "name": "Mysore Pak | Sweets By Royal Sweets & Restaurant Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1015,
+        "newSlug": "party-deal-1",
+        "name": "Party Deal 1 | Indo-Pakistani Party Deal for 8 People",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 937,
+        "newSlug": "peshawari-nan-taste-of-peshawar-in-stockholm",
+        "name": "Peshawari nan | Taste of Peshawar in Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1033,
+        "newSlug": "kids-burger",
+        "name": "Kids Burger/Barn Burger",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 934,
+        "newSlug": "plain-nan",
+        "name": "Plain nan",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1042,
+        "newSlug": "paneer-tikka-pizza",
+        "name": "Paneer Tikka Pizza",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1095,
+        "newSlug": "sohan-halwa-tiki-no-1-sweets-shop-in-stockholm",
+        "name": "Sohan Halwa Tiki ( SOHAN PITEES ) | No. 1 Sweets Shop in Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 998,
+        "newSlug": "achar-gosht-lamm-beef-chicken-pickle-flavour-curry",
+        "name": "Achar Gosht | Lamm | Beef | Chicken | Pickle flavour Curry",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 849,
+        "newSlug": "vegetable-pakora-popular-indian-snacks-in-stockholm",
+        "name": "Vegetable Pakora | Popular Indian snacks in Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 945,
+        "newSlug": "beef-nehari-best-nihari-in-stockholm",
+        "name": "Beef Nehari | Best Nihari in Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1061,
+        "newSlug": "warm-doodh-jalebi-a-royal-sweet-indulgence",
+        "name": "Warm Doodh Jalebi - A Royal Sweet Indulgence",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 972,
+        "newSlug": "lamm-karahi-best-lamb-karahi-in-stockholm",
+        "name": "Lamm Karahi | Best Lamb Karahi in Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 847,
+        "newSlug": "chicken-samosa-most-famous-chicken-samosa-in-stockholm",
+        "name": "Chicken Samosa | Most Famous Chicken Samosa in Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 943,
+        "newSlug": "halwa-puri-most-famous-halwa-puri-in-stockholm",
+        "name": "Halwa Puri | Most Famous Halwa puri in Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1063,
+        "newSlug": "royal-falooda-refreshing-layered-dessert-drink",
+        "name": "Royal Falooda - Refreshing Layered Dessert Drink",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 929,
+        "newSlug": "alo-gobi-vegetarian-food-in-stockholm",
+        "name": "Alo Gobi | Vegetarian Food in Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1050,
+        "newSlug": "royal-special-pizza",
+        "name": "The Royal Special Loaded Pizza",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 829,
+        "newSlug": "milky-patisa-no-1-patisa-sweets-in-stockholm",
+        "name": "Milky Patisa | No. 1 Patisa Sweets in Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1023,
+        "newSlug": "catering-deal-5",
+        "name": "Catering Deal 5 (from 320 kr/person) | 30+ Guests",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1062,
+        "newSlug": "creamy-doodh-rabri-rich-milk-dessert",
+        "name": "Creamy Doodh Rabri - Rich Milk Dessert",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1048,
+        "newSlug": "lahori-salami-pizza",
+        "name": "Lahori Salami Pizza",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1018,
+        "newSlug": "party-deal-veg-deal",
+        "name": "Party deal / Veg deal/ Vegetarian Indo-Pakistani Menu for 8 People",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1014,
+        "newSlug": "fish-grill",
+        "name": "Fish Grill BBQ | Tandoori Fish",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1041,
+        "newSlug": "garlic-corn-pizza",
+        "name": "Garlic & Sweet Corn Delight Pizza",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1022,
+        "newSlug": "catering-deal-4",
+        "name": "Catering Deal 4 (from 290 kr/person) | 30+ Guests",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1047,
+        "newSlug": "keema-pizza",
+        "name": "Keema (Minced Meat) Pizza",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 938,
+        "newSlug": "tandoori-roti",
+        "name": "Tandoori roti",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 942,
+        "newSlug": "lachha-paratha-best-breakfast-in-stockholm",
+        "name": "Lachha Paratha | Best Breakfast in Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1020,
+        "newSlug": "catering-deal-2",
+        "name": "Catering & Party hall Deal 2 (fr. 220 kr/person) | 35+ Gäster",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1177,
+        "newSlug": "lamm-biryani-tastiest-biryani-in-stockholm",
+        "name": "Lamm Biryani | Tastiest Biryani In Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1049,
+        "newSlug": "fish-tikka-pizza",
+        "name": "Lahori Fish Tikka Pizza",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1198,
+        "newSlug": "khoya-kulfi",
+        "name": "Authentic Khoya Kulfi – Traditional Desi Frozen Dessert in Sweden",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 851,
+        "newSlug": "goll-gapey-gol-gapay-time-for-khata-meetha-chat-pata-food",
+        "name": "Goll Gapey | Gol Gapay Time for Khata Meetha Chat Pata food",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 992,
+        "newSlug": "chicken-madras-lamm-madras-best-madras-curry",
+        "name": "Chicken Madras | Lamm Madras | Best Madras curry",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1002,
+        "newSlug": "palak-gosht-spinach-and-lamb-curry",
+        "name": "Palak Gosht (Spinach and Lamb Curry)",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1003,
+        "newSlug": "lamb-korma-beef-korma",
+        "name": "Lamb Korma | Beef Korma",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1086,
+        "newSlug": "coconut-burfi-premium-sweets-by-royal-sweets",
+        "name": "Coconut Burfi | Premium Sweets By Royal Sweets",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1046,
+        "newSlug": "seekh-kabab-pizza",
+        "name": "Seekh Kabab Pizza",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1105,
+        "newSlug": "jalebi-queen-of-traditional-mithai",
+        "name": "Jalebi Queen of Traditional Mithai. | Royal Sweets Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1093,
+        "newSlug": "akhrot-halwa-walnut-halwa-true-taste-of-home",
+        "name": "Akhrot Halwa | Walnut Halwa True taste of Home",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1028,
+        "newSlug": "cheese-burger",
+        "name": "Classic Cheese Burger",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 843,
+        "newSlug": "namak-parey-salty-snacks-for-tea-party",
+        "name": "Namak Parey | Salty Snacks for Tea Party",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1178,
+        "newSlug": "shahi-biryani-authentic-biryani-in-stockholm",
+        "name": "Shahi Biryani | Authentic Biryani In Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1107,
+        "newSlug": "khoya-peda-mawa-peda-best-peda-shop-in-stockholm",
+        "name": "Khoya Peda | Mawa Peda, Best Peda shop in Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 922,
+        "newSlug": "chicken-tikka-sizzler",
+        "name": "Chicken Tikka Sizzler",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 852,
+        "newSlug": "dahi-bhalla-dahi-vada",
+        "name": "Dahi Bhalla | Dahi Vada",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 939,
+        "newSlug": "poori-weekend-best-puri-in-stockholm",
+        "name": "Poori (Weekend) | Best Puri in Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1004,
+        "newSlug": "lamb-jalfrezi",
+        "name": "Lamb Jalfrezi in 169 kr",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 923,
+        "newSlug": "seekh-kebab-juicy-and-flavorful-kebabs-by-royal-restaurant",
+        "name": "Seekh Kebab | Juicy and flavorful kebabs By Royal Restaurant",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 909,
+        "newSlug": "butter-chicken-yummiest-buttery-chicken-curry-in-stockholm",
+        "name": "Butter Chicken | Yummiest Buttery Chicken Curry in Stockholm",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1019,
+        "newSlug": "catering-deal-1",
+        "name": "Catering Deal 1 (from 190 kr/person) | 40+ Guests",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 989,
+        "newSlug": "mango-chicken-best-of-royal-sweets-restaurant",
+        "name": "Mango Chicken | Best of Royal Sweets & Restaurant",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1043,
+        "newSlug": "chicken-tikka-pizza",
+        "name": "Spicy Chicken Tikka Pizza",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 850,
+        "newSlug": "chana-chaat-your-new-favorite-chana-chaat-place-is-here",
+        "name": "Chana Chaat | Your new favorite chana chaat place is here.",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      },
+      {
+        "id": 1113,
+        "newSlug": "keema-samosa-king-of-all-samosas-by-royal-sweets",
+        "name": "Keema Samosa | King of All Samosas By Royal Sweets",
+        "error": "HTTP 401: {\"code\":\"rest_cannot_edit\",\"message\":\"Sorry, you are not allowed to edit this post.\",\"data\":{\"status\":401}}"
+      }
+    ],
+    "skipped": []
+  }
+}

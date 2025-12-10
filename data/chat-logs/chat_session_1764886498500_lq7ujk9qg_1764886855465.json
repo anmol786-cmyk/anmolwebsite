@@ -1,0 +1,38 @@
+{
+  "id": "chat_session_1764886498500_lq7ujk9qg_1764886855465",
+  "sessionId": "session_1764886498500_lq7ujk9qg",
+  "messages": [
+    {
+      "role": "assistant",
+      "content": "Hello! I'm your **Anmol Assistant**. I can help you with:\n\n✨ Menu recommendations\n🍽️ Reservations\n🎉 Catering & events\n📍 Location & hours\n💬 Any questions about our food\n\nWhat can I help you with today?",
+      "timestamp": "2025-12-04T22:14:58.501Z"
+    },
+    {
+      "role": "user",
+      "content": "hi",
+      "timestamp": "2025-12-04T22:20:37.760Z"
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to help! At **Anmol Sweets & Restaurant**, we offer authentic Indian & Pakistani cuisine, traditional sweets, catering services, and more.\n\nYou can:\n- Browse our [Menu](/menu)\n- Book a [Reservation](/reservations)\n- Explore [Catering Options](/catering)\n- Try our lunch or weekend buffets\n\nWhat would you like to know more about?",
+      "timestamp": "2025-12-04T22:20:38.767Z"
+    },
+    {
+      "role": "user",
+      "content": "address?",
+      "timestamp": "2025-12-04T22:20:47.167Z"
+    },
+    {
+      "role": "assistant",
+      "content": "We're located at **Halmstad, Sweden**.\n\nFind us on [Google Maps](https://maps.app.goo.gl/anmolsweets) for directions!",
+      "timestamp": "2025-12-04T22:20:48.170Z"
+    }
+  ],
+  "metadata": {
+    "page": "/shop",
+    "messageCount": 5,
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+    "ip": "::1",
+    "timestamp": "2025-12-04T22:20:55.465Z"
+  }
+}

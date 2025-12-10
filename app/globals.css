@@ -1,0 +1,661 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Anmol Sweets - Refined Modern Royal Theme */
+
+    /* Base Background: Warm Cream (Clean, readable, premium) */
+    --background: 40 30% 98%;
+    /* #FDFBF7 - Soft, natural paper-like white */
+
+    /* Text: Deep Charcoal/Black (High contrast but softer than pure black) */
+    --foreground: 20 10% 15%;
+    /* #2B2625 - Dark charcoal with warm undertone */
+
+    /* Card: Pure White for subtle stacking effect on Cream background */
+    --card: 0 0% 100%;
+    --card-foreground: 20 10% 15%;
+
+    /* Popover: White */
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 10% 15%;
+
+    /* Primary: Deep Royal Red (The brand color) */
+    --primary: 356 85% 35%;
+    /* #A60D12 - slightly brighter, more vibrant royal red */
+    --primary-foreground: 0 0% 100%;
+    /* Pure white text on red */
+
+    /* Secondary: Gold/Saffron (Accents) */
+    --secondary: 45 90% 50%;
+    /* #F2B705 - Richer gold */
+    --secondary-foreground: 356 85% 35%;
+
+    /* Muted: Neutral Warm Gray */
+    --muted: 40 10% 94%;
+    --muted-foreground: 25 10% 45%;
+
+    /* Accent: Very Soft Gold/Beige */
+    --accent: 45 40% 96%;
+    --accent-foreground: 356 85% 35%;
+
+    /* Destructive: Bright Red */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Border: Subtle Warm Gray */
+    --border: 30 10% 90%;
+    --input: 30 10% 90%;
+    --ring: 356 85% 35%;
+
+    --radius: 0.75rem;
+    /* Soft rounded corners (12px) */
+  }
+
+  .dark {
+    /* Dark Mode: Deep Rich Black/Red */
+    --background: 20 10% 5%;
+    --foreground: 40 20% 97%;
+
+    --card: 20 10% 8%;
+    --card-foreground: 40 20% 97%;
+
+    --popover: 20 10% 8%;
+    --popover-foreground: 40 20% 97%;
+
+    --primary: 356 80% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 45 90% 50%;
+    --secondary-foreground: 356 80% 45%;
+
+    --muted: 20 10% 15%;
+    --muted-foreground: 40 10% 65%;
+
+    --accent: 20 10% 15%;
+    --accent-foreground: 40 20% 97%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 20 10% 20%;
+    --input: 20 10% 20%;
+    --ring: 356 80% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground relative;
+  }
+
+  /* Subtle Noise Overlay for "Wow" Factor */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.07;
+    /* Increased for visibility */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    mix-blend-mode: overlay;
+  }
+
+  /* Refined Typography System */
+  h1 {
+    @apply font-heading text-4xl md:text-5xl lg:text-7xl tracking-[-0.02em] font-bold text-foreground mb-6;
+  }
+
+  h2 {
+    @apply font-heading text-3xl md:text-4xl lg:text-5xl tracking-[-0.02em] font-bold text-foreground mb-4;
+  }
+
+  h3 {
+    @apply font-heading text-2xl md:text-3xl tracking-[-0.01em] font-semibold text-foreground mb-3;
+  }
+
+  h4 {
+    @apply font-heading text-xl tracking-tight font-semibold text-foreground mb-2;
+  }
+
+  p {
+    @apply font-sans text-base md:text-lg leading-relaxed text-muted-foreground mb-4;
+  }
+
+  /* Utility for "Wow" text */
+  .text-gradient-gold {
+    @apply text-secondary;
+  }
+
+  .text-gradient-red {
+    @apply text-primary;
+  }
+}
+
+@layer utilities {
+  .font-heading {
+    font-family: var(--font-heading), serif;
+  }
+
+  /* Custom Animations for Lunch Buffet Hero */
+  @keyframes slowZoom {
+    0% {
+      transform: scale(1);
+    }
+
+    100% {
+      transform: scale(1.1);
+    }
+  }
+
+  @keyframes fadeInDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes scrollDown {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateY(12px);
+      opacity: 0;
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 3s infinite linear;
+  }
+
+  /* Custom Scrollbar Utilities */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-track-transparent::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thumb-muted-foreground\/20::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--muted-foreground) / 0.2);
+    border-radius: 9999px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ============================================
+   GLOBAL STATIC PAGE DESIGN SYSTEM
+   Apply consistent design across all static pages
+   ============================================ */
+
+@layer components {
+  /* ===========================================
+     SECTION STYLES
+     Consistent section spacing and structure
+     =========================================== */
+
+  .page-section {
+    @apply py-8 md:py-12;
+  }
+
+  .page-section-tight {
+    @apply py-6 md:py-8;
+  }
+
+  .page-section-spacious {
+    @apply py-12 md:py-16;
+  }
+
+  /* ===========================================
+     STATIC PAGE TYPOGRAPHY
+     Consistent heading styles for static pages
+     =========================================== */
+
+  /* Page Title - H1 for static pages */
+  .page-title {
+    @apply font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-foreground tracking-tight;
+  }
+
+  /* Section Title - H2 for static pages */
+  .section-title {
+    @apply font-heading text-xl md:text-2xl font-bold text-foreground;
+  }
+
+  /* Subsection Title - H3 for static pages */
+  .subsection-title {
+    @apply font-heading text-lg md:text-xl font-semibold text-foreground;
+  }
+
+  /* Card Title - H4 level */
+  .card-title {
+    @apply font-heading text-base md:text-lg font-bold text-foreground;
+  }
+
+  /* Section Subtitle/Description */
+  .section-subtitle {
+    @apply text-sm md:text-base text-muted-foreground max-w-2xl;
+  }
+
+  /* Small Labels */
+  .label-text {
+    @apply text-[11px] uppercase tracking-wider text-muted-foreground font-medium;
+  }
+
+  /* ===========================================
+     BODY TEXT SYSTEM
+     Standardized text sizes for consistency
+     =========================================== */
+
+  /* Main Body Text - 16px for primary descriptions */
+  .body-text {
+    @apply text-base text-muted-foreground leading-relaxed;
+  }
+
+  /* Small Body Text - 14px for cards, secondary info */
+  .body-text-sm {
+    @apply text-sm text-muted-foreground leading-relaxed;
+  }
+
+  /* Extra Small Text - 13px for tertiary info */
+  .body-text-xs {
+    @apply text-[13px] text-muted-foreground leading-relaxed;
+  }
+
+  /* ===========================================
+     CARD STYLES
+     Consistent card styling for all components
+     Cards use same background color as page, separated only by shadows
+     =========================================== */
+
+  /* Standard Card - Same background, shadow separation */
+  .card-base {
+    @apply bg-card rounded-lg shadow-sm transition-all duration-200;
+  }
+
+  .card-base:hover {
+    @apply shadow-md;
+  }
+
+  /* Card with Highlight - For featured items */
+  .card-highlight {
+    @apply bg-card rounded-lg shadow-sm transition-all duration-200;
+  }
+
+  .card-highlight:hover {
+    @apply shadow-md;
+  }
+
+  /* Interactive Card - With hover lift */
+  .card-interactive {
+    @apply bg-card rounded-lg shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5;
+  }
+
+  /* Compact Card Padding */
+  .card-padding {
+    @apply p-4 md:p-5;
+  }
+
+  .card-padding-sm {
+    @apply p-3 md:p-4;
+  }
+
+  .card-padding-lg {
+    @apply p-5 md:p-6;
+  }
+
+  /* ===========================================
+     LIST STYLES
+     Consistent list styling
+     =========================================== */
+
+  /* List Item - Standard */
+  .list-item {
+    @apply py-1 border-b border-dashed border-border/30 last:border-0;
+  }
+
+  .list-item-tight {
+    @apply py-0.5 border-b border-dashed border-border/30 last:border-0;
+  }
+
+  /* Feature Item with Icon */
+  .feature-item {
+    @apply flex items-start gap-2.5 p-3 rounded-lg bg-card shadow-sm transition-all duration-200 hover:shadow-md;
+  }
+
+  /* Icon Container - Standard */
+  .icon-box {
+    @apply flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-md bg-primary/10 text-primary;
+  }
+
+  .icon-box-lg {
+    @apply flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary;
+  }
+
+  /* ===========================================
+     BADGE STYLES
+     Consistent badge styling
+     =========================================== */
+
+  .badge-base {
+    @apply inline-flex items-center px-3 py-1 text-xs font-medium rounded-full;
+  }
+
+  .badge-muted {
+    @apply badge-base bg-muted/60 text-muted-foreground;
+  }
+
+  .badge-primary {
+    @apply badge-base bg-primary/10 text-primary border border-primary/20;
+  }
+
+  .badge-highlight {
+    @apply badge-base bg-primary text-primary-foreground;
+  }
+
+  /* ===========================================
+     DIVIDER STYLES
+     Consistent dividers and underlines
+     =========================================== */
+
+  .section-divider {
+    @apply h-0.5 w-12 rounded-full bg-primary/60;
+  }
+
+  .section-divider-lg {
+    @apply h-1 w-16 rounded-full bg-primary;
+  }
+
+  /* ===========================================
+     HORIZONTAL SCROLL CONTAINER
+     For scrollable card sections
+     =========================================== */
+
+  .scroll-container {
+    @apply flex gap-4 overflow-x-auto pb-4 -mx-4 px-4;
+    scrollbar-width: thin;
+  }
+
+  .scroll-container::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scroll-container::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--muted-foreground) / 0.2);
+    border-radius: 9999px;
+  }
+
+  /* ===========================================
+     PRICE DISPLAY
+     Consistent price styling
+     =========================================== */
+
+  .price-large {
+    @apply text-3xl md:text-4xl font-bold text-primary;
+  }
+
+  .price-medium {
+    @apply text-2xl font-bold text-primary;
+  }
+
+  .price-small {
+    @apply text-lg font-bold text-primary;
+  }
+
+  /* ===========================================
+     GRID LAYOUTS
+     Consistent grid structures
+     =========================================== */
+
+  .grid-2 {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+  }
+
+  .grid-3 {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4;
+  }
+
+  .grid-4 {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4;
+  }
+
+  /* ===========================================
+     SPACING UTILITIES
+     Consistent margin/padding
+     =========================================== */
+
+  .section-gap {
+    @apply mb-8 md:mb-12;
+  }
+
+  .section-header-gap {
+    @apply mb-4 md:mb-6;
+  }
+
+  .content-gap {
+    @apply mb-6;
+  }
+
+  .item-gap {
+    @apply gap-2 md:gap-3;
+  }
+}
+
+/* =========================================
+   WORDPRESS CONTENT OVERRIDES
+   Force styling for content injected via dangerouslySetInnerHTML
+   ========================================= */
+
+/* 1. Remove background colors from WP Blocks (Group, Cover, etc.) */
+.prose .has-background,
+.prose .wp-block-group,
+.prose .wp-block-cover,
+.prose .wp-block-columns {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+  margin-top: 2rem !important;
+  margin-bottom: 2rem !important;
+}
+
+/* Fix text color visibility if background was dark */
+.prose .has-background p,
+.prose .has-background h1,
+.prose .has-background h2,
+.prose .has-background h3,
+.prose .has-background li {
+  color: var(--foreground) !important;
+}
+
+/* 2. Styling for Products List -> convert to Horizontal Carousel */
+.prose ul.products,
+.prose ul.wc-block-grid__products,
+.prose .wc-block-grid ul,
+.prose .woocommerce ul.products {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  gap: 1.5rem !important;
+  padding: 1rem 0.5rem 2rem 0.5rem !important;
+  margin: 2rem 0 !important;
+  list-style: none !important;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Hide scrollbar track */
+.prose ul.products::-webkit-scrollbar,
+.prose ul.wc-block-grid__products::-webkit-scrollbar {
+  height: 6px;
+}
+
+.prose ul.products::-webkit-scrollbar-thumb,
+.prose ul.wc-block-grid__products::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 99px;
+}
+
+/* Individual Product Card Item */
+.prose ul.products li,
+.prose ul.wc-block-grid__products li,
+.prose .wc-block-grid ul li,
+.prose .woocommerce ul.products li {
+  flex: 0 0 auto !important;
+  width: 260px !important;
+  min-width: 260px !important;
+  background-color: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1) !important;
+  overflow: hidden !important;
+  scroll-snap-align: start;
+  list-style-type: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  position: relative;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Remove pseudo-elements (bullets) */
+.prose ul.products li::before,
+.prose ul.wc-block-grid__products li::before,
+.prose .wc-block-grid ul li::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* Product Image */
+.prose ul.products li img,
+.prose ul.wc-block-grid__products li img,
+.prose .wc-block-grid ul li img {
+  width: 100% !important;
+  height: 200px !important;
+  object-fit: cover !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+}
+
+/* Product Link (wrapper) */
+.prose ul.products li a,
+.prose ul.wc-block-grid__products li a {
+  text-decoration: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+}
+
+/* Inner Text Styling */
+.prose ul.products li .woocommerce-loop-product__title,
+.prose ul.products li h2 {
+  font-family: var(--font-heading) !important;
+  font-size: 1rem !important;
+  /* 16px */
+  font-weight: 700 !important;
+  color: var(--foreground) !important;
+  padding: 1rem 1rem 0.5rem 1rem !important;
+  margin: 0 !important;
+  text-align: center !important;
+  line-height: 1.4 !important;
+}
+
+.prose ul.products li .price {
+  color: var(--primary) !important;
+  font-weight: 700 !important;
+  font-size: 1.125rem !important;
+  /* 18px */
+  text-align: center !important;
+  padding: 0 1rem 1rem 1rem !important;
+  margin: 0 !important;
+  display: block !important;
+}
+
+/* Star Rating */
+.prose ul.products li .star-rating {
+  margin: 0 auto 0.5rem auto !important;
+  font-size: 0.875rem !important;
+  color: var(--secondary) !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+/* Hide unwanted elements */
+.prose ul.products li .button,
+.prose ul.products li .added_to_cart {
+  display: none !important;
+  /* Cleaner look */
+}

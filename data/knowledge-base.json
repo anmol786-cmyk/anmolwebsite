@@ -1,0 +1,456 @@
+{
+  "restaurant_info": {
+    "name": "Anmol Sweets & Restaurant",
+    "tagline": "Authentic Indian & Pakistani Cuisine",
+    "location": {
+      "address": "Halmstad, Sweden",
+      "map_url": "https://maps.app.goo.gl/anmolsweets"
+    },
+    "contact": {
+      "phone": "+46 123 456 789",
+      "email": "info@anmolsweets.se",
+      "website": "https://anmolsweets.se"
+    },
+    "hours": {
+      "weekdays": "11:00 AM - 9:00 PM",
+      "weekends": "11:00 AM - 10:00 PM",
+      "note": "Please check our website for updated hours and holiday schedules"
+    },
+    "description": "Anmol Sweets & Restaurant brings the authentic flavors of India and Pakistan to Sweden. We specialize in traditional sweets, savory dishes, and full-service catering for all occasions."
+  },
+  "services": {
+    "dine_in": {
+      "available": true,
+      "description": "Enjoy our authentic cuisine in a warm, welcoming atmosphere"
+    },
+    "takeaway": {
+      "available": true,
+      "description": "Order your favorite dishes for pickup"
+    },
+    "catering": {
+      "available": true,
+      "description": "Full-service catering for weddings, parties, and corporate events",
+      "link": "/catering",
+      "features": [
+        "Customizable menus",
+        "Price calculator",
+        "Event planning assistance"
+      ]
+    },
+    "reservations": {
+      "available": true,
+      "description": "Book your table online for a guaranteed spot",
+      "link": "/reservations"
+    },
+    "lunch_buffet": {
+      "available": true,
+      "description": "All-you-can-eat lunch buffet with rotating dishes",
+      "link": "/lunch-buffet",
+      "days": "Monday to Friday"
+    },
+    "weekend_brunch": {
+      "available": true,
+      "description": "Special weekend brunch buffet",
+      "link": "/weekend-brunch-buffet",
+      "days": "Saturday and Sunday"
+    }
+  },
+  "menu_categories": [
+    {
+      "id": "sweets",
+      "name": "Indian Sweets",
+      "description": "Traditional mithai made fresh daily",
+      "popular_items": [
+        "Gulab Jamun",
+        "Rasmalai",
+        "Jalebi",
+        "Barfi",
+        "Ladoo"
+      ]
+    },
+    {
+      "id": "appetizers",
+      "name": "Appetizers",
+      "description": "Start your meal with these delicious starters",
+      "popular_items": [
+        "Samosa",
+        "Pakora",
+        "Spring Rolls",
+        "Chaat"
+      ]
+    },
+    {
+      "id": "curries",
+      "name": "Curries & Main Dishes",
+      "description": "Authentic Indian and Pakistani curries",
+      "popular_items": [
+        "Butter Chicken",
+        "Chicken Tikka Masala",
+        "Palak Paneer",
+        "Biryani",
+        "Korma"
+      ]
+    },
+    {
+      "id": "tandoor",
+      "name": "Tandoori Specialties",
+      "description": "Clay oven specialties",
+      "popular_items": [
+        "Tandoori Chicken",
+        "Chicken Tikka",
+        "Seekh Kabab",
+        "Naan"
+      ]
+    },
+    {
+      "id": "vegetarian",
+      "name": "Vegetarian Dishes",
+      "description": "Delicious plant-based options",
+      "popular_items": [
+        "Palak Paneer",
+        "Chana Masala",
+        "Dal Makhani",
+        "Aloo Gobi"
+      ]
+    },
+    {
+      "id": "rice",
+      "name": "Rice & Biryani",
+      "description": "Fragrant rice dishes",
+      "popular_items": [
+        "Chicken Biryani",
+        "Vegetable Biryani",
+        "Pulao"
+      ]
+    },
+    {
+      "id": "breads",
+      "name": "Breads",
+      "description": "Freshly baked in our tandoor",
+      "popular_items": [
+        "Naan",
+        "Garlic Naan",
+        "Roti",
+        "Paratha"
+      ]
+    }
+  ],
+  "popular_dishes": [
+    {
+      "name": "Chicken Biryani",
+      "description": "Authentic Karachi Style Chicken Biryani. Flavourful, layered rice dish made with tender chicken, potatoes, aromatic long-grain basmati rice, and a secret blend of spices. Served with raita.",
+      "category": "rice",
+      "dietary": [
+        "gluten-free"
+      ],
+      "spice_level": "medium"
+    },
+    {
+      "name": "Butter Chicken",
+      "description": "Tender chicken in rich, creamy tomato sauce",
+      "category": "curries",
+      "dietary": [
+        "gluten-free-option"
+      ],
+      "spice_level": "mild"
+    },
+    {
+      "name": "Palak Paneer",
+      "description": "Fresh, house-made paneer cheese, gently simmered in a vibrant, creamy spinach gravy infused with ginger, garlic, and aromatic spices.",
+      "category": "vegetarian",
+      "dietary": [
+        "vegetarian",
+        "gluten-free"
+      ],
+      "spice_level": "mild"
+    },
+    {
+      "name": "Chicken Karahi",
+      "description": "Sizzling, robust classic cooked fresh to order in a traditional wok. Bone-in chicken flash-cooked with fresh tomatoes, ginger, green chilies, and black pepper.",
+      "category": "curries",
+      "dietary": [
+        "gluten-free"
+      ],
+      "spice_level": "spicy"
+    },
+    {
+      "name": "Chicken Achari",
+      "description": "Uniquely tangy and spicy curry made with traditional Indian pickling spices (fennel, mustard seeds, nigella seeds). Bold and zesty.",
+      "category": "curries",
+      "dietary": [
+        "gluten-free"
+      ],
+      "spice_level": "spicy"
+    },
+    {
+      "name": "Chicken Samosa",
+      "description": "Golden, flaky pastry triangle, handmade fresh daily and stuffed with spiced minced chicken and peas. Served with mint and tamarind chutneys.",
+      "category": "appetizers",
+      "dietary": [
+        "halal"
+      ],
+      "spice_level": "medium"
+    },
+    {
+      "name": "Chana Chaat",
+      "description": "Vibrant, fresh salad made with tender chickpeas, soft boiled potatoes, crisp onions, tomatoes, lemon juice and tangy chaat masala. Naturally vegan.",
+      "category": "appetizers",
+      "dietary": [
+        "vegan",
+        "vegetarian"
+      ],
+      "spice_level": "medium"
+    },
+    {
+      "name": "Rasmalai",
+      "description": "Delicate, soft sponge discs of fresh house-made paneer soaked in creamy, sweetened milk perfumed with saffron and cardamom.",
+      "category": "sweets",
+      "dietary": [
+        "vegetarian"
+      ],
+      "spice_level": "none"
+    },
+    {
+      "name": "Rasmalai Cake",
+      "description": "Spectacular fusion dessert. Soft cardamom sponge sponge cake layered with saffron and pistachio cream frosting, soaked in sweet milk.",
+      "category": "bakery",
+      "dietary": [
+        "vegetarian"
+      ],
+      "spice_level": "none"
+    },
+    {
+      "name": "Halwa Puri Platter",
+      "description": "Legendary weekend breakfast. Hot fluffy puri breads, savory chickpea curry (Lahori channay), and sweet semolina pudding (suji halwa).",
+      "category": "breakfast",
+      "dietary": [
+        "vegetarian"
+      ],
+      "spice_level": "medium"
+    },
+    {
+      "name": "Classic Coconut Biscuits",
+      "description": "Freshly baked Kokoskakor with a perfect chewy and buttery texture. Perfect for fika.",
+      "category": "bakery",
+      "dietary": [
+        "vegetarian"
+      ],
+      "spice_level": "none"
+    }
+  ],
+  "dietary_options": {
+    "vegetarian": {
+      "available": true,
+      "description": "We have a large and beloved vegetarian menu! Our most famous dish is the Palak Paneer (house-made paneer).",
+      "examples": [
+        "Palak Paneer",
+        "Chana Chaat",
+        "Daal (Lentils)",
+        "Vegetable Biryani"
+      ]
+    },
+    "vegan": {
+      "available": true,
+      "description": "Yes, several of our dishes are naturally vegan.",
+      "examples": [
+        "Chana Chaat",
+        "Daal",
+        "Vegetable Curry"
+      ]
+    },
+    "gluten_free": {
+      "available": true,
+      "description": "Most curries and rice dishes are naturally gluten-free",
+      "note": "Please inform staff of allergies"
+    },
+    "halal": {
+      "available": true,
+      "description": "Yes, we proudly offer a wide menu of Halal dishes, prepared according to proper standards."
+    }
+  },
+  "policies": {
+    "reservations": {
+      "how_to_book": "Book online at anmolsweets.se/reservations or call +46 8 88 66 79",
+      "cancellation": "Please cancel at least 2 hours in advance",
+      "group_bookings": "For large groups, please book in advance"
+    },
+    "catering": {
+      "minimum_order": "Varies",
+      "advance_notice": "Please contact us for quotes",
+      "customization": "We customize menus for weddings, corporate functions, and festivals"
+    },
+    "delivery": {
+      "available": "Yes, we deliver in the Stockholm area",
+      "areas": "Specific zones apply for weekend specials"
+    },
+    "payment": {
+      "methods": [
+        "Visa",
+        "Mastercard",
+        "Swish",
+        "Cash"
+      ],
+      "online_payment": "Credit card available for online orders"
+    }
+  },
+  "faqs": [
+    {
+      "question": "Where are you located?",
+      "answer": "We are located at Fagerstagatan 13, 163 53 Spånga, Stockholm, Sweden.",
+      "category": "location"
+    },
+    {
+      "question": "What are your opening hours?",
+      "answer": "Mon-Fri: 10:00 – 20:00, Sat-Sun: 10:00 – 19:00. Lunch Buffet Mon-Fri 11:00-14:00. Weekend Breakfast 10:30-14:00.",
+      "category": "general"
+    },
+    {
+      "question": "Do you have a lunch buffet?",
+      "answer": "Yes! We have Stockholm's best-value workday lunch buffet (Mon-Fri 11:00-14:00) for 139 SEK. Includes rotating hot dishes (chicken, meat, veg), salad bar, naan, rice, raita, coffee/tea, and dessert.",
+      "category": "services"
+    },
+    {
+      "question": "Do you have a breakfast buffet?",
+      "answer": "On weekends (Sat & Sun 10:30-14:00), we serve our legendary Halwa Puri breakfast buffet for 129 SEK. Includes fresh puris, Lahori channay, and suji halwa.",
+      "category": "services"
+    },
+    {
+      "question": "Do you do catering?",
+      "answer": "Yes! We specialize in authentic Indian/Pakistani catering for weddings, parties, corporate functions, and festivals. We create custom menus to suit your event.",
+      "category": "services"
+    },
+    {
+      "question": "Do you deliver?",
+      "answer": "Yes, we deliver in the Stockholm area. Some weekend specials like Halwa Puri are restricted to specific zones for freshness.",
+      "category": "services"
+    },
+    {
+      "question": "Do you sell cakes?",
+      "answer": "Yes, our in-house Anmol Bakery creates custom cakes for all occasions (birthdays, weddings). Famous for our fusion Rasmalai Cake and themed cakes.",
+      "category": "products"
+    },
+    {
+      "question": "What is Halwa Puri?",
+      "answer": "It's our legendary weekend breakfast platter featuring hot fluffy puris (fried bread), savory chickpea curry (Lahori channay), and sweet semolina pudding (suji halwa).",
+      "category": "products"
+    },
+    {
+      "question": "I have a nut allergy. Is your food safe?",
+      "answer": "Our kitchen handles nuts, dairy, and gluten extensively. While we take precautions, we cannot guarantee zero cross-contamination. Please inform staff but consume at your own risk.",
+      "category": "dietary"
+    },
+    {
+      "question": "Do you have parking?",
+      "answer": "Yes, parking facilities are available nearby on Fagerstagatan.",
+      "category": "logistics"
+    },
+    {
+      "question": "Do you sell gift cards?",
+      "answer": "Yes, we offer gift cards! Purchase them in-store at our restaurant in Spånga.",
+      "category": "services"
+    },
+    {
+      "question": "Do you sell groceries?",
+      "answer": "Yes, we sell high-quality ingredients and products like ready-to-cook Papadums, both in-store and online.",
+      "category": "products"
+    },
+    {
+      "question": "What is the Anmol Electric Tandoor?",
+      "answer": "It's a versatile countertop appliance we sell for home use. Great for baking naan, pizza, and roti. Premium German Standard.",
+      "category": "products"
+    }
+  ],
+  "promotions": {
+    "current": [],
+    "note": "Check our website and social media for current promotions and special offers"
+  },
+  "keywords": {
+    "spicy": [
+      "spice level",
+      "heat",
+      "mild",
+      "medium",
+      "hot",
+      "adjust"
+    ],
+    "sweet": [
+      "sweets",
+      "dessert",
+      "mithai",
+      "gulab jamun",
+      "rasmalai"
+    ],
+    "vegetarian": [
+      "vegetarian",
+      "veg",
+      "no meat",
+      "plant-based"
+    ],
+    "vegan": [
+      "vegan",
+      "no dairy",
+      "plant-based"
+    ],
+    "gluten": [
+      "gluten-free",
+      "celiac",
+      "wheat"
+    ],
+    "halal": [
+      "halal",
+      "islamic",
+      "muslim"
+    ],
+    "buffet": [
+      "buffet",
+      "all you can eat",
+      "lunch",
+      "brunch"
+    ],
+    "catering": [
+      "catering",
+      "event",
+      "party",
+      "wedding",
+      "corporate"
+    ],
+    "reservation": [
+      "book",
+      "reserve",
+      "table",
+      "booking"
+    ],
+    "location": [
+      "where",
+      "location",
+      "address",
+      "find",
+      "directions"
+    ],
+    "hours": [
+      "hours",
+      "open",
+      "timing",
+      "when",
+      "time"
+    ],
+    "menu": [
+      "menu",
+      "dishes",
+      "food",
+      "what do you serve"
+    ],
+    "delivery": [
+      "delivery",
+      "deliver",
+      "order online"
+    ],
+    "price": [
+      "price",
+      "cost",
+      "expensive",
+      "cheap",
+      "how much"
+    ]
+  }
+}
