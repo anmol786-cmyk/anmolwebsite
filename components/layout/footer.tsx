@@ -69,9 +69,11 @@ export async function Footer() {
                 rel="noopener noreferrer"
                 className="hover:opacity-80 transition-opacity"
               >
-                <img
+                <Image
                   src="https://anmolsweets.se/wp-content/uploads/2025/01/Review-us-on-Google.png"
                   alt="Review us on Google"
+                  width={112}
+                  height={40}
                   className="h-auto w-28 object-contain"
                 />
               </a>
@@ -83,9 +85,11 @@ export async function Footer() {
                 rel="noopener noreferrer"
                 className="hover:opacity-80 transition-opacity"
               >
-                <img
+                <Image
                   src="https://anmolsweets.se/wp-content/uploads/2025/01/TripAdvisor-Write-A-Review-www.tripadvisor.com_UserReviewEdit-d19905368_m68676.png"
                   alt="Review us on TripAdvisor"
+                  width={112}
+                  height={40}
                   className="h-auto w-28 object-contain"
                 />
               </a>
@@ -104,10 +108,12 @@ export async function Footer() {
                 >
                   <div className="relative w-10 h-10 rounded-sm overflow-hidden bg-muted flex-shrink-0 border border-border/50">
                     {product.images && product.images[0] ? (
-                      <img
+                      <Image
                         src={product.images[0].src}
                         alt={product.images[0].alt || product.name}
-                        className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
+                        fill
+                        className="object-cover group-hover:scale-110 transition-transform duration-300"
+                        sizes="40px"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-[8px] text-muted-foreground">

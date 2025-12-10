@@ -72,7 +72,8 @@ export function ShopTopBar({ categories, totalProducts, className }: ShopTopBarP
             router.push(`?${params.toString()}`);
         }, 500);
         return () => clearTimeout(timer);
-    }, [searchQuery, router]); // Only trigger when searchQuery changes, not searchParams
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchQuery, router]); // Intentionally exclude searchParams to avoid infinite loop
 
     // Handle Sort
     const handleSort = (value: string) => {

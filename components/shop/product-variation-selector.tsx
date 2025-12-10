@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -147,7 +148,7 @@ export function ProductVariationSelector({
       {attributesToDisplay.map((attribute) => {
         const options = getAttributeOptions(attribute.name);
         const isColorAttribute = attribute.name.toLowerCase().includes('color') ||
-                                 attribute.name.toLowerCase().includes('colour');
+          attribute.name.toLowerCase().includes('colour');
         const isSizeAttribute = attribute.name.toLowerCase().includes('size');
 
         // Custom WooCommerce attributes
@@ -197,6 +198,7 @@ export function ProductVariationSelector({
                       title={option}
                     >
                       <div className="relative h-20 w-20 overflow-hidden rounded-md">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={imageMap[option] || '/placeholder.jpg'}
                           alt={option}

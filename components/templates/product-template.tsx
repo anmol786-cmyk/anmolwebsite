@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode, useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Breadcrumbs, BreadcrumbItem } from '@/components/layout/breadcrumbs';
 import { Badge } from '@/components/ui/badge';
 import { AddToCartButton } from '@/components/shop/add-to-cart-button';
@@ -89,10 +90,12 @@ export function ProductTemplate({
                           {/* Product Image */}
                           <div className="relative w-20 h-20 flex-shrink-0 overflow-hidden rounded-md bg-muted">
                             {relatedProduct.images && relatedProduct.images[0] ? (
-                              <img
+                              <Image
                                 src={relatedProduct.images[0].src}
                                 alt={relatedProduct.name}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                fill
+                                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                sizes="80px"
                               />
                             ) : (
                               <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">
