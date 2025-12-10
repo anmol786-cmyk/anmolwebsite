@@ -161,7 +161,7 @@ export default async function RestaurantMenuPage() {
                 <div className="container mx-auto px-4 max-w-7xl">
                     {categoriesWithProducts.map((category, index) => {
                         const categoryProducts = allProducts.filter((product) =>
-                            product.categories?.some((cat) => cat.id === category.id)
+                            product.categories?.some((cat: any) => cat.id === category.id)
                         );
 
                         if (categoryProducts.length === 0) return null;
