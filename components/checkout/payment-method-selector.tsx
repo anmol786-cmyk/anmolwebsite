@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Card } from '@/components/ui/card';
@@ -47,11 +47,7 @@ export function PaymentMethodSelector({
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        fetchPaymentGateways();
-    }, []);
-
-    const fetchPaymentGateways = async () => {
+    const fetchPaymentGateways = useCallback(async () => {
         setLoading(true);
         setError(null);
 
@@ -96,7 +92,11 @@ export function PaymentMethodSelector({
         } finally {
             setLoading(false);
         }
-    };
+    }, [selectedMethod, onMethodChange]);
+
+    useEffect(() => {
+        fetchPaymentGateways();
+    }, [fetchPaymentGateways]);
 
     if (loading) {
         return (

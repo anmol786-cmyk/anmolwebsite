@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Card } from '@/components/ui/card';
@@ -43,17 +43,7 @@ export function ShippingMethodSelector({
     const [error, setError] = useState<string | null>(null);
     const [zoneInfo, setZoneInfo] = useState<{ id: number; name: string } | null>(null);
 
-    useEffect(() => {
-        if (!postcode) {
-            setMethods([]);
-            setError('Please enter a postal code first');
-            return;
-        }
-
-        fetchShippingMethods();
-    }, [postcode, country]);
-
-    const fetchShippingMethods = async () => {
+    const fetchShippingMethods = useCallback(async () => {
         setLoading(true);
         setError(null);
 
@@ -132,7 +122,17 @@ export function ShippingMethodSelector({
         } finally {
             setLoading(false);
         }
-    };
+    }, [postcode, country, cartTotal, selectedMethod, onMethodChange, onShippingCostChange]);
+
+    useEffect(() => {
+        if (!postcode) {
+            setMethods([]);
+            setError('Please enter a postal code first');
+            return;
+        }
+
+        fetchShippingMethods();
+    }, [postcode, fetchShippingMethods]);
 
     const handleMethodSelect = (methodId: string) => {
         const method = methods.find((m) => m.id === methodId);

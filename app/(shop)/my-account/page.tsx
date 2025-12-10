@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { useAuthStore } from '@/store/auth-store';
 import { Section, Container } from '@/components/craft';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -281,11 +282,15 @@ export default function MyAccountPage() {
                           {order.line_items.slice(0, 3).map((item) => (
                             <div key={item.id} className="flex items-center gap-3 text-sm">
                               {item.image?.src && (
-                                <img
-                                  src={item.image.src}
-                                  alt={item.name}
-                                  className="h-12 w-12 rounded object-cover"
-                                />
+                                <div className="relative h-12 w-12 flex-shrink-0">
+                                  <Image
+                                    src={item.image.src}
+                                    alt={item.name}
+                                    fill
+                                    sizes="48px"
+                                    className="rounded object-cover"
+                                  />
+                                </div>
                               )}
                               <div className="flex-1">
                                 <p className="font-medium">{item.name}</p>

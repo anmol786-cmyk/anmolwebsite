@@ -17,22 +17,22 @@ import { Users, Calculator, ArrowRight } from 'lucide-react';
 import { formatPrice } from '@/lib/utils';
 import { motion } from 'framer-motion';
 
+// Base prices per person (SEK)
+const prices = {
+    wedding: 350,
+    corporate: 250,
+    birthday: 200,
+    party: 220,
+    other: 200,
+};
+
+const serviceFeePerGuest = 100; // Waiters, setup, cleanup
+
 export function CateringCalculator() {
     const [guests, setGuests] = useState([50]);
     const [eventType, setEventType] = useState('wedding');
     const [includeService, setIncludeService] = useState(false);
     const [estimatedPrice, setEstimatedPrice] = useState(0);
-
-    // Base prices per person (SEK)
-    const prices = {
-        wedding: 350,
-        corporate: 250,
-        birthday: 200,
-        party: 220,
-        other: 200,
-    };
-
-    const serviceFeePerGuest = 100; // Waiters, setup, cleanup
 
     useEffect(() => {
         const basePrice = prices[eventType as keyof typeof prices] || 200;
