@@ -6,23 +6,35 @@ import { cn } from "@/lib/utils";
 
 import {
   getFeaturedMediaById,
-  getAuthorById,
   getCategoryById,
 } from "@/lib/wordpress";
 
 export async function PostCard({ post }: { post: Post }) {
-  const media = post.featured_media
-    ? await getFeaturedMediaById(post.featured_media)
-    : null;
-  const author = post.author ? await getAuthorById(post.author) : null;
+  let media = null;
+  if (post.featured_media) {
+    try {
+      media = await getFeaturedMediaById(post.featured_media);
+    } catch (e) {
+      // console.error(`Failed to fetch media for post ${post.id}`, e);
+    }
+  }
+
+  // Author fetch removed as it is unused in the component
+
   const date = new Date(post.date).toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
     year: "numeric",
   });
-  const category = post.categories?.[0]
-    ? await getCategoryById(post.categories[0])
-    : null;
+
+  let category = null;
+  if (post.categories?.[0]) {
+    try {
+      category = await getCategoryById(post.categories[0]);
+    } catch (e) {
+      // console.error(`Failed to fetch category for post ${post.id}`, e);
+    }
+  }
 
   return (
     <Link
@@ -59,7 +71,7 @@ export async function PostCard({ post }: { post: Post }) {
           dangerouslySetInnerHTML={{
             __html: post.excerpt?.rendered
               ? post.excerpt.rendered.split(" ").slice(0, 12).join(" ").trim() +
-                "..."
+              "..."
               : "No excerpt available",
           }}
         ></div>

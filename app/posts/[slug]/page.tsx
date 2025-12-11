@@ -71,16 +71,48 @@ export default async function Page({
 }) {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
-  const featuredMedia = post.featured_media
-    ? await getFeaturedMediaById(post.featured_media)
-    : null;
-  const author = await getAuthorById(post.author);
+
+  if (!post) {
+    return <div>Post not found</div>;
+  }
+
+  // Safe fetch for featured media
+  let featuredMedia = null;
+  if (post.featured_media) {
+    try {
+      featuredMedia = await getFeaturedMediaById(post.featured_media);
+    } catch (e) {
+      console.error(`Failed to fetch media ${post.featured_media} for post ${slug}`, e);
+    }
+  }
+
+  // Safe fetch for author
+  let author = null;
+  if (post.author) {
+    try {
+      author = await getAuthorById(post.author);
+    } catch (e) {
+      console.warn(`Failed to fetch author ${post.author} for post ${slug}`, e);
+      // Fallback author
+      author = { id: 0, name: 'Anmol Sweets', slug: 'anmol-sweets', url: '', description: '', link: '', avatar_urls: {} } as any;
+    }
+  }
+
   const date = new Date(post.date).toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
     year: "numeric",
   });
-  const category = await getCategoryById(post.categories[0]);
+
+  // Safe fetch for category
+  let category = null;
+  if (post.categories && post.categories.length > 0) {
+    try {
+      category = await getCategoryById(post.categories[0]);
+    } catch (e) {
+      console.warn(`Failed to fetch category ${post.categories[0]} for post ${slug}`, e);
+    }
+  }
 
   return (
     <Section>
@@ -95,23 +127,28 @@ export default async function Page({
           </h1>
           <div className="flex justify-between items-center gap-4 text-sm mb-4">
             <h5>
-              Published {date} by{" "}
-              {author.name && (
-                <span>
-                  <a href={`/posts/?author=${author.id}`}>{author.name}</a>{" "}
-                </span>
+              Published {date}
+              {author && author.name && (
+                <>
+                  {" "}by{" "}
+                  <span>
+                    <a href={`/posts/?author=${author.id}`}>{author.name}</a>{" "}
+                  </span>
+                </>
               )}
             </h5>
 
-            <Link
-              href={`/posts/?category=${category.id}`}
-              className={cn(
-                badgeVariants({ variant: "outline" }),
-                "!no-underline"
-              )}
-            >
-              {category.name}
-            </Link>
+            {category && (
+              <Link
+                href={`/posts/?category=${category.id}`}
+                className={cn(
+                  badgeVariants({ variant: "outline" }),
+                  "!no-underline"
+                )}
+              >
+                {category.name}
+              </Link>
+            )}
           </div>
           {featuredMedia?.source_url && (
             <div className="h-96 my-12 md:h-[500px] overflow-hidden flex items-center justify-center border rounded-lg bg-accent/25">

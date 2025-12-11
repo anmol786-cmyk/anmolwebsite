@@ -10,7 +10,12 @@ interface CommentSectionProps {
 }
 
 export async function CommentSection({ postId }: CommentSectionProps) {
-    const comments = await getCommentsByPostId(postId);
+    let comments: any[] = [];
+    try {
+        comments = await getCommentsByPostId(postId);
+    } catch (error) {
+        console.error(`Failed to fetch comments for post ${postId}`, error);
+    }
 
     return (
         <div className="space-y-8" id="comments">
