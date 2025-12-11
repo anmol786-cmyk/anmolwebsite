@@ -65,7 +65,7 @@ export default async function BakeryMenuPage() {
 
     // Filter categories that have products
     const categoriesWithProducts = activeCategories.filter((cat) =>
-        allProducts.some((p) => p.categories && p.categories.some((c) => c.id === cat.id))
+        allProducts.some((p) => p.categories && p.categories.some((c: any) => c.id === cat.id))
     );
 
     return (
@@ -178,7 +178,7 @@ export default async function BakeryMenuPage() {
                     {categoriesWithProducts.length > 0 ? (
                         categoriesWithProducts.map((category) => {
                             const categoryProducts = allProducts.filter((product) =>
-                                product.categories?.some((cat) => cat.id === category.id)
+                                product.categories?.some((cat: any) => cat.id === category.id)
                             );
 
                             if (categoryProducts.length === 0) return null;

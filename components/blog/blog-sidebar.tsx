@@ -30,35 +30,38 @@ export async function BlogSidebar() {
                     <CardTitle className="text-xl font-heading text-primary-950 dark:text-primary-50">Latest Posts</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                    {recentPosts.map((post) => (
-                        <div key={post.id} className="group">
-                            <Link href={`/blog/${post.slug}`} className="flex gap-4">
-                                {post._embedded?.['wp:featuredmedia']?.[0]?.source_url ? (
-                                    <div className="relative w-20 h-20 flex-shrink-0 rounded-md overflow-hidden bg-muted">
-                                        <Image
-                                            src={post._embedded['wp:featuredmedia'][0].source_url}
-                                            alt={post.title.rendered}
-                                            fill
-                                            className="object-cover transition-transform group-hover:scale-105"
-                                        />
+                    {recentPosts.map((post) => {
+                        const postAny = post as any;
+                        return (
+                            <div key={post.id} className="group">
+                                <Link href={`/blog/${post.slug}`} className="flex gap-4">
+                                    {postAny._embedded?.['wp:featuredmedia']?.[0]?.source_url ? (
+                                        <div className="relative w-20 h-20 flex-shrink-0 rounded-md overflow-hidden bg-muted">
+                                            <Image
+                                                src={postAny._embedded['wp:featuredmedia'][0].source_url}
+                                                alt={post.title.rendered}
+                                                fill
+                                                className="object-cover transition-transform group-hover:scale-105"
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className="w-20 h-20 flex-shrink-0 rounded-md bg-muted flex items-center justify-center text-muted-foreground">
+                                            <span className="text-xs">No Image</span>
+                                        </div>
+                                    )}
+                                    <div>
+                                        <h4 className="font-medium text-sm text-neutral-800 dark:text-neutral-200 line-clamp-2 group-hover:text-primary-600 transition-colors mb-1">
+                                            {decodeHtmlEntities(post.title.rendered)}
+                                        </h4>
+                                        <div className="flex items-center text-xs text-neutral-500 gap-2">
+                                            <Calendar className="h-3 w-3" />
+                                            {new Date(post.date).toLocaleDateString()}
+                                        </div>
                                     </div>
-                                ) : (
-                                    <div className="w-20 h-20 flex-shrink-0 rounded-md bg-muted flex items-center justify-center text-muted-foreground">
-                                        <span className="text-xs">No Image</span>
-                                    </div>
-                                )}
-                                <div>
-                                    <h4 className="font-medium text-sm text-neutral-800 dark:text-neutral-200 line-clamp-2 group-hover:text-primary-600 transition-colors mb-1">
-                                        {decodeHtmlEntities(post.title.rendered)}
-                                    </h4>
-                                    <div className="flex items-center text-xs text-neutral-500 gap-2">
-                                        <Calendar className="h-3 w-3" />
-                                        {new Date(post.date).toLocaleDateString()}
-                                    </div>
-                                </div>
-                            </Link>
-                        </div>
-                    ))}
+                                </Link>
+                            </div>
+                        );
+                    })}
                 </CardContent>
             </Card>
 

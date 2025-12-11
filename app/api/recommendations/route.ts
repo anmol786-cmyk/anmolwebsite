@@ -61,8 +61,8 @@ function getRelatedRecommendations(
 
     // 1. Same category products
     const sameCategory = otherProducts.filter((product) =>
-        product.categories?.some((cat) =>
-            currentProduct.categories?.some((currentCat) => currentCat.id === cat.id)
+        product.categories?.some((cat: any) =>
+            currentProduct.categories?.some((currentCat: any) => currentCat.id === cat.id)
         )
     );
 

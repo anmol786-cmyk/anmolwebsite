@@ -70,7 +70,7 @@ export default async function HomePage() {
   };
 
   // Fetch data in parallel for better performance
-  let topProducts = [];
+  let topProducts: any[] = [];
 
   try {
     const [homepage, featuredResult] = await Promise.all([

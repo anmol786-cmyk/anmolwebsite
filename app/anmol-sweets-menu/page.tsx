@@ -60,7 +60,7 @@ export default async function SweetsMenuPage() {
 
     // Filter categories that have products
     const activeCategories = sweetsCategories.filter((cat) =>
-        allProducts.some((p) => p.categories && p.categories.some((c) => c.id === cat.id))
+        allProducts.some((p) => p.categories && p.categories.some((c: any) => c.id === cat.id))
     );
 
     // Get parent and child categories for hierarchical display
@@ -174,7 +174,7 @@ export default async function SweetsMenuPage() {
                 <div className="container mx-auto px-4 max-w-7xl">
                     {activeCategories.map((category) => {
                         const categoryProducts = allProducts.filter((product) =>
-                            product.categories?.some((cat) => cat.id === category.id)
+                            product.categories?.some((cat: any) => cat.id === category.id)
                         );
 
                         if (categoryProducts.length === 0) return null;
@@ -209,7 +209,7 @@ export default async function SweetsMenuPage() {
                                 {/* If parent, also show child category products */}
                                 {isParent && childCategories.map(childCat => {
                                     const childProducts = allProducts.filter((product) =>
-                                        product.categories?.some((cat) => cat.id === childCat.id)
+                                        product.categories?.some((cat: any) => cat.id === childCat.id)
                                     );
 
                                     if (childProducts.length === 0) return null;
