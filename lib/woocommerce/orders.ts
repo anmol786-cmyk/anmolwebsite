@@ -409,3 +409,37 @@ export async function validateShippingPostcode(postcode: string, country: string
         };
     }
 }
+
+/**
+ * Extract Stripe PaymentIntent client_secret from order metadata
+ * WooCommerce Stripe plugin stores this in order meta
+ */
+export function getStripeClientSecret(order: Order): string | null {
+    if (!order.meta_data || order.meta_data.length === 0) {
+        return null;
+    }
+
+    // Look for Stripe client_secret in meta_data
+    // Common keys: _stripe_intent_id, _stripe_source_id, or custom meta
+    const stripeIntentMeta = order.meta_data.find(
+        (meta) => meta.key === '_stripe_intent_id' || meta.key === 'stripe_intent_id'
+    );
+
+    if (stripeIntentMeta && typeof stripeIntentMeta.value === 'string') {
+        // If we have the intent ID, we need to construct or fetch the client_secret
+        // Note: This might require a custom WP endpoint if WooCommerce doesn't expose it
+        return stripeIntentMeta.value as string;
+    }
+
+    // Alternative: Look for client_secret directly
+    const clientSecretMeta = order.meta_data.find(
+        (meta) => meta.key === '_stripe_client_secret' || meta.key === 'stripe_client_secret'
+    );
+
+    if (clientSecretMeta && typeof clientSecretMeta.value === 'string') {
+        return clientSecretMeta.value as string;
+    }
+
+    return null;
+}
+

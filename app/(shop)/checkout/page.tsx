@@ -19,10 +19,13 @@ import { validateCartStockAction } from '@/app/actions/cart';
 import { getMinimumOrderAmount } from '@/app/actions/woocommerce-settings';
 import { validateShippingRestrictions } from '@/app/actions/shipping-restrictions';
 import { formatPrice } from '@/lib/woocommerce';
+import { getStripeClientSecret } from '@/lib/woocommerce/orders';
 import { Loader2, CheckCircle2, AlertCircle, ShoppingBag } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
 import { motion, AnimatePresence } from 'framer-motion';
+import { StripeProvider } from '@/components/providers/stripe-provider';
+import { StripePaymentForm } from '@/components/checkout/stripe-payment-form';
 
 type CheckoutStep = 'shipping' | 'shipping-method' | 'billing' | 'payment' | 'review';
 
@@ -47,6 +50,11 @@ export default function CheckoutPage() {
   const [minimumOrderAmount, setMinimumOrderAmount] = useState(0);
   const [loadingMinimum, setLoadingMinimum] = useState(true);
   const [coupon, setCoupon] = useState<any | null>(null);
+
+  // Stripe state
+  const [pendingOrderId, setPendingOrderId] = useState<number | null>(null);
+  const [stripeClientSecret, setStripeClientSecret] = useState<string | null>(null);
+  const [isStripePayment, setIsStripePayment] = useState(false);
 
   // Fetch minimum order amount on mount
   useEffect(() => {
@@ -147,6 +155,10 @@ export default function CheckoutPage() {
       return;
     }
 
+    // Check if this is a Stripe payment
+    const isStripe = paymentMethod === 'stripe' || paymentMethod === 'stripe_cc';
+    setIsStripePayment(isStripe);
+
     setIsProcessing(true);
     setError(null);
     setStockErrors([]);
@@ -195,6 +207,7 @@ export default function CheckoutPage() {
         payment_method_title: getPaymentMethodTitle(paymentMethod),
         customer_note: orderNotes || undefined,
         coupon_lines: coupon ? [{ code: coupon.code }] : undefined,
+        set_paid: false, // Don't mark as paid yet - Stripe will handle this
       });
 
       if (!result.success || !result.data) {
@@ -202,8 +215,32 @@ export default function CheckoutPage() {
       }
 
       const order = result.data;
+      setPendingOrderId(order.id);
 
-      // Clear cart and redirect to success page
+      // For Stripe payments, extract client_secret and show payment form
+      if (isStripe) {
+        const clientSecret = getStripeClientSecret(order);
+
+        if (!clientSecret) {
+          // If no client_secret in metadata, log for debugging
+          console.warn('No Stripe client_secret found in order metadata');
+          console.log('Order metadata:', order.meta_data);
+          console.log('Payment URL:', order.payment_url);
+
+          setError(
+            'Stripe payment initialization failed. Please contact support or try a different payment method.'
+          );
+          setIsProcessing(false);
+          return;
+        }
+
+        setStripeClientSecret(clientSecret);
+        setIsProcessing(false);
+        // The Stripe payment form will now be shown
+        return;
+      }
+
+      // For non-Stripe payments (COD, etc.), redirect to success
       clearCart();
       router.push(`/checkout/success?order=${order.id}`);
     } catch (err) {
@@ -597,6 +634,32 @@ export default function CheckoutPage() {
                       )}
                     </Button>
                   </div>
+
+                  {/* Stripe Payment Form (shown after order creation) */}
+                  {stripeClientSecret && pendingOrderId && (
+                    <div className="mt-8">
+                      <Separator className="my-6" />
+                      <h3 className="mb-4 font-heading text-xl font-bold text-primary-950 dark:text-primary-50">
+                        Complete Payment
+                      </h3>
+                      <StripeProvider clientSecret={stripeClientSecret}>
+                        <StripePaymentForm
+                          amount={getTotalPrice() + shippingCost - calculateDiscount()}
+                          currency="SEK"
+                          onSuccess={(paymentIntentId) => {
+                            console.log('Payment successful:', paymentIntentId);
+                            // Clear cart and redirect to success page
+                            clearCart();
+                            router.push(`/checkout/success?order=${pendingOrderId}&payment_intent=${paymentIntentId}`);
+                          }}
+                          onError={(error) => {
+                            console.error('Payment failed:', error);
+                            setError(`Payment failed: ${error}`);
+                          }}
+                        />
+                      </StripeProvider>
+                    </div>
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>

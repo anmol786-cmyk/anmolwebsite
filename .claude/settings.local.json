@@ -59,7 +59,8 @@
       "Bash(mv:*)",
       "Bash(ls:*)",
       "Bash(find:*)",
-      "Bash(del \"D:\\Visual codes\\Anmol Project\\headlessworpressrestaurant-production\\components\\layout\\header-wrapper.tsx\")"
+      "Bash(del \"D:\\Visual codes\\Anmol Project\\headlessworpressrestaurant-production\\components\\layout\\header-wrapper.tsx\")",
+      "Bash(if exist utils dir utils)"
     ],
     "deny": [],
     "ask": []

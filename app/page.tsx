@@ -10,6 +10,12 @@ import { SocialFeed } from "@/components/home/social-feed";
 import { getHomepage, extractHeroContent } from "@/lib/fourlines-mcp";
 import { getProducts } from "@/lib/woocommerce/products-direct";
 import type { Metadata } from "next";
+import {
+  anmolOrganizationSchemaFull,
+  anmolWebsiteSchema,
+  breadcrumbSchema,
+  schemaGraph
+} from "@/lib/schema";
 
 // Revalidate page every hour (3600 seconds)
 export const revalidate = 3600;
@@ -62,6 +68,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
+  const baseUrl = 'https://anmolsweets.se';
+
   // Default hero content (fallback)
   let heroContent = {
     title: "Taste the Authentic Tradition",
@@ -110,45 +118,62 @@ export default async function HomePage() {
     // Continue with default content and empty products
   }
 
+  // Generate comprehensive homepage schema
+  const homepageSchema = schemaGraph(
+    anmolOrganizationSchemaFull(baseUrl),
+    anmolWebsiteSchema(baseUrl),
+    breadcrumbSchema([{ name: 'Home', url: baseUrl }], baseUrl)
+  );
+
   return (
-    <main className="flex min-h-screen flex-col">
-      <Hero
-        title={heroContent.title}
-        subtitle={heroContent.subtitle}
-        badge={heroContent.badge}
+    <>
+      {/* JSON-LD Schema for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(homepageSchema)
+        }}
       />
 
-      <Marquee
-        items={[
-          "Stockholm's #1 Indo-Pakistani Restaurant",
-          "Authentic Flavors Since 2020",
-          "100% Halal Certified",
-          "Fresh Made Daily",
-          "Weekend Brunch Buffet",
-          "Premium Catering Services",
-          "Lunch Buffet Mon-Fri",
-          "Traditional Sweets & Desserts"
-        ]}
-        separator={<Sparkles className="h-4 w-4" />}
-        speed={35}
-      />
+      <main className="flex min-h-screen flex-col">
+        <Hero
+          title={heroContent.title}
+          subtitle={heroContent.subtitle}
+          badge={heroContent.badge}
+        />
 
-      <TopProductsCarousel products={topProducts} />
+        <Marquee
+          items={[
+            "Stockholm's #1 Indo-Pakistani Restaurant",
+            "Authentic Flavors Since 2020",
+            "100% Halal Certified",
+            "Fresh Made Daily",
+            "Weekend Brunch Buffet",
+            "Premium Catering Services",
+            "Lunch Buffet Mon-Fri",
+            "Traditional Sweets & Desserts"
+          ]}
+          separator={<Sparkles className="h-4 w-4" />}
+          speed={35}
+        />
 
-      <LunchBuffetSection />
+        <TopProductsCarousel products={topProducts} />
 
-      <WeekendBrunch />
+        <LunchBuffetSection />
 
-      <CateringSection />
+        <WeekendBrunch />
 
-      {/* AI Recommendations Section */}
-      <section className="w-full py-16 bg-primary/5">
-        <div className="container px-4 md:px-6">
-          <ProductRecommendations maxRecommendations={5} />
-        </div>
-      </section>
+        <CateringSection />
 
-      <SocialFeed />
-    </main>
+        {/* AI Recommendations Section */}
+        <section className="w-full py-16 bg-primary/5">
+          <div className="container px-4 md:px-6">
+            <ProductRecommendations maxRecommendations={5} />
+          </div>
+        </section>
+
+        <SocialFeed />
+      </main>
+    </>
   );
 }
