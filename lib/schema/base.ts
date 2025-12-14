@@ -125,14 +125,18 @@ export function validateSchema<T extends Record<string, unknown>>(
 /**
  * Remove undefined/null fields from schema object
  */
-export function cleanSchema<T extends Record<string, unknown>>(schema: T): T {
-  const cleaned: Record<string, unknown> = {};
+export function cleanSchema<T>(schema: T): T {
+  if (typeof schema !== 'object' || schema === null || Array.isArray(schema)) {
+    return schema;
+  }
+
+  const cleaned: any = {};
 
   for (const [key, value] of Object.entries(schema)) {
     if (value !== undefined && value !== null) {
       // Recursively clean nested objects
       if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
-        cleaned[key] = cleanSchema(value as Record<string, unknown>);
+        cleaned[key] = cleanSchema(value);
       } else {
         cleaned[key] = value;
       }
