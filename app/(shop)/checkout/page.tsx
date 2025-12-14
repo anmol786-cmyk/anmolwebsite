@@ -19,7 +19,7 @@ import { validateCartStockAction } from '@/app/actions/cart';
 import { getMinimumOrderAmount } from '@/app/actions/woocommerce-settings';
 import { validateShippingRestrictions } from '@/app/actions/shipping-restrictions';
 import { formatPrice } from '@/lib/woocommerce';
-import { getStripeClientSecret } from '@/lib/woocommerce/orders';
+import { getStripeClientSecret, getOrder } from '@/lib/woocommerce/orders';
 import { Loader2, CheckCircle2, AlertCircle, ShoppingBag } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
@@ -217,27 +217,53 @@ export default function CheckoutPage() {
       const order = result.data;
       setPendingOrderId(order.id);
 
-      // For Stripe payments, extract client_secret and show payment form
+      // For Stripe payments, extract PaymentIntent client_secret from order
+      // WooCommerce Stripe plugin should have created it automatically
       if (isStripe) {
-        const clientSecret = getStripeClientSecret(order);
+        try {
+          // Extract client_secret from order metadata
+          let clientSecret = getStripeClientSecret(order);
 
-        if (!clientSecret) {
-          // If no client_secret in metadata, log for debugging
-          console.warn('No Stripe client_secret found in order metadata');
-          console.log('Order metadata:', order.meta_data);
-          console.log('Payment URL:', order.payment_url);
+          // If not immediately available, wait a moment and fetch order again
+          // WooCommerce Stripe plugin might be creating PaymentIntent asynchronously
+          if (!clientSecret) {
+            console.log('⏳ Waiting for WooCommerce Stripe plugin to create PaymentIntent...');
+            await new Promise(resolve => setTimeout(resolve, 1500)); // Wait 1.5 seconds
 
+            // Fetch the order again to get updated metadata
+            try {
+              const refreshedOrder = await getOrder(order.id);
+              clientSecret = getStripeClientSecret(refreshedOrder);
+            } catch (refreshError) {
+              console.warn('Failed to refresh order:', refreshError);
+              // Continue with null clientSecret, will show error below
+            }
+          }
+
+          if (!clientSecret) {
+            throw new Error(
+              'WooCommerce Stripe plugin did not create PaymentIntent. ' +
+              'Please ensure the WooCommerce Stripe Gateway plugin is installed, activated, and properly configured in WordPress.'
+            );
+          }
+
+          setStripeClientSecret(clientSecret);
+          setIsProcessing(false);
+          console.log('✅ Stripe PaymentIntent retrieved from WooCommerce');
+
+          // The Stripe payment form will now be shown
+          return;
+
+        } catch (stripeError) {
+          console.error('Stripe initialization failed:', stripeError);
           setError(
-            'Stripe payment initialization failed. Please contact support or try a different payment method.'
+            stripeError instanceof Error
+              ? stripeError.message
+              : 'Stripe payment initialization failed. Please ensure Stripe is configured in WordPress.'
           );
           setIsProcessing(false);
           return;
         }
-
-        setStripeClientSecret(clientSecret);
-        setIsProcessing(false);
-        // The Stripe payment form will now be shown
-        return;
       }
 
       // For non-Stripe payments (COD, etc.), redirect to success
