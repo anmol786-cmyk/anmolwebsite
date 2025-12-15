@@ -5,7 +5,7 @@ import {
   StaticPageLayout,
   PageSection,
 } from '@/components/layout/static-page-layout';
-import { ContactForm } from '@/components/forms/contact-form';
+import { ContactFormWrapper } from '@/components/forms/contact-form-wrapper';
 import {
   MapPin,
   Phone,
@@ -34,33 +34,6 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
-  const handleFormSubmit = async (data: any) => {
-    'use server';
-
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/contact`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        console.error('❌ Failed to send contact form:', result);
-        throw new Error(result.error || 'Failed to send message');
-      }
-
-      console.log('✅ Contact form sent successfully:', result);
-      return result;
-    } catch (error) {
-      console.error('Error submitting contact form:', error);
-      throw error;
-    }
-  };
-
   // Group hours for display
   const groupedHours = [
     "Monday - Friday: 10:00 - 20:00",
@@ -86,7 +59,7 @@ export default function ContactPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ContactForm onSubmit={handleFormSubmit} />
+                <ContactFormWrapper />
               </CardContent>
             </Card>
           </div>
