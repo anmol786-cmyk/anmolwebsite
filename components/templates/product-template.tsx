@@ -37,6 +37,7 @@ export function ProductTemplate({
   const [variations, setVariations] = useState<ProductVariation[]>([]);
   const [isLoadingVariations, setIsLoadingVariations] = useState(false);
   const [selectedVariation, setSelectedVariation] = useState<ProductVariation | null>(null);
+  const [quantity, setQuantity] = useState(1);
 
   // Fetch variations if product has them
   useEffect(() => {
@@ -291,13 +292,15 @@ export function ProductTemplate({
                     initialQuantity={1}
                     min={1}
                     max={selectedVariation?.stock_quantity || product.stock_quantity || 99}
-                    onChange={(qty) => console.log('Quantity:', qty)}
+                    onChange={setQuantity}
                   />
                 </div>
 
                 {/* Add to Cart Button */}
                 <AddToCartButton
                   product={product}
+                  variation={selectedVariation}
+                  quantity={quantity}
                   size="lg"
                   className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-full py-6 text-lg font-medium"
                 />

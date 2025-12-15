@@ -50,6 +50,7 @@ export interface CreateOrderData {
     payment_method_title?: string;
     customer_note?: string;
     set_paid?: boolean;
+    transaction_id?: string;
     coupon_lines?: {
         code: string;
     }[];

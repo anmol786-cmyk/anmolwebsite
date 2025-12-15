@@ -19,7 +19,6 @@ import { validateCartStockAction } from '@/app/actions/cart';
 import { getMinimumOrderAmount } from '@/app/actions/woocommerce-settings';
 import { validateShippingRestrictions } from '@/app/actions/shipping-restrictions';
 import { formatPrice } from '@/lib/woocommerce';
-import { getStripeClientSecret, getOrder } from '@/lib/woocommerce/orders';
 import { Loader2, CheckCircle2, AlertCircle, ShoppingBag } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
@@ -144,6 +143,62 @@ export default function CheckoutPage() {
     setCurrentStep('payment');
   };
 
+  // Handler for successful Stripe payment - creates WooCommerce order
+  const handleStripeSuccess = async (paymentIntentId: string) => {
+    if (!shippingData || !billingData || !shippingMethod) {
+      setError('Missing order information');
+      return;
+    }
+
+    setIsProcessing(true);
+    setError(null);
+
+    try {
+      console.log('✅ Payment successful! Creating WooCommerce order...');
+
+      // Create WooCommerce order with payment details
+      const result = await createOrderAction({
+        billing: billingData,
+        shipping: shippingData,
+        line_items: items.map((item) => ({
+          product_id: item.productId,
+          variation_id: item.variationId,
+          quantity: item.quantity,
+        })),
+        shipping_lines: [
+          {
+            method_id: shippingMethod.method_id,
+            method_title: shippingMethod.title,
+            total: shippingCost.toString(),
+          },
+        ],
+        payment_method: paymentMethod,
+        payment_method_title: getPaymentMethodTitle(paymentMethod),
+        customer_note: orderNotes || undefined,
+        coupon_lines: coupon ? [{ code: coupon.code }] : undefined,
+        set_paid: true, // Mark as paid since Stripe payment succeeded
+        transaction_id: paymentIntentId, // Store Stripe PaymentIntent ID
+      });
+
+      if (!result.success || !result.data) {
+        throw new Error(result.error || 'Failed to create order');
+      }
+
+      console.log('✅ WooCommerce order created:', result.data.id);
+
+      // Clear cart and redirect to success page
+      clearCart();
+      router.push(`/checkout/success?order=${result.data.id}&payment_intent=${paymentIntentId}`);
+    } catch (err) {
+      console.error('Order creation after payment failed:', err);
+      setError(
+        'Payment succeeded but order creation failed. Please contact support with payment ID: ' +
+        paymentIntentId
+      );
+      setIsProcessing(false);
+    }
+  };
+
   const handlePlaceOrder = async () => {
     if (!shippingData || !billingData) {
       setError('Please complete all required information');
@@ -164,7 +219,7 @@ export default function CheckoutPage() {
     setStockErrors([]);
 
     try {
-      // Validate stock before creating order using server action
+      // Validate stock before proceeding
       const stockValidationResult = await validateCartStockAction(
         items.map((item) => ({
           productId: item.productId,
@@ -187,7 +242,67 @@ export default function CheckoutPage() {
         return;
       }
 
-      // Create order with shipping method
+      // For Stripe payments, create PaymentIntent FIRST (before WooCommerce order)
+      if (isStripe) {
+        try {
+          const totalAmount = getTotalPrice() + shippingCost - calculateDiscount();
+
+          console.log('💳 Creating Stripe PaymentIntent...');
+
+          // Create PaymentIntent via Next.js API route
+          const response = await fetch('/api/stripe/create-payment-intent', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              amount: Math.round(totalAmount * 100), // Convert to öre (cents)
+              currency: 'sek',
+              customerEmail: billingData.email,
+              metadata: {
+                customer_name: `${billingData.first_name} ${billingData.last_name}`,
+                items: JSON.stringify(items.map(item => ({
+                  id: item.productId,
+                  name: item.product.name,
+                  quantity: item.quantity,
+                }))),
+              },
+            }),
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Failed to initialize payment');
+          }
+
+          const { clientSecret, paymentIntentId } = await response.json();
+
+          if (!clientSecret) {
+            throw new Error('Failed to get payment client secret');
+          }
+
+          // Store paymentIntentId for later order creation
+          setPendingOrderId(0); // Temporary flag to indicate we're in Stripe flow
+          setStripeClientSecret(clientSecret);
+          setIsProcessing(false);
+
+          console.log('✅ Stripe PaymentIntent created:', paymentIntentId);
+
+          // The Stripe payment form will now be shown
+          // Order will be created in handleStripeSuccess after payment succeeds
+          return;
+
+        } catch (stripeError) {
+          console.error('Stripe initialization failed:', stripeError);
+          setError(
+            stripeError instanceof Error
+              ? stripeError.message
+              : 'Failed to initialize payment. Please try again.'
+          );
+          setIsProcessing(false);
+          return;
+        }
+      }
+
+      // For non-Stripe payments (COD, etc.), create order immediately
       const result = await createOrderAction({
         billing: billingData,
         shipping: shippingData,
@@ -207,68 +322,16 @@ export default function CheckoutPage() {
         payment_method_title: getPaymentMethodTitle(paymentMethod),
         customer_note: orderNotes || undefined,
         coupon_lines: coupon ? [{ code: coupon.code }] : undefined,
-        set_paid: false, // Don't mark as paid yet - Stripe will handle this
+        set_paid: false,
       });
 
       if (!result.success || !result.data) {
         throw new Error(result.error);
       }
 
-      const order = result.data;
-      setPendingOrderId(order.id);
-
-      // For Stripe payments, extract PaymentIntent client_secret from order
-      // WooCommerce Stripe plugin should have created it automatically
-      if (isStripe) {
-        try {
-          // Extract client_secret from order metadata
-          let clientSecret = getStripeClientSecret(order);
-
-          // If not immediately available, wait a moment and fetch order again
-          // WooCommerce Stripe plugin might be creating PaymentIntent asynchronously
-          if (!clientSecret) {
-            console.log('⏳ Waiting for WooCommerce Stripe plugin to create PaymentIntent...');
-            await new Promise(resolve => setTimeout(resolve, 1500)); // Wait 1.5 seconds
-
-            // Fetch the order again to get updated metadata
-            try {
-              const refreshedOrder = await getOrder(order.id);
-              clientSecret = getStripeClientSecret(refreshedOrder);
-            } catch (refreshError) {
-              console.warn('Failed to refresh order:', refreshError);
-              // Continue with null clientSecret, will show error below
-            }
-          }
-
-          if (!clientSecret) {
-            throw new Error(
-              'WooCommerce Stripe plugin did not create PaymentIntent. ' +
-              'Please ensure the WooCommerce Stripe Gateway plugin is installed, activated, and properly configured in WordPress.'
-            );
-          }
-
-          setStripeClientSecret(clientSecret);
-          setIsProcessing(false);
-          console.log('✅ Stripe PaymentIntent retrieved from WooCommerce');
-
-          // The Stripe payment form will now be shown
-          return;
-
-        } catch (stripeError) {
-          console.error('Stripe initialization failed:', stripeError);
-          setError(
-            stripeError instanceof Error
-              ? stripeError.message
-              : 'Stripe payment initialization failed. Please ensure Stripe is configured in WordPress.'
-          );
-          setIsProcessing(false);
-          return;
-        }
-      }
-
-      // For non-Stripe payments (COD, etc.), redirect to success
+      // For non-Stripe payments, redirect to success immediately
       clearCart();
-      router.push(`/checkout/success?order=${order.id}`);
+      router.push(`/checkout/success?order=${result.data.id}`);
     } catch (err) {
       console.error('Order creation failed:', err);
       setError(err instanceof Error ? err.message : 'Failed to create order. Please try again.');
@@ -661,8 +724,8 @@ export default function CheckoutPage() {
                     </Button>
                   </div>
 
-                  {/* Stripe Payment Form (shown after order creation) */}
-                  {stripeClientSecret && pendingOrderId && (
+                  {/* Stripe Payment Form (shown after PaymentIntent creation) */}
+                  {stripeClientSecret && isStripePayment && (
                     <div className="mt-8">
                       <Separator className="my-6" />
                       <h3 className="mb-4 font-heading text-xl font-bold text-primary-950 dark:text-primary-50">
@@ -672,12 +735,7 @@ export default function CheckoutPage() {
                         <StripePaymentForm
                           amount={getTotalPrice() + shippingCost - calculateDiscount()}
                           currency="SEK"
-                          onSuccess={(paymentIntentId) => {
-                            console.log('Payment successful:', paymentIntentId);
-                            // Clear cart and redirect to success page
-                            clearCart();
-                            router.push(`/checkout/success?order=${pendingOrderId}&payment_intent=${paymentIntentId}`);
-                          }}
+                          onSuccess={handleStripeSuccess}
                           onError={(error) => {
                             console.error('Payment failed:', error);
                             setError(`Payment failed: ${error}`);
