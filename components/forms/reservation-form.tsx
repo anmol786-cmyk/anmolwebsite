@@ -69,16 +69,32 @@ export function ReservationForm({ onSubmit, className }: ReservationFormProps) {
 
     try {
       if (onSubmit) {
-        const result = await onSubmit(formData) as any;
-        if (result && typeof result === 'object' && 'success' in result && !result.success) {
-          throw new Error(result.error || 'Submission failed');
+        console.log('Submitting reservation form...', formData);
+
+        // Add timeout to prevent hanging
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Request timeout - please try again')), 30000)
+        );
+
+        const submitPromise = onSubmit(formData);
+
+        const result = await Promise.race([submitPromise, timeoutPromise]) as any;
+
+        console.log('Reservation submission result:', result);
+
+        if (result && typeof result === 'object' && 'success' in result) {
+          if (!result.success) {
+            throw new Error(result.error || result.message || 'Submission failed');
+          }
         }
       } else {
         // Default behavior: log to console (can be replaced with API call)
         console.log('Reservation form submitted:', formData);
       }
+
       setSubmitStatus('success');
-      // Reset form
+
+      // Reset form after successful submission
       setFormData({
         name: '',
         email: '',
@@ -281,15 +297,20 @@ export function ReservationForm({ onSubmit, className }: ReservationFormProps) {
         {/* Status Messages */}
         {submitStatus === 'success' && (
           <div className="rounded-lg bg-green-50 p-4 text-sm text-green-800 dark:bg-green-900/20 dark:text-green-400">
-            Thank you! Your reservation request has been submitted. We&apos;ll contact
-            you shortly to confirm.
+            <strong className="font-semibold">Reservation Received!</strong>
+            <p className="mt-1">
+              Thank you for your reservation request. We&apos;ll contact you within 24 hours to confirm your booking.
+              For immediate assistance, please call us at +46 8 88 66 79.
+            </p>
           </div>
         )}
 
         {submitStatus === 'error' && (
           <div className="rounded-lg bg-red-50 p-4 text-sm text-red-800 dark:bg-red-900/20 dark:text-red-400">
-            Sorry, there was an error submitting your reservation. Please try
-            again or call us directly.
+            <strong className="font-semibold">Submission Error</strong>
+            <p className="mt-1">
+              Sorry, there was an error submitting your reservation. Please try again or call us directly at +46 8 88 66 79.
+            </p>
           </div>
         )}
       </div>

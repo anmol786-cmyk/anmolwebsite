@@ -16,20 +16,7 @@ interface DynamicPageProps {
 export async function generateMetadata({ params }: DynamicPageProps): Promise<Metadata> {
   const resolvedParams = await params;
 
-  // Try category first
-  try {
-    const category = await getProductCategoryBySlug(resolvedParams.slug);
-    if (category) {
-      return {
-        title: category.name,
-        description: category.description || `Browse our ${category.name} products`,
-      };
-    }
-  } catch {
-    // Continue to try product
-  }
-
-  // Try product
+  // Try product first (products are more specific than categories)
   try {
     const product = await getProductBySlug(resolvedParams.slug);
     if (product) {
@@ -49,6 +36,19 @@ export async function generateMetadata({ params }: DynamicPageProps): Promise<Me
       };
     }
   } catch {
+    // Continue to try category
+  }
+
+  // Try category as fallback
+  try {
+    const category = await getProductCategoryBySlug(resolvedParams.slug);
+    if (category) {
+      return {
+        title: category.name,
+        description: category.description || `Browse our ${category.name} products`,
+      };
+    }
+  } catch {
     // Not found
   }
 
@@ -61,7 +61,34 @@ export default async function DynamicPage({ params, searchParams }: DynamicPageP
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
 
-  // Try to fetch as category first
+  // Try to fetch as product first (products are more specific than categories)
+  try {
+    const product = await getProductBySlug(resolvedParams.slug);
+    if (product) {
+      const relatedProducts = await getRelatedProducts(product.id);
+
+      // Build breadcrumbs
+      const breadcrumbs = [
+        { label: 'Shop', href: '/shop' },
+        ...(product.categories && product.categories.length > 0
+          ? [{ label: product.categories[0].name, href: `/${product.categories[0].slug}` }]
+          : []),
+        { label: product.name },
+      ];
+
+      return (
+        <ProductTemplate
+          product={product}
+          breadcrumbs={breadcrumbs}
+          relatedProducts={relatedProducts}
+        />
+      );
+    }
+  } catch {
+    // Continue to try as category
+  }
+
+  // Try to fetch as category as fallback
   try {
     const category = await getProductCategoryBySlug(resolvedParams.slug);
     if (category) {
@@ -95,33 +122,6 @@ export default async function DynamicPage({ params, searchParams }: DynamicPageP
           totalPages={totalPages}
           basePath={`/${resolvedParams.slug}`}
           gridColumns={5}
-        />
-      );
-    }
-  } catch {
-    // Continue to try as product
-  }
-
-  // Try to fetch as product
-  try {
-    const product = await getProductBySlug(resolvedParams.slug);
-    if (product) {
-      const relatedProducts = await getRelatedProducts(product.id);
-
-      // Build breadcrumbs
-      const breadcrumbs = [
-        { label: 'Shop', href: '/shop' },
-        ...(product.categories && product.categories.length > 0
-          ? [{ label: product.categories[0].name, href: `/${product.categories[0].slug}` }]
-          : []),
-        { label: product.name },
-      ];
-
-      return (
-        <ProductTemplate
-          product={product}
-          breadcrumbs={breadcrumbs}
-          relatedProducts={relatedProducts}
         />
       );
     }

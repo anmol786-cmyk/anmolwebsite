@@ -84,7 +84,7 @@ export function FoodConcierge() {
             return "You can explore our full menu here: [Restaurant Menu](/menu/restaurant) and [Sweets & Desserts](/menu). We have something for every palate!";
         }
         if (lowerInput.includes('hello') || lowerInput.includes('hi') || lowerInput.includes('hey')) {
-            return "Hello! Welcome to Royal Sweets & Restaurant. How can I assist you today? Feel free to ask about our dishes, reservations, or catering services!";
+            return "Hello! Welcome to Anmol Sweets & Restaurant. How can I assist you today? Feel free to ask about our dishes, reservations, or catering services!";
         }
 
         return "That sounds delicious! We have an extensive menu with dishes to satisfy every craving. Have a look at our [Chef's Specials](/menu) or tell me more about what you're in the mood for!";

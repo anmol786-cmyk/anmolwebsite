@@ -4,7 +4,10 @@ import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useMotionValue, useAnimationFrame } from 'framer-motion';
-import { formatPrice } from '@/lib/woocommerce';
+import { formatPrice, hasVariations } from '@/lib/woocommerce';
+import { Plus } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useCartStore } from '@/store/cart-store';
 import type { Product } from '@/types/woocommerce';
 
 interface TopProductsCarouselProps {
@@ -83,11 +86,28 @@ export function TopProductsCarousel({ products, title = "Our Signature Dishes", 
 
 function ProductCard({ product }: { product: Product }) {
   const [isHovered, setIsHovered] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
+  const { addItem } = useCartStore();
   const imageUrl = product.images?.[0]?.src || '/placeholder-food.jpg';
   const cleanName = product.name.replace(/<[^>]*>/g, '').trim();
 
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // For variable products, redirect to product page to select variation
+    if (hasVariations(product)) {
+      window.location.href = `/${product.slug}`;
+      return;
+    }
+
+    setIsAdding(true);
+    addItem(product);
+    setTimeout(() => setIsAdding(false), 1000);
+  };
+
   return (
-    <Link href={`/shop/${product.slug}`}>
+    <Link href={`/${product.slug}`}>
       <motion.div
         className="w-[320px] flex-shrink-0 group cursor-pointer"
         onMouseEnter={() => setIsHovered(true)}
@@ -112,6 +132,23 @@ function ProductCard({ product }: { product: Product }) {
               </span>
             </div>
           )}
+
+          {/* Add to Cart Button */}
+          <div className="absolute bottom-3 right-3 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 z-10">
+            <Button
+              size="icon"
+              className="h-11 w-11 rounded-full bg-primary/80 backdrop-blur-xl text-primary-foreground shadow-[0_8px_24px_0_rgba(0,0,0,0.3)] border-2 border-white/50 hover:bg-primary/90 hover:scale-110 hover:shadow-[0_8px_32px_0_rgba(var(--primary),0.4)] transition-all"
+              onClick={handleAddToCart}
+              disabled={product.stock_status === 'outofstock' || isAdding}
+            >
+              {isAdding ? (
+                <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              ) : (
+                <Plus className="h-5 w-5" />
+              )}
+              <span className="sr-only">Add to cart</span>
+            </Button>
+          </div>
         </div>
 
         <div className="space-y-2 text-center">

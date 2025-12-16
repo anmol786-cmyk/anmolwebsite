@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Sparkles, ThumbsUp, ThumbsDown, RefreshCw, Loader2 } from 'lucide-react';
+import { Sparkles, ThumbsUp, ThumbsDown, RefreshCw, Loader2, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { formatPrice } from '@/lib/woocommerce';
+import { formatPrice, hasVariations } from '@/lib/woocommerce';
+import { useCartStore } from '@/store/cart-store';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Product } from '@/types/woocommerce';
@@ -33,6 +34,8 @@ export function ProductRecommendations({
     const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [feedback, setFeedback] = useState<Record<number, 'like' | 'dislike'>>({});
+    const [addingStates, setAddingStates] = useState<Record<number, boolean>>({});
+    const { addItem } = useCartStore();
 
     const fetchRecommendations = async () => {
         setIsLoading(true);
@@ -76,6 +79,23 @@ export function ProductRecommendations({
         } catch (error) {
             console.error('Failed to send feedback:', error);
         }
+    };
+
+    const handleAddToCart = (e: React.MouseEvent, product: Product) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // For variable products, redirect to product page to select variation
+        if (hasVariations(product)) {
+            window.location.href = `/${product.slug}`;
+            return;
+        }
+
+        setAddingStates((prev) => ({ ...prev, [product.id]: true }));
+        addItem(product);
+        setTimeout(() => {
+            setAddingStates((prev) => ({ ...prev, [product.id]: false }));
+        }, 1000);
     };
 
     // Auto-fetch on mount (client-side only)
@@ -143,6 +163,23 @@ export function ProductRecommendations({
                                             Top Pick
                                         </Badge>
                                     )}
+
+                                    {/* Add to Cart Button */}
+                                    <div className="absolute bottom-3 right-3 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 z-10">
+                                        <Button
+                                            size="icon"
+                                            className="h-10 w-10 rounded-full bg-primary/80 backdrop-blur-xl text-primary-foreground shadow-[0_8px_24px_0_rgba(0,0,0,0.3)] border-2 border-white/50 hover:bg-primary/90 hover:scale-110 transition-all"
+                                            onClick={(e) => handleAddToCart(e, product)}
+                                            disabled={product.stock_status === 'outofstock' || addingStates[product.id]}
+                                        >
+                                            {addingStates[product.id] ? (
+                                                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                                            ) : (
+                                                <Plus className="h-5 w-5" />
+                                            )}
+                                            <span className="sr-only">Add to cart</span>
+                                        </Button>
+                                    </div>
                                 </div>
 
                                 {/* Content */}

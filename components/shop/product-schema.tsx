@@ -28,7 +28,7 @@ export function ProductSchema({ product, reviews = [] }: ProductSchemaProps) {
       itemCondition: 'https://schema.org/NewCondition',
       seller: {
         '@type': 'Organization',
-        name: 'Royal Sweets & Restaurant',
+        name: 'Anmol Sweets & Restaurant',
       },
     },
     aggregateRating:

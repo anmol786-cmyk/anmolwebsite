@@ -140,7 +140,7 @@ export async function submitCateringQuote(data: CateringQuoteData) {
                         title: 'Need Immediate Assistance?',
                         content: `
               <p style="margin: 0; color: #333333; font-size: 14px; line-height: 1.6;">
-                If you have any immediate questions, please call us at <a href="tel:+46720203332" style="color: #8B1538; text-decoration: none; font-weight: 600;">+46 72 020 33 32</a>
+                If you have any immediate questions, please call us at <a href="tel:+4688866679" style="color: #8B1538; text-decoration: none; font-weight: 600;">+46 8 88 66 79</a>
               </p>
             `
                     }

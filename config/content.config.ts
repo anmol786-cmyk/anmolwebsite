@@ -47,7 +47,7 @@ export const contentConfig = {
       cta: 'View All Products',
     },
     callToAction: {
-      title: `Ready to Experience ${brandConfig.businessName.replace('Royal Sweets & Restaurant', 'Royal Flavors')}?`,
+      title: `Ready to Experience ${brandConfig.businessName}?`,
       description: `Order now and enjoy authentic ${brandConfig.cuisineDescription} delivered to your home, or reserve a table for a memorable dining experience.`,
       buttons: {
         primary: 'Order Now',

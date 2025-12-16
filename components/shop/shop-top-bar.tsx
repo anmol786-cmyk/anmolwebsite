@@ -96,11 +96,13 @@ export function ShopTopBar({ categories, totalProducts, className }: ShopTopBarP
     // Identify specific groups
     const sweetsCategory = categoryTree.find(c => c.name.toLowerCase().includes('sweets') || c.slug.includes('sweets'));
     const groceryCategory = categoryTree.find(c => c.name.toLowerCase().includes('grocery') || c.slug.includes('grocery'));
+    const bakeryCategory = categoryTree.find(c => c.name.toLowerCase().includes('bakery') || c.slug.includes('bakery'));
 
-    // "Restaurant Food" is everything else (excluding Sweets and Grocery)
+    // "Restaurant Food" is everything else (excluding Sweets, Grocery, and Bakery)
     const restaurantCategories = categoryTree.filter(c =>
         c.id !== sweetsCategory?.id &&
         c.id !== groceryCategory?.id &&
+        c.id !== bakeryCategory?.id &&
         !c.name.toLowerCase().includes('uncategorized')
     );
 
@@ -185,6 +187,28 @@ export function ShopTopBar({ categories, totalProducts, className }: ShopTopBarP
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
                                 {groceryCategory.children.map((child) => (
+                                    <DropdownMenuItem key={child.id} onClick={() => handleCategoryClick(child.slug)}>
+                                        {decodeHtmlEntities(child.name)}
+                                    </DropdownMenuItem>
+                                ))}
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    )}
+
+                    {/* Bakery Dropdown */}
+                    {bakeryCategory && (
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="outline" className="h-10 px-4 gap-2 border-primary/20 hover:bg-primary/5 hover:text-primary">
+                                    {decodeHtmlEntities(bakeryCategory.name)} <ChevronDown className="h-4 w-4 opacity-50" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="start" className="w-56">
+                                <DropdownMenuItem onClick={() => handleCategoryClick(bakeryCategory.slug)} className="font-medium">
+                                    All {decodeHtmlEntities(bakeryCategory.name)}
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                {bakeryCategory.children.map((child) => (
                                     <DropdownMenuItem key={child.id} onClick={() => handleCategoryClick(child.slug)}>
                                         {decodeHtmlEntities(child.name)}
                                     </DropdownMenuItem>
