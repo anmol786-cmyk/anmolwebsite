@@ -56,8 +56,14 @@ export async function submitCateringQuote(data: CateringQuoteData) {
             const recipients = secondaryEmail ? [adminEmail, secondaryEmail] : [adminEmail];
             const fromEmail = process.env.SMTP_USER;
 
-            // Generate Kitchen Instruction PDF for catering
-            const cateringPDF = await generateCateringInstructionPDF(data);
+            // Try to generate Kitchen Instruction PDF (but don't fail if it errors)
+            let cateringPDF: Buffer | null = null;
+            try {
+                cateringPDF = await generateCateringInstructionPDF(data);
+                console.log('✅ PDF generated successfully');
+            } catch (pdfError) {
+                console.error('⚠️  PDF generation failed (will send email without PDF):', pdfError);
+            }
 
             // Format selected menu for email with better styling
             const menuHtml = Object.entries(data.selectedMenu)
@@ -137,19 +143,21 @@ export async function submitCateringQuote(data: CateringQuoteData) {
                 ]
             });
 
-            // Send email to admin with PDF attachment
+            // Send email to admin with PDF attachment (if available)
             await transporter.sendMail({
                 from: `"Anmol Sweets Catering" <${fromEmail}>`,
                 to: recipients,
                 subject: `🔔 NEW CATERING ORDER: ${data.eventType} - ${data.guestCount} guests on ${data.eventDate}`,
                 html: adminEmailHtml,
-                attachments: [
-                    {
-                        filename: `Catering-Order-${data.eventDate.replace(/\//g, '-')}-${data.name.replace(/\s/g, '_')}.pdf`,
-                        content: cateringPDF,
-                        contentType: 'application/pdf'
-                    }
-                ],
+                ...(cateringPDF && {
+                    attachments: [
+                        {
+                            filename: `Catering-Order-${data.eventDate.replace(/\//g, '-')}-${data.name.replace(/\s/g, '_')}.pdf`,
+                            content: cateringPDF,
+                            contentType: 'application/pdf'
+                        }
+                    ]
+                }),
                 priority: 'high',
                 headers: {
                     'X-Priority': '1',

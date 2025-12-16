@@ -43,10 +43,16 @@ export async function submitReservation(data: ReservationFormData) {
             const recipients = secondaryEmail ? [adminEmail, secondaryEmail] : [adminEmail];
             const fromEmail = process.env.SMTP_USER;
 
-            // Generate Kitchen Instruction PDF
-            const kitchenPDF = await generateKitchenInstructionPDF({
-                reservation: data
-            });
+            // Try to generate Kitchen Instruction PDF (but don't fail if it errors)
+            let kitchenPDF: Buffer | null = null;
+            try {
+                kitchenPDF = await generateKitchenInstructionPDF({
+                    reservation: data
+                });
+                console.log('✅ PDF generated successfully');
+            } catch (pdfError) {
+                console.error('⚠️  PDF generation failed (will send email without PDF):', pdfError);
+            }
 
             // Format booking type for display
             const bookingTypeDisplay = {
@@ -117,19 +123,21 @@ export async function submitReservation(data: ReservationFormData) {
                 ]
             });
 
-            // Try to send admin notification with PDF attachment and timeout
+            // Try to send admin notification with PDF attachment (if available) and timeout
             const adminEmailPromise = transporter.sendMail({
                 from: `"Anmol Sweets Reservations" <${fromEmail}>`,
                 to: recipients,
                 subject: `🔔 NEW RESERVATION: ${name} - ${date} @ ${time} (${guests} Guests)`,
                 html: adminEmailHtml,
-                attachments: [
-                    {
-                        filename: `Kitchen-Instruction-${date}-${time.replace(':', '')}-${name.replace(/\s/g, '_')}.pdf`,
-                        content: kitchenPDF,
-                        contentType: 'application/pdf'
-                    }
-                ],
+                ...(kitchenPDF && {
+                    attachments: [
+                        {
+                            filename: `Kitchen-Instruction-${date}-${time.replace(':', '')}-${name.replace(/\s/g, '_')}.pdf`,
+                            content: kitchenPDF,
+                            contentType: 'application/pdf'
+                        }
+                    ]
+                }),
                 priority: 'high',
                 headers: {
                     'X-Priority': '1',
