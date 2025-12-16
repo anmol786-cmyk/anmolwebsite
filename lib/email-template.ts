@@ -56,7 +56,7 @@ export function generateEmailTemplate(options: EmailTemplateOptions): string {
                       </p>
                     </div>
                     ${priority === 'high' ? `
-                    <div style="position: absolute; top: 15px; right: 15px; background-color: #ff4444; color: white; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+                    <div style="position: absolute; top: 15px; right: 15px; background-color: #f3d7a0; color: #8B1538; padding: 8px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
                       🔔 High Priority
                     </div>
                     ` : ''}
@@ -173,21 +173,21 @@ export function generateEmailTemplate(options: EmailTemplateOptions): string {
                             <tr>
                               ${brandConfig.social.facebook ? `
                                 <td style="padding: 0 8px;">
-                                  <a href="${brandConfig.social.facebook}" style="display: inline-block; background-color: #1877f2; color: white; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 600;">
+                                  <a href="${brandConfig.social.facebook}" style="display: inline-block; background-color: #8B1538; color: #f3d7a0; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 600;">
                                     📘 Facebook
                                   </a>
                                 </td>
                               ` : ''}
                               ${brandConfig.social.instagram ? `
                                 <td style="padding: 0 8px;">
-                                  <a href="${brandConfig.social.instagram}" style="display: inline-block; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 600;">
+                                  <a href="${brandConfig.social.instagram}" style="display: inline-block; background-color: #8B1538; color: #f3d7a0; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 600;">
                                     📷 Instagram
                                   </a>
                                 </td>
                               ` : ''}
                               ${brandConfig.social.youtube ? `
                                 <td style="padding: 0 8px;">
-                                  <a href="${brandConfig.social.youtube}" style="display: inline-block; background-color: #ff0000; color: white; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 600;">
+                                  <a href="${brandConfig.social.youtube}" style="display: inline-block; background-color: #8B1538; color: #f3d7a0; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 600;">
                                     ▶️ YouTube
                                   </a>
                                 </td>

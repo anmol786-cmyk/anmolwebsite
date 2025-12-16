@@ -1,7 +1,8 @@
 'use server';
 
 import nodemailer from 'nodemailer';
-import { generateEmailTemplate, createInfoRow, createInfoBox } from '@/lib/email-template';
+import { generateEmailTemplate, createInfoRow, createInfoBox, createCTAButton } from '@/lib/email-template';
+import { generateCateringInstructionPDF } from '@/lib/pdf-generator-catering';
 
 export interface CateringQuoteData {
     name: string;
@@ -55,59 +56,106 @@ export async function submitCateringQuote(data: CateringQuoteData) {
             const recipients = secondaryEmail ? [adminEmail, secondaryEmail] : [adminEmail];
             const fromEmail = process.env.SMTP_USER;
 
+            // Generate Kitchen Instruction PDF for catering
+            const cateringPDF = await generateCateringInstructionPDF(data);
+
             // Format selected menu for email with better styling
             const menuHtml = Object.entries(data.selectedMenu)
                 .filter(([_, items]) => items.length > 0)
                 .map(([category, items]) => `
-          <div style="margin-bottom: 12px;">
-            <strong style="color: #8B1538; text-transform: capitalize;">${category}:</strong>
-            <span style="color: #333333;"> ${items.join(', ')}</span>
+          <div style="margin-bottom: 15px; padding: 15px; background-color: #f8f9fa; border-left: 4px solid #8B1538; border-radius: 6px;">
+            <strong style="color: #8B1538; text-transform: uppercase; font-size: 13px; letter-spacing: 0.5px;">${category}:</strong>
+            <ul style="margin: 8px 0 0 0; padding-left: 20px; color: #2c3e50;">
+              ${items.map(item => `<li style="margin: 5px 0; font-size: 14px;">${item}</li>`).join('')}
+            </ul>
           </div>
         `)
                 .join('');
 
-            // Create admin email with beautiful template
+            // Create admin email with beautiful template and high priority
             const adminEmailHtml = generateEmailTemplate({
-                title: 'New Catering Quote Request',
+                title: 'New Catering Order - Kitchen Instruction',
                 heading: '🎉 New Catering Quote Request',
+                priority: 'high',
                 contentSections: [
                     {
                         title: 'Event Details',
                         content: `
-              <table width="100%" cellpadding="0" cellspacing="0">
-                ${createInfoRow('Event Type', data.eventType)}
-                ${createInfoRow('Event Date', data.eventDate)}
-                ${createInfoRow('Number of Guests', data.guestCount)}
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: white; border-radius: 8px; overflow: hidden;">
+                ${createInfoRow('Event Type', `<strong>${data.eventType}</strong>`)}
+                ${createInfoRow('Event Date', `<strong>${data.eventDate}</strong>`)}
+                ${createInfoRow('Number of Guests', `<strong>${data.guestCount} Guests</strong>`)}
               </table>
             `
                     },
                     {
                         title: 'Customer Information',
                         content: `
-              <table width="100%" cellpadding="0" cellspacing="0">
-                ${createInfoRow('Name', data.name)}
-                ${createInfoRow('Email', `<a href="mailto:${data.email}" style="color: #8B1538; text-decoration: none;">${data.email}</a>`)}
-                ${createInfoRow('Phone', `<a href="tel:${data.phone.replace(/\s/g, '')}" style="color: #8B1538; text-decoration: none;">${data.phone}</a>`)}
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: white; border-radius: 8px; overflow: hidden;">
+                ${createInfoRow('Name', `<strong>${data.name}</strong>`)}
+                ${createInfoRow('Email', `<a href="mailto:${data.email}" style="color: #8B1538; text-decoration: none; font-weight: 700;">${data.email}</a>`)}
+                ${createInfoRow('Phone', `<a href="tel:${data.phone.replace(/\s/g, '')}" style="color: #8B1538; text-decoration: none; font-weight: 700;">${data.phone}</a>`)}
               </table>
             `
                     },
                     {
-                        title: 'Menu Selection',
+                        title: '🍽️  Menu Selection',
                         content: menuHtml || '<p style="color: #666666; font-style: italic;">No menu items selected</p>'
                     },
                     ...(data.message ? [{
-                        title: 'Special Requests',
+                        title: '⚠️  Special Requests / Dietary Requirements',
                         content: createInfoBox(data.message)
-                    }] : [])
+                    }] : []),
+                    {
+                        title: '📎 Attached Document',
+                        content: `
+              <div style="background-color: #fff5e6; border: 2px dashed #8B1538; padding: 20px; border-radius: 10px; text-align: center;">
+                <p style="margin: 0; color: #8B1538; font-size: 16px; font-weight: 700;">
+                  📄 Kitchen Instruction PDF Attached
+                </p>
+                <p style="margin: 10px 0 0 0; color: #666666; font-size: 13px;">
+                  Please print and distribute to kitchen staff
+                </p>
+              </div>
+            `
+                    },
+                    {
+                        title: 'Next Steps',
+                        content: `
+              <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px;">
+                <ol style="margin: 0; padding-left: 20px; color: #2c3e50; font-size: 14px; line-height: 1.8;">
+                  <li style="margin-bottom: 10px;"><strong>Review the attached Kitchen Instruction PDF</strong></li>
+                  <li style="margin-bottom: 10px;"><strong>Contact customer</strong> at ${data.phone} to discuss details</li>
+                  <li style="margin-bottom: 10px;"><strong>Verify menu items</strong> and availability for event date</li>
+                  <li style="margin-bottom: 10px;"><strong>Prepare quote</strong> based on guest count and menu</li>
+                  <li><strong>Send formal quote</strong> to customer via email</li>
+                </ol>
+              </div>
+              ${createCTAButton('Call Customer Now', `tel:${data.phone.replace(/\s/g, '')}`)}
+            `
+                    }
                 ]
             });
 
-            // Send email to admin (and secondary admin)
+            // Send email to admin with PDF attachment
             await transporter.sendMail({
                 from: `"Anmol Sweets Catering" <${fromEmail}>`,
                 to: recipients,
-                subject: `New Catering Quote: ${data.eventType} - ${data.guestCount} guests on ${data.eventDate}`,
+                subject: `🔔 NEW CATERING ORDER: ${data.eventType} - ${data.guestCount} guests on ${data.eventDate}`,
                 html: adminEmailHtml,
+                attachments: [
+                    {
+                        filename: `Catering-Order-${data.eventDate.replace(/\//g, '-')}-${data.name.replace(/\s/g, '_')}.pdf`,
+                        content: cateringPDF,
+                        contentType: 'application/pdf'
+                    }
+                ],
+                priority: 'high',
+                headers: {
+                    'X-Priority': '1',
+                    'X-MSMail-Priority': 'High',
+                    'Importance': 'high'
+                }
             });
 
             // Create customer confirmation email  
@@ -151,8 +199,9 @@ export async function submitCateringQuote(data: CateringQuoteData) {
             await transporter.sendMail({
                 from: `"Anmol Sweets Catering" <${fromEmail}>`,
                 to: data.email,
-                subject: 'Catering Quote Request Received - Anmol Sweets',
+                subject: `✅ Catering Quote Request for ${data.eventDate} - Anmol Sweets`,
                 html: customerEmailHtml,
+                replyTo: fromEmail
             });
 
             console.log('✅ Catering quote emails sent successfully');
