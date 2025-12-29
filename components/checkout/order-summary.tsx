@@ -20,18 +20,29 @@ interface OrderSummaryProps {
 import { CouponInput } from './coupon-input';
 
 export function OrderSummary({
-    shippingCost = 0,
-    taxRate = 0,
+    shippingCost: propShippingCost,
+    taxRate = 25, // Swedish VAT is 25% (included in prices)
     className,
     discountAmount = 0,
     onApplyCoupon,
     appliedCoupon
 }: OrderSummaryProps) {
-    const { items, getTotalPrice } = useCartStore();
+    const { items, getTotalPrice, getShippingCost, selectedShippingMethod } = useCartStore();
 
-    const subtotal = getTotalPrice();
-    const tax = subtotal * (taxRate / 100);
-    const total = Math.max(0, subtotal + shippingCost + tax - discountAmount);
+    // Prices in WooCommerce already include tax
+    const totalWithTax = getTotalPrice();
+
+    // Calculate tax that's included in the price
+    // If total is 100 SEK with 25% tax, then: 100 / 1.25 = 80 (subtotal), tax = 20
+    const taxMultiplier = 1 + (taxRate / 100);
+    const subtotalWithoutTax = totalWithTax / taxMultiplier;
+    const includedTax = totalWithTax - subtotalWithoutTax;
+
+    // Use shipping cost from cart store if available, otherwise use prop
+    const shippingCost = selectedShippingMethod ? getShippingCost() : (propShippingCost || 0);
+
+    // Total = items total (already includes tax) + shipping - discount
+    const total = Math.max(0, totalWithTax + shippingCost - discountAmount);
 
     if (items.length === 0) {
         return (
@@ -100,8 +111,17 @@ export function OrderSummary({
                 {/* Totals */}
                 <div className="space-y-3">
                     <div className="flex justify-between text-sm">
-                        <span className="text-neutral-600 dark:text-neutral-400">Subtotal</span>
-                        <span className="font-medium">{formatPrice(subtotal, 'SEK')}</span>
+                        <span className="text-neutral-600 dark:text-neutral-400">
+                            Subtotal (excl. tax)
+                        </span>
+                        <span className="font-medium">{formatPrice(subtotalWithoutTax, 'SEK')}</span>
+                    </div>
+
+                    <div className="flex justify-between text-sm">
+                        <span className="text-neutral-600 dark:text-neutral-400">
+                            Tax ({taxRate}% included)
+                        </span>
+                        <span className="font-medium">{formatPrice(includedTax, 'SEK')}</span>
                     </div>
 
                     {discountAmount > 0 && (
@@ -115,15 +135,6 @@ export function OrderSummary({
                         <div className="flex justify-between text-sm">
                             <span className="text-neutral-600 dark:text-neutral-400">Shipping</span>
                             <span className="font-medium">{formatPrice(shippingCost, 'SEK')}</span>
-                        </div>
-                    )}
-
-                    {tax > 0 && (
-                        <div className="flex justify-between text-sm">
-                            <span className="text-neutral-600 dark:text-neutral-400">
-                                Tax ({taxRate}%)
-                            </span>
-                            <span className="font-medium">{formatPrice(tax, 'SEK')}</span>
                         </div>
                     )}
 
@@ -147,7 +158,12 @@ export function OrderSummary({
                 {/* Additional Info */}
                 <div className="mt-6 rounded-lg bg-neutral-50 p-4 text-sm dark:bg-neutral-900">
                     <p className="text-neutral-600 dark:text-neutral-400">
-                        <strong>Note:</strong> Prices include VAT where applicable. Final shipping costs will be calculated based on your location.
+                        <strong>Note:</strong> Prices include VAT where applicable.
+                        {selectedShippingMethod && selectedShippingMethod.method_id === 'free_shipping' && (
+                            <span className="ml-1 text-green-600 dark:text-green-400">
+                                You qualify for free shipping!
+                            </span>
+                        )}
                     </p>
                 </div>
             </div>

@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
 import { formatPrice } from '@/lib/woocommerce';
 import { Minus, Plus, X } from 'lucide-react';
+import { CartThresholdMessages } from './cart-threshold-messages';
 
 export function CartDrawer() {
   const { items, isOpen, closeCart, updateQuantity, removeItem, getTotalPrice, getTotalItems } = useCartStore();
@@ -99,6 +100,11 @@ export function CartDrawer() {
               </div>
             </div>
 
+            {/* Threshold Messages */}
+            <div className="pb-4">
+              <CartThresholdMessages />
+            </div>
+
             {/* Cart Footer */}
             <SheetFooter className="flex-col gap-4">
               <div className="flex justify-between border-t pt-4 text-lg font-bold">
@@ -108,7 +114,7 @@ export function CartDrawer() {
 
               <div className="grid grid-cols-2 gap-4">
                 <Button asChild variant="outline" size="lg" onClick={closeCart}>
-                  <Link href="/cart">View Cart</Link>
+                  <Link href="/shop">Continue shopping</Link>
                 </Button>
                 <Button asChild size="lg" onClick={closeCart}>
                   <Link href="/checkout">Checkout</Link>

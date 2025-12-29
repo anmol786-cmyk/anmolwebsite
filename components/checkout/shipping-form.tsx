@@ -23,7 +23,7 @@ const shippingSchema = z.object({
     address_1: z.string().min(1, 'Address is required'),
     address_2: z.string().optional(),
     city: z.string().min(1, 'City is required'),
-    state: z.string().min(1, 'State/Province is required'),
+    state: z.string().optional(),
     postcode: z.string().min(1, 'Postal code is required'),
     country: z.string().min(2, 'Country is required'),
     phone: z.string().min(1, 'Phone number is required'),
@@ -201,9 +201,7 @@ export function ShippingForm({ onSubmit, defaultValues, className }: ShippingFor
 
                     {/* State */}
                     <div className="space-y-2">
-                        <Label htmlFor="state">
-                            State/Province <span className="text-destructive">*</span>
-                        </Label>
+                        <Label htmlFor="state">State/Province (optional)</Label>
                         <Input
                             id="state"
                             {...register('state')}
