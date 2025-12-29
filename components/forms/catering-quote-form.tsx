@@ -95,6 +95,15 @@ const menuCategories: MenuCategory[] = [
     ],
   },
   {
+    name: 'Pulao Menu',
+    slug: 'pulao-menu',
+    items: [
+      'Chicken Pulao',
+      'Lamb Pulao',
+      'Beef Pulao',
+    ],
+  },
+  {
     name: 'Vegan Menu',
     slug: 'vegan-menu',
     items: [
@@ -128,6 +137,9 @@ const menuCategories: MenuCategory[] = [
       'Zeera Rice',
       'Plain Rice',
       'Poori',
+      'Kulfi',
+      'Salad',
+      'Finger Fries',
     ],
   },
 ];
