@@ -4,6 +4,7 @@ import { ReactNode, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Breadcrumbs, BreadcrumbItem } from '@/components/layout/breadcrumbs';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { AddToCartButton } from '@/components/shop/add-to-cart-button';
 import { ProductGrid } from '@/components/shop/product-grid';
 import { ProductImageGallery } from '@/components/shop/product-image-gallery';
@@ -16,8 +17,10 @@ import { ProductRecommendations } from '@/components/ai/product-recommendations'
 import { WhatsAppOrderButton } from '@/components/whatsapp/whatsapp-order-button';
 import { WishlistButton } from '@/components/wishlist/wishlist-button';
 import { StripeExpressCheckout } from '@/components/checkout/stripe-express-checkout';
-import { formatPrice, getDiscountPercentage } from '@/lib/woocommerce';
+import { formatPrice, getDiscountPercentage, hasVariations as checkHasVariations } from '@/lib/woocommerce';
 import { decodeHtmlEntities } from '@/lib/utils';
+import { useCartStore } from '@/store/cart-store';
+import { Plus } from 'lucide-react';
 import type { Product, ProductReview, ProductVariation } from '@/types/woocommerce';
 
 interface ProductTemplateProps {
@@ -41,6 +44,26 @@ export function ProductTemplate({
   const [isLoadingVariations, setIsLoadingVariations] = useState(false);
   const [selectedVariation, setSelectedVariation] = useState<ProductVariation | null>(null);
   const [quantity, setQuantity] = useState(1);
+  const [addingRelatedStates, setAddingRelatedStates] = useState<Record<number, boolean>>({});
+  const { addItem } = useCartStore();
+
+  // Handle add to cart for related products
+  const handleAddRelatedToCart = (e: React.MouseEvent, relatedProduct: Product) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // For variable products, redirect to product page to select variation
+    if (checkHasVariations(relatedProduct)) {
+      window.location.href = `/shop/${relatedProduct.slug}`;
+      return;
+    }
+
+    setAddingRelatedStates((prev) => ({ ...prev, [relatedProduct.id]: true }));
+    addItem(relatedProduct);
+    setTimeout(() => {
+      setAddingRelatedStates((prev) => ({ ...prev, [relatedProduct.id]: false }));
+    }, 1000);
+  };
 
   // Fetch variations if product has them
   useEffect(() => {
@@ -74,23 +97,20 @@ export function ProductTemplate({
             <Breadcrumbs items={breadcrumbs} className="mb-6" />
           )}
 
-          {/* Product Content - 3 Column Layout (Always in One Row) */}
+          {/* Product Content - 3 Column Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
-            {/* Column 1: Related Products (LEFT) - Hidden on mobile, visible on large screens */}
+            {/* Column 1: Related Products (LEFT on desktop, LAST on mobile) */}
             {relatedProducts && relatedProducts.length > 0 && (
-              <div className="hidden lg:block lg:col-span-3">
-                <div className="sticky top-24 space-y-4">
+              <div className="order-3 lg:order-1 lg:col-span-3">
+                <div className="lg:sticky lg:top-24 space-y-4">
                   <h3 className="text-lg font-semibold text-primary border-b border-primary/10 pb-3">
                     You May Also Like
                   </h3>
-                  <div className="space-y-3">
+                  {/* Desktop: Vertical Stack */}
+                  <div className="hidden lg:block space-y-3">
                     {relatedProducts.slice(0, 4).map((relatedProduct) => (
-                      <a
-                        key={relatedProduct.id}
-                        href={`/shop/${relatedProduct.slug}`}
-                        className="group block bg-background border border-border hover:border-primary/30 rounded-lg p-3 transition-all duration-300 hover:shadow-md"
-                      >
-                        <div className="flex gap-3">
+                      <div key={relatedProduct.id} className="group relative bg-background border border-border hover:border-primary/30 rounded-lg p-3 transition-all duration-300 hover:shadow-md">
+                        <a href={`/shop/${relatedProduct.slug}`} className="flex gap-3">
                           {/* Product Image */}
                           <div className="relative w-20 h-20 flex-shrink-0 overflow-hidden rounded-md bg-muted">
                             {relatedProduct.images && relatedProduct.images[0] ? (
@@ -106,6 +126,21 @@ export function ProductTemplate({
                                 No Image
                               </div>
                             )}
+                            {/* Add to Cart Button */}
+                            <div className="absolute bottom-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                              <Button
+                                size="icon"
+                                className="h-7 w-7 rounded-full bg-primary/90 backdrop-blur-sm text-primary-foreground shadow-lg border border-white/50 hover:bg-primary hover:scale-110 transition-all"
+                                onClick={(e) => handleAddRelatedToCart(e, relatedProduct)}
+                                disabled={relatedProduct.stock_status === 'outofstock' || addingRelatedStates[relatedProduct.id]}
+                              >
+                                {addingRelatedStates[relatedProduct.id] ? (
+                                  <span className="h-3 w-3 animate-spin rounded-full border border-white border-t-transparent" />
+                                ) : (
+                                  <Plus className="h-4 w-4" />
+                                )}
+                              </Button>
+                            </div>
                           </div>
 
                           {/* Product Info */}
@@ -130,16 +165,81 @@ export function ProductTemplate({
                               )}
                             </div>
                           </div>
-                        </div>
-                      </a>
+                        </a>
+                      </div>
                     ))}
+                  </div>
+                  {/* Mobile: Horizontal Carousel */}
+                  <div className="lg:hidden overflow-x-auto scrollbar-hide -mx-4 px-4">
+                    <div className="flex gap-3 pb-4">
+                      {relatedProducts.slice(0, 8).map((relatedProduct) => (
+                        <div key={relatedProduct.id} className="group relative flex-shrink-0 w-[140px] bg-background border border-border hover:border-primary/30 rounded-lg overflow-hidden transition-all duration-300 hover:shadow-md">
+                          <a href={`/shop/${relatedProduct.slug}`}>
+                            {/* Product Image */}
+                            <div className="relative aspect-square overflow-hidden bg-muted">
+                              {relatedProduct.images && relatedProduct.images[0] ? (
+                                <Image
+                                  src={relatedProduct.images[0].src}
+                                  alt={relatedProduct.name}
+                                  fill
+                                  className="object-cover group-hover:scale-110 transition-transform duration-300"
+                                  sizes="140px"
+                                />
+                              ) : (
+                                <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">
+                                  No Image
+                                </div>
+                              )}
+                              {/* Add to Cart Button */}
+                              <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                                <Button
+                                  size="icon"
+                                  className="h-8 w-8 rounded-full bg-primary/90 backdrop-blur-sm text-primary-foreground shadow-lg border border-white/50 hover:bg-primary hover:scale-110 transition-all"
+                                  onClick={(e) => handleAddRelatedToCart(e, relatedProduct)}
+                                  disabled={relatedProduct.stock_status === 'outofstock' || addingRelatedStates[relatedProduct.id]}
+                                >
+                                  {addingRelatedStates[relatedProduct.id] ? (
+                                    <span className="h-3 w-3 animate-spin rounded-full border border-white border-t-transparent" />
+                                  ) : (
+                                    <Plus className="h-4 w-4" />
+                                  )}
+                                </Button>
+                              </div>
+                            </div>
+
+                            {/* Product Info */}
+                            <div className="p-2">
+                              <h4 className="text-xs font-medium text-foreground line-clamp-2 group-hover:text-primary transition-colors mb-1">
+                                {decodeHtmlEntities(relatedProduct.name)}
+                              </h4>
+                              <div>
+                                {relatedProduct.on_sale && relatedProduct.sale_price && relatedProduct.sale_price !== '' ? (
+                                  <div className="flex flex-col gap-0.5">
+                                    <span className="text-xs font-bold text-primary">
+                                      {formatPrice(relatedProduct.sale_price, 'SEK')}
+                                    </span>
+                                    <span className="text-[10px] text-muted-foreground line-through">
+                                      {formatPrice(relatedProduct.regular_price, 'SEK')}
+                                    </span>
+                                  </div>
+                                ) : (
+                                  <span className="text-xs font-bold text-primary">
+                                    {formatPrice(relatedProduct.price, 'SEK')}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Column 2: Product Images (CENTER) */}
-            <div className={relatedProducts && relatedProducts.length > 0 ? "lg:col-span-5" : "lg:col-span-6"}>
+            {/* Column 2: Product Images (CENTER on desktop, FIRST on mobile) */}
+            <div className={`order-1 lg:order-2 ${relatedProducts && relatedProducts.length > 0 ? "lg:col-span-5" : "lg:col-span-6"}`}>
               <ProductImageGallery
                 images={product.images || []}
                 productName={product.name}
