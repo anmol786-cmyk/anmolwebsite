@@ -132,13 +132,13 @@ export function ProductRecommendations({
             </div>
 
             {isLoading ? (
-                <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+                <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
                     {Array.from({ length: maxRecommendations }).map((_, i) => (
                         <Card key={i} className="h-64 animate-pulse bg-neutral-100 dark:bg-neutral-800" />
                     ))}
                 </div>
             ) : (
-                <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+                <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
                     {recommendations.map(({ product, reason, confidence }) => (
                         <Card key={product.id} className="group overflow-hidden transition-all hover:shadow-lg">
                             <Link href={`/${product.slug}`}>

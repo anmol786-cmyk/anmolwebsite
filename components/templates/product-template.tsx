@@ -246,8 +246,8 @@ export function ProductTemplate({
               />
             </div>
 
-            {/* Column 3: Product Info (RIGHT) */}
-            <div className={relatedProducts && relatedProducts.length > 0 ? "lg:col-span-4 space-y-5" : "lg:col-span-6 space-y-5"}>
+            {/* Column 3: Product Info (RIGHT on desktop, SECOND on mobile) */}
+            <div className={relatedProducts && relatedProducts.length > 0 ? "order-2 lg:order-3 lg:col-span-4 space-y-5" : "lg:col-span-6 space-y-5"}>
               {/* Categories & Badges */}
               <div className="flex flex-wrap items-center gap-2">
                 {product.categories && product.categories.length > 0 && (
