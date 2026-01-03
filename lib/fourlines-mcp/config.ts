@@ -68,14 +68,14 @@ export const FOURLINES_MCP_CONFIG = {
 
 /**
  * Get authentication headers for Fourlines MCP
+ * Returns null if API key is not configured (graceful fallback)
  */
-export function getFourlinesAuthHeaders(): HeadersInit {
+export function getFourlinesAuthHeaders(): HeadersInit | null {
   const apiKey = FOURLINES_MCP_CONFIG.apiKey;
 
   if (!apiKey) {
-    throw new Error(
-      'Fourlines MCP API key is not configured. Please set FOURLINES_MCP_KEY environment variable.'
-    );
+    // Return null instead of throwing - allows graceful fallback
+    return null;
   }
 
   return {

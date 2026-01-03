@@ -72,6 +72,15 @@ export async function fetchFourlinesMCP<T>(
     // Get authentication headers
     const authHeaders = getFourlinesAuthHeaders();
 
+    // If no API key configured, throw error to trigger fallback
+    if (!authHeaders) {
+      throw new FourlinesMCPError(
+        500,
+        'Fourlines MCP API key is not configured. Please set FOURLINES_MCP_KEY environment variable.',
+        'unknown_error'
+      );
+    }
+
     // Merge headers
     const headers: HeadersInit = {
       ...authHeaders,
