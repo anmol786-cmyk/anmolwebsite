@@ -575,9 +575,9 @@ export async function getChildCategories(parentId: number): Promise<ProductCateg
  */
 export async function getProductVariations(productId: number): Promise<ProductVariation[]> {
   try {
-    const variations = await fetchWooCommerceAPI<ProductVariation[]>(
-      WC_API_CONFIG.endpoints.productVariations(productId)
-    );
+    // Fetch all variations by setting per_page to 100 (WooCommerce max)
+    const endpoint = `${WC_API_CONFIG.endpoints.productVariations(productId)}?per_page=100`;
+    const variations = await fetchWooCommerceAPI<ProductVariation[]>(endpoint);
     return variations;
   } catch (error) {
     console.error(`Error fetching variations for product ${productId}:`, error);

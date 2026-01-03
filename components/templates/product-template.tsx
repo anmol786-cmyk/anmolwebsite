@@ -349,7 +349,7 @@ export function ProductTemplate({
                     </p>
                   )}
                   <p className="flex items-center gap-2">
-                    <span>🚚</span> Free shipping on orders over 500 SEK
+                    <span>🚚</span> Free shipping on orders over 1500 SEK
                   </p>
                 </div>
               </div>
