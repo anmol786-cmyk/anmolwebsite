@@ -1,4 +1,4 @@
-# robots.txt for Royal Sweets & Restaurant
+# robots.txt for Anmol Sweets & Restaurant
 
 User-agent: *
 Allow: /
@@ -16,7 +16,7 @@ Allow: /contact
 Allow: /reservations
 
 # Sitemap
-Sitemap: https://royalbr.se/sitemap.xml
+Sitemap: https://anmolsweets.se/sitemap.xml
 
 # Crawl-delay (optional, helps prevent server overload)
 Crawl-delay: 1

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { UserNav } from '@/components/layout/user-nav';
 import { CartIcon } from '@/components/cart/cart-icon';
+import { WishlistIcon } from '@/components/wishlist/wishlist-icon';
 import { SearchModal } from '@/components/search/search-modal';
 import { MobileMenu } from '@/components/layout/mobile-menu';
 import { MenuNavDropdown } from '@/components/layout/menu-nav-dropdown';
@@ -98,9 +99,10 @@ export function Header({ className, categories = [] }: HeaderProps) {
                 <NavLink href="/bookings">Reservations</NavLink>
               </div>
 
-              {/* Extreme Right: Shop/Cart */}
+              {/* Extreme Right: Shop/Cart/Wishlist */}
               <div className="col-span-1 flex justify-end items-center gap-3">
                 <UserNav />
+                <WishlistIcon />
                 <CartIcon />
               </div>
             </div>
@@ -143,6 +145,7 @@ export function Header({ className, categories = [] }: HeaderProps) {
 
               {/* Right Actions */}
               <div className="flex items-center gap-3">
+                <WishlistIcon />
                 <CartIcon />
               </div>
             </div>

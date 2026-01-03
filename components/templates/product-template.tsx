@@ -13,6 +13,9 @@ import { ProductSchema } from '@/components/shop/product-schema';
 import { StockIndicator } from '@/components/shop/stock-indicator';
 import { QuantitySelector } from '@/components/shop/quantity-selector';
 import { ProductRecommendations } from '@/components/ai/product-recommendations';
+import { WhatsAppOrderButton } from '@/components/whatsapp/whatsapp-order-button';
+import { WishlistButton } from '@/components/wishlist/wishlist-button';
+import { StripeExpressCheckout } from '@/components/checkout/stripe-express-checkout';
 import { formatPrice, getDiscountPercentage } from '@/lib/woocommerce';
 import { decodeHtmlEntities } from '@/lib/utils';
 import type { Product, ProductReview, ProductVariation } from '@/types/woocommerce';
@@ -296,13 +299,46 @@ export function ProductTemplate({
                   />
                 </div>
 
-                {/* Add to Cart Button */}
-                <AddToCartButton
+                {/* Add to Cart and Wishlist Buttons */}
+                <div className="flex gap-3">
+                  <AddToCartButton
+                    product={product}
+                    variation={selectedVariation}
+                    quantity={quantity}
+                    size="lg"
+                    className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full py-6 text-lg font-medium"
+                  />
+                  <WishlistButton
+                    product={product}
+                    variation={selectedVariation || undefined}
+                    size="lg"
+                    variant="outline"
+                    className="rounded-full py-6 px-6 border-2"
+                  />
+                </div>
+
+                {/* WhatsApp Order Button */}
+                <WhatsAppOrderButton
+                  context="product"
                   product={product}
-                  variation={selectedVariation}
+                  variation={selectedVariation || undefined}
                   quantity={quantity}
+                  variant="outline"
                   size="lg"
-                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-full py-6 text-lg font-medium"
+                  className="w-full border-2 border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-950/20 rounded-full py-6 text-lg font-medium"
+                  label="Order via WhatsApp"
+                />
+
+                {/* Express Checkout - Apple Pay / Google Pay */}
+                <StripeExpressCheckout
+                  amount={parseFloat(selectedVariation?.price || product.price || '0') * quantity}
+                  currency="SEK"
+                  onSuccess={(result) => {
+                    console.log('Express checkout success:', result);
+                  }}
+                  onError={(error) => {
+                    console.error('Express checkout error:', error);
+                  }}
                 />
 
                 {/* Additional Info */}

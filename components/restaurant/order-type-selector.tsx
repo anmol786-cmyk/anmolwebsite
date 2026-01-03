@@ -157,7 +157,7 @@ export function OrderTypeSelector({ className, showDetails = true }: OrderTypeSe
                             <Bike className="h-4 w-4" /> Delivery Information
                         </p>
                         <p className="mt-2 text-primary-700 dark:text-primary-300 leading-relaxed">
-                            We deliver within {config.delivery.radius}km radius.
+                            We deliver all over Sweden.
                             Minimum order: {formatPrice(config.delivery.minimumOrder, 'SEK')}.
                             Free delivery over {formatPrice(config.delivery.freeDeliveryThreshold, 'SEK')}.
                         </p>

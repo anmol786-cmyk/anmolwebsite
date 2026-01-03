@@ -5,7 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useMotionValue, useAnimationFrame } from 'framer-motion';
 import { formatPrice, hasVariations } from '@/lib/woocommerce';
-import { Plus } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { ArrowRight, Check, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/store/cart-store';
 import type { Product } from '@/types/woocommerce';
@@ -16,7 +17,7 @@ interface TopProductsCarouselProps {
   subtitle?: string;
 }
 
-export function TopProductsCarousel({ products, title = "Our Signature Dishes", subtitle = "Explore our most loved authentic Pakistani & Indian specialties, prepared fresh daily." }: TopProductsCarouselProps) {
+export function TopProductsCarousel({ products, title = "Anmol Sweets & Restaurant", subtitle = "Explore our most loved authentic Pakistani & Indian specialties, prepared fresh daily." }: TopProductsCarouselProps) {
   const [isPaused, setIsPaused] = useState(false);
   const x = useMotionValue(0);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -25,7 +26,7 @@ export function TopProductsCarousel({ products, title = "Our Signature Dishes", 
   // Calculate total width of all items
   useEffect(() => {
     if (containerRef.current) {
-      const itemWidth = 320; // Wider cards for better visibility
+      const itemWidth = 280; // Slightly smaller cards
       const gap = 32; // More breathing room
       const totalWidth = products.length * (itemWidth + gap);
       setContainerWidth(totalWidth);
@@ -67,8 +68,7 @@ export function TopProductsCarousel({ products, title = "Our Signature Dishes", 
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
-        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+
 
         <motion.div
           ref={containerRef}
@@ -84,96 +84,116 @@ export function TopProductsCarousel({ products, title = "Our Signature Dishes", 
   );
 }
 
+
+
 function ProductCard({ product }: { product: Product }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
+  const [isAdded, setIsAdded] = useState(false); // Success state
   const { addItem } = useCartStore();
   const imageUrl = product.images?.[0]?.src || '/placeholder-food.jpg';
   const cleanName = product.name.replace(/<[^>]*>/g, '').trim();
+  const isVariable = hasVariations(product);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
     // For variable products, redirect to product page to select variation
-    if (hasVariations(product)) {
+    if (isVariable) {
       window.location.href = `/${product.slug}`;
       return;
     }
 
     setIsAdding(true);
     addItem(product);
-    setTimeout(() => setIsAdding(false), 1000);
+
+    // Show success checkmark briefly
+    setTimeout(() => {
+      setIsAdding(false);
+      setIsAdded(true);
+      setTimeout(() => setIsAdded(false), 2000);
+    }, 600);
   };
 
   return (
-    <Link href={`/${product.slug}`}>
-      <motion.div
-        className="w-[320px] flex-shrink-0 group cursor-pointer"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        whileHover={{ y: -5 }}
-        transition={{ duration: 0.3 }}
-      >
-        <div className="relative w-full h-[400px] rounded-2xl overflow-hidden bg-muted mb-4 shadow-sm group-hover:shadow-md transition-all duration-300">
+    <motion.div
+      className="w-[280px] flex-shrink-0 group relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      whileHover={{ y: -5 }}
+      transition={{ duration: 0.3 }}
+    >
+      <div className="relative w-full h-[340px] rounded-2xl overflow-hidden bg-muted mb-4 shadow-sm group-hover:shadow-md transition-all duration-300">
+        <Link href={`/${product.slug}`} className="block w-full h-full">
           <Image
             src={imageUrl}
             alt={cleanName}
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-105"
-            sizes="320px"
+            sizes="280px"
           />
+        </Link>
 
-          {/* Minimal Sale Badge */}
-          {product.on_sale && (
-            <div className="absolute top-4 left-4 z-10">
-              <span className="bg-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
-                Sale
-              </span>
-            </div>
-          )}
-
-          {/* Add to Cart Button */}
-          <div className="absolute bottom-3 right-3 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 z-10">
-            <Button
-              size="icon"
-              className="h-11 w-11 rounded-full bg-primary/80 backdrop-blur-xl text-primary-foreground shadow-[0_8px_24px_0_rgba(0,0,0,0.3)] border-2 border-white/50 hover:bg-primary/90 hover:scale-110 hover:shadow-[0_8px_32px_0_rgba(var(--primary),0.4)] transition-all"
-              onClick={handleAddToCart}
-              disabled={product.stock_status === 'outofstock' || isAdding}
-            >
-              {isAdding ? (
-                <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
-              ) : (
-                <Plus className="h-5 w-5" />
-              )}
-              <span className="sr-only">Add to cart</span>
-            </Button>
+        {/* Minimal Sale Badge */}
+        {product.on_sale && (
+          <div className="absolute top-4 left-4 z-10 pointer-events-none">
+            <span className="bg-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
+              Sale
+            </span>
           </div>
-        </div>
+        )}
 
-        <div className="space-y-2 text-center">
-          <h3 className="font-heading text-xl font-bold text-foreground group-hover:text-primary transition-colors line-clamp-1">
+        {/* Action Button: Add to Cart or View Options */}
+        <div className="absolute bottom-3 right-3 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 z-20">
+          <Button
+            type="button"
+            size="icon"
+            className={cn(
+              "h-11 w-11 rounded-full backdrop-blur-xl shadow-[0_8px_24px_0_rgba(0,0,0,0.3)] border-2 border-white/50 transition-all cursor-pointer",
+              isAdded ? "bg-green-500 text-white hover:bg-green-600 border-green-400" : "bg-primary/80 text-primary-foreground hover:bg-primary/90 hover:scale-110 hover:shadow-[0_8px_32px_0_rgba(var(--primary),0.4)]"
+            )}
+            onClick={handleAddToCart}
+            disabled={product.stock_status === 'outofstock' || isAdding}
+          >
+            {isAdding ? (
+              <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+            ) : isAdded ? (
+              <Check className="h-5 w-5" />
+            ) : isVariable ? (
+              <ArrowRight className="h-5 w-5" />
+            ) : (
+              <Plus className="h-5 w-5" />
+            )}
+            <span className="sr-only">{isVariable ? 'Select Options' : 'Add to cart'}</span>
+          </Button>
+        </div>
+      </div>
+
+      <div className="space-y-2 text-center">
+        <Link href={`/${product.slug}`} className="block">
+          <h3 className="font-heading text-lg font-bold text-foreground group-hover:text-primary transition-colors line-clamp-1">
             {cleanName}
           </h3>
+        </Link>
 
-          <div className="flex items-center justify-center gap-2">
-            {product.on_sale && product.sale_price ? (
-              <>
-                <span className="text-lg font-bold text-primary">
-                  {formatPrice(product.sale_price, 'SEK')}
-                </span>
-                <span className="text-sm text-muted-foreground line-through decoration-red-500/30">
-                  {formatPrice(product.regular_price, 'SEK')}
-                </span>
-              </>
-            ) : (
-              <span className="text-lg font-bold text-primary">
-                {formatPrice(product.price, 'SEK')}
+        <div className="flex items-center justify-center gap-2">
+          {product.on_sale && product.sale_price ? (
+            <>
+              <span className="text-base font-bold text-primary">
+                {formatPrice(product.sale_price, 'SEK')}
               </span>
-            )}
-          </div>
+              <span className="text-sm text-muted-foreground line-through decoration-red-500/30">
+                {formatPrice(product.regular_price, 'SEK')}
+              </span>
+            </>
+          ) : (
+            <span className="text-base font-bold text-primary">
+              {formatPrice(product.price, 'SEK')}
+            </span>
+          )}
         </div>
-      </motion.div>
-    </Link>
+      </div>
+    </motion.div>
   );
 }

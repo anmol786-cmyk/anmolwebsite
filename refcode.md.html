@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Restaurant Homepage</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;family=Noto+Sans:wght@300..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#cf1726",
+                        "background-light": "#f2f0f0",
+                        "background-dark": "#1a1a1a",
+                        "surface": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "1rem", "2xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .hero-overlay {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.5) 100%);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#181112] font-display antialiased selection:bg-primary/20">
+<div class="relative flex flex-col min-h-screen overflow-x-hidden">
+<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-gradient-to-b from-black/50 to-transparent hover:bg-black/80">
+<div class="flex items-center justify-between whitespace-nowrap px-6 md:px-12 py-6">
+<div class="flex items-center gap-4 text-white">
+<div class="size-10 flex items-center justify-center bg-white/10 backdrop-blur-md rounded-full border border-white/20">
+<span class="material-symbols-outlined text-xl">restaurant</span>
+</div>
+<h2 class="text-white text-xl font-bold tracking-tight uppercase">Svenska Smaker</h2>
+</div>
+<div class="hidden lg:flex items-center gap-10 bg-black/20 backdrop-blur-md px-8 py-3 rounded-full border border-white/10">
+<a class="text-white hover:text-primary text-sm font-semibold transition-colors" href="#">Home</a>
+<a class="text-white/80 hover:text-white text-sm font-semibold transition-colors" href="#experiences">Buffet &amp; Catering</a>
+<a class="text-white/80 hover:text-white text-sm font-semibold transition-colors" href="#menu">A La Carte</a>
+<a class="text-white/80 hover:text-white text-sm font-semibold transition-colors" href="#events">Private</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="hidden md:flex min-w-[84px] cursor-pointer items-center justify-center rounded-full h-11 px-6 bg-white hover:bg-neutral-200 transition-colors text-black text-sm font-bold tracking-wide shadow-lg">
+<span class="truncate">Book Table</span>
+</button>
+<button class="lg:hidden text-white bg-white/10 p-2 rounded-full backdrop-blur-md">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+</div>
+</div>
+</header>
+<section class="relative h-[85vh] w-full flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat scale-105" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuApyQxJF9ffQA0gobqmoLz_sfTR5RiLm3EeDwr9lxYWA6rpsdKJta6ZeA9bhvmxa9izodf5M236EnhvFomkg5LkzLIqEw5UqXmXbclbVkQgSamNSHhqm7mkwbSuiOGpczdZzaWpfd70oojYv9sxeC4fkQYsrb38XUteQcwIpjusdA_J8RvCVspGiEPhDwfK2N8CF33zCKiiamGgql7XcoaNgBBg08Oe4kln48ea17Qmwc7FeFXMbY8CPwjNA20wT4pwyVCAXTWhKqI");'></div>
+<div class="absolute inset-0 z-10 hero-overlay"></div>
+<div class="relative z-20 flex flex-col items-center text-center px-4 max-w-5xl mx-auto space-y-6">
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/30 bg-white/10 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider mb-2">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+            Open for Dinner
+        </div>
+<h1 class="text-white text-6xl md:text-8xl font-bold leading-[0.9] tracking-tight">
+            New Nordic <br/> <span class="italic font-light font-body text-white/90">Elegance</span>
+</h1>
+<p class="text-white/80 text-lg md:text-xl font-light max-w-xl mx-auto leading-relaxed pt-4">
+            A modern culinary destination in Södermalm emphasizing seasonal purity and sustainable sourcing.
+        </p>
+</div>
+</section>
+<section class="py-12 border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-background-dark relative z-30 -mt-10 mx-4 md:mx-10 rounded-2xl shadow-xl">
+<div class="px-6 md:px-10">
+<h3 class="text-xs font-bold uppercase tracking-widest text-neutral-400 mb-6">Browse by Category</h3>
+<div class="flex gap-4 overflow-x-auto hide-scrollbar snap-x cursor-grab active:cursor-grabbing pb-2">
+<a class="snap-start flex-none group" href="#">
+<div class="flex items-center gap-3 pl-2 pr-6 py-2 rounded-full border border-neutral-200 hover:border-primary hover:bg-primary/5 transition-all bg-neutral-50 dark:bg-neutral-800 dark:border-neutral-700">
+<div class="w-10 h-10 rounded-full bg-white dark:bg-neutral-900 shadow-sm flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">lunch_dining</span>
+</div>
+<span class="font-bold text-sm text-neutral-800 dark:text-neutral-200 group-hover:text-primary">Lunch Buffet</span>
+</div>
+</a>
+<a class="snap-start flex-none group" href="#">
+<div class="flex items-center gap-3 pl-2 pr-6 py-2 rounded-full border border-neutral-200 hover:border-primary hover:bg-primary/5 transition-all bg-neutral-50 dark:bg-neutral-800 dark:border-neutral-700">
+<div class="w-10 h-10 rounded-full bg-white dark:bg-neutral-900 shadow-sm flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">restaurant_menu</span>
+</div>
+<span class="font-bold text-sm text-neutral-800 dark:text-neutral-200 group-hover:text-primary">A La Carte</span>
+</div>
+</a>
+<a class="snap-start flex-none group" href="#">
+<div class="flex items-center gap-3 pl-2 pr-6 py-2 rounded-full border border-neutral-200 hover:border-primary hover:bg-primary/5 transition-all bg-neutral-50 dark:bg-neutral-800 dark:border-neutral-700">
+<div class="w-10 h-10 rounded-full bg-white dark:bg-neutral-900 shadow-sm flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">brunch_dining</span>
+</div>
+<span class="font-bold text-sm text-neutral-800 dark:text-neutral-200 group-hover:text-primary">Weekend Brunch</span>
+</div>
+</a>
+<a class="snap-start flex-none group" href="#">
+<div class="flex items-center gap-3 pl-2 pr-6 py-2 rounded-full border border-neutral-200 hover:border-primary hover:bg-primary/5 transition-all bg-neutral-50 dark:bg-neutral-800 dark:border-neutral-700">
+<div class="w-10 h-10 rounded-full bg-white dark:bg-neutral-900 shadow-sm flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">local_bar</span>
+</div>
+<span class="font-bold text-sm text-neutral-800 dark:text-neutral-200 group-hover:text-primary">Wine &amp; Cocktails</span>
+</div>
+</a>
+<a class="snap-start flex-none group" href="#">
+<div class="flex items-center gap-3 pl-2 pr-6 py-2 rounded-full border border-neutral-200 hover:border-primary hover:bg-primary/5 transition-all bg-neutral-50 dark:bg-neutral-800 dark:border-neutral-700">
+<div class="w-10 h-10 rounded-full bg-white dark:bg-neutral-900 shadow-sm flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">soup_kitchen</span>
+</div>
+<span class="font-bold text-sm text-neutral-800 dark:text-neutral-200 group-hover:text-primary">Catering</span>
+</div>
+</a>
+</div>
+</div>
+</section>
+<section class="py-20 px-4 md:px-10 bg-background-light dark:bg-background-dark" id="experiences">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-12">
+<div>
+<h2 class="text-4xl md:text-5xl font-bold text-[#181112] dark:text-white leading-tight mb-2">Dining Experiences</h2>
+<p class="text-neutral-500 max-w-md">Curated menus for every occasion, from quick lunches to lavish weekend feasts.</p>
+</div>
+<a class="hidden md:flex items-center gap-2 text-primary font-bold hover:text-red-700 transition-colors mt-4 md:mt-0" href="#">
+                View All Menus <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[minmax(300px,auto)]">
+<div class="md:col-span-8 relative group rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500">
+<img alt="Chef preparing lunch buffet" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACoxPSoeMG-QWBxg7ASIAq9fJRYm9gwdBlUnjlXNGdDyG8FcKAsFkgeUolFytIMQFvhm-jsqGXJiBhhpA4ApwQTSbY0ewOv83vh75gI9kpEWrJQqcknxQ-zcdd_-U6yqWh3u7h9nnKueSIi8riobkVDuKuSd_3o5wvfI0vSc1mPfvOuvQXX-yG8-rpL7igXl9UmLrDnMZF6us-f45T8tefYUfuNKRijDGo97tlm4XxHxU4OwRehCh54Zpb8LXt2gRxvAAjRfuo-DA"/>
+<div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+<div class="relative z-10 p-8 md:p-12 flex flex-col justify-end h-full text-white">
+<span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-lg text-xs font-bold uppercase tracking-wider mb-4 w-fit border border-white/20">Weekdays 11:00 - 14:00</span>
+<h3 class="text-3xl md:text-4xl font-bold mb-2">The Lunch Buffet</h3>
+<p class="text-white/80 max-w-md mb-6 line-clamp-2 md:line-clamp-none">A daily changing selection of Swedish home cooking favorites, fresh salads, and house-baked bread. Perfect for a business lunch or casual break.</p>
+<div class="flex items-center gap-6">
+<span class="text-2xl font-bold text-white">145 kr</span>
+<button class="bg-white text-black px-6 py-2 rounded-full text-sm font-bold hover:bg-primary hover:text-white transition-colors">See Today's Menu</button>
+</div>
+</div>
+</div>
+<div class="md:col-span-4 relative group rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 bg-white dark:bg-neutral-800 flex flex-col">
+<div class="h-1/2 overflow-hidden relative">
+<img alt="Exquisite weekend dish" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9r__OdRhEt4xdW9rM1ruq-fdGKY7QLKqP4lAV0C2IVct-ge0HJj-M0r6LxJW5zswhCaN6t6YAS6_UzUP9w7IT7ZafRbBHiwp6OA-nCkJUm5xRW70ZBPwcZwSWTTGDeM481QciQqJes6MzCDSs7ZdH_VGLrnYFnR08ozZRkMXkZeFJrLbJXFds_oWfQV4fa4v3cIGkDfdkh8JbrebUN6rnzKcT9vqHs_YCSldYQhdcmoLoYbUBGhX3KMQDUHt3N4-OjaCXJGT-wZo"/>
+<div class="absolute inset-0 bg-black/10"></div>
+</div>
+<div class="p-8 flex flex-col justify-center flex-grow">
+<span class="text-primary font-bold text-sm uppercase tracking-wider mb-2">Sat &amp; Sun</span>
+<h3 class="text-2xl font-bold text-neutral-900 dark:text-white mb-2">Weekend Feast</h3>
+<p class="text-neutral-500 text-sm mb-6">Indulge in our premium weekend buffet featuring seafood, carved meats, and an extended dessert table.</p>
+<div class="flex justify-between items-center mt-auto">
+<span class="text-xl font-bold text-neutral-900 dark:text-white">295 kr</span>
+<a class="w-10 h-10 rounded-full border border-neutral-200 flex items-center justify-center hover:bg-black hover:text-white hover:border-black transition-colors dark:border-neutral-600 dark:hover:bg-white dark:hover:text-black" href="#">
+<span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<div class="md:col-span-12 relative group rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 bg-[#f4f1ea] dark:bg-neutral-800">
+<div class="grid md:grid-cols-2 h-full">
+<div class="p-8 md:p-12 flex flex-col justify-center">
+<div class="flex items-center gap-2 text-neutral-500 text-sm font-bold uppercase tracking-wider mb-4">
+<span class="material-symbols-outlined text-lg">local_shipping</span>
+                            For Your Events
+                        </div>
+<h3 class="text-3xl font-bold text-neutral-900 dark:text-white mb-4">Premium Catering</h3>
+<p class="text-neutral-600 dark:text-neutral-400 mb-8 max-w-md">Bring the taste of Svenska Smaker to your office or home. We offer customized menus for corporate events, weddings, and private parties.</p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-[#181112] text-white dark:bg-white dark:text-black px-8 py-3 rounded-full text-sm font-bold hover:bg-primary transition-colors">Get a Quote</button>
+<button class="bg-transparent border border-neutral-300 dark:border-neutral-600 px-8 py-3 rounded-full text-sm font-bold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors">Download Menu PDF</button>
+</div>
+</div>
+<div class="relative h-64 md:h-auto overflow-hidden">
+<img alt="Catering presentation" class="w-full h-full object-cover absolute inset-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyve9VTs9sNlXX9bltA7--zMTDaVNM_4uVx-OAlPBsTt7200nAgm05La9MUloOFcaFdWUpnpmCi14h2q6Of9jadRqN5Gr_zeB8IZh0nJyaDs1HtwfhETBjpyjDzH1IKsu9m9Xn5g8h3tMvsDSo5ZOfhuGhr--OafPVYAK7qaBi0HuJP-7Y7pyz7caTDsVOsNX0gE_86J3-ROpQc4vjxAZ0MaLirzXv2mGqEfTAFK_rV3_5iTL6WRfUjlmcC9Z8KHKXRRgeQuAsSzw"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-20 bg-white dark:bg-[#121212] overflow-hidden" id="menu">
+<div class="pl-4 md:pl-10 max-w-[1400px] mx-auto">
+<div class="flex justify-between items-end pr-4 md:pr-10 mb-10">
+<div>
+<span class="text-primary font-bold uppercase tracking-widest text-xs mb-2 block">Chef's Selection</span>
+<h2 class="text-4xl font-bold text-[#181112] dark:text-white">Signature Dishes</h2>
+</div>
+<div class="flex gap-2">
+<button class="w-12 h-12 rounded-full border border-neutral-200 dark:border-neutral-800 flex items-center justify-center hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<button class="w-12 h-12 rounded-full border border-black dark:border-white bg-black text-white dark:bg-white dark:text-black flex items-center justify-center hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="flex overflow-x-auto gap-6 pb-8 hide-scrollbar snap-x pr-4 md:pr-10">
+<div class="min-w-[280px] md:min-w-[340px] snap-center group cursor-pointer">
+<div class="aspect-[3/4] rounded-2xl overflow-hidden relative mb-4">
+<img alt="Reindeer Carpaccio" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADAefVO63SrsDNnm3HYsx1Cnz-iS54tokBpNXm4qIqP5iRalIFw9rPZeaSywlx0TykUvaLejapPuKnp7BTEN_-wRED_uqx4IYq4uMlbpjfRusofuUE1e7g4h_j0GIk8qNLryZl9Io04DFV5nAe1SNHna1hFLqFxPpas5-qidO8qVrkYqKQuxgNgnjp0T9bzWEeHc3yzbyfTO1smepDNZapdnEjobOpNj5sxx5zVYZsyqR_Pb6_2er82NwgkwCri-FZyY6NcguNm0Y"/>
+<div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-bold shadow-sm">
+                        185 kr
+                    </div>
+</div>
+<h3 class="text-xl font-bold text-neutral-900 dark:text-white group-hover:text-primary transition-colors">Reindeer Carpaccio</h3>
+<p class="text-neutral-500 text-sm mt-1">Lingonberries, crispy lichen, juniper emulsion.</p>
+</div>
+<div class="min-w-[280px] md:min-w-[340px] snap-center group cursor-pointer">
+<div class="aspect-[3/4] rounded-2xl overflow-hidden relative mb-4">
+<img alt="Arctic Char" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9r__OdRhEt4xdW9rM1ruq-fdGKY7QLKqP4lAV0C2IVct-ge0HJj-M0r6LxJW5zswhCaN6t6YAS6_UzUP9w7IT7ZafRbBHiwp6OA-nCkJUm5xRW70ZBPwcZwSWTTGDeM481QciQqJes6MzCDSs7ZdH_VGLrnYFnR08ozZRkMXkZeFJrLbJXFds_oWfQV4fa4v3cIGkDfdkh8JbrebUN6rnzKcT9vqHs_YCSldYQhdcmoLoYbUBGhX3KMQDUHt3N4-OjaCXJGT-wZo"/>
+<div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-bold shadow-sm">
+                        325 kr
+                    </div>
+</div>
+<h3 class="text-xl font-bold text-neutral-900 dark:text-white group-hover:text-primary transition-colors">Arctic Char</h3>
+<p class="text-neutral-500 text-sm mt-1">Sandefjord sauce, cucumber, new potatoes.</p>
+</div>
+<div class="min-w-[280px] md:min-w-[340px] snap-center group cursor-pointer">
+<div class="aspect-[3/4] rounded-2xl overflow-hidden relative mb-4">
+<img alt="Swedish Meatballs" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuApi8ijGlyNVQFB6eqQHh04qbRyPVo-RNKeLu8QeqRr5gAS7PbUsz6cJXl0VCLqn2hChICnp3dC78_IvR8aH18Cizs9Y8C2OnxlBwc4cOO7VQOF6ckRgOuKImzwNgaJn3QkVtOZ0R60-d_Z_E6BUZ8ZR9aGmq3bkBOK57AoDcCXPai2l__l1vvyYCNa5buEOE_YF50xvsKd_YkzBr-2Zt7Z8ZcpJBU4JJdjiR5dRY_Ir6V9zu19ul0C2AezJO2qwr3Me9OYD7njXXY"/>
+<div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-bold shadow-sm">
+                        245 kr
+                    </div>
+</div>
+<h3 class="text-xl font-bold text-neutral-900 dark:text-white group-hover:text-primary transition-colors">Swedish Meatballs "Lux"</h3>
+<p class="text-neutral-500 text-sm mt-1">Potato purée, pressed cucumber, raw lingonberries.</p>
+</div>
+<div class="min-w-[280px] md:min-w-[340px] snap-center group cursor-pointer">
+<div class="aspect-[3/4] rounded-2xl overflow-hidden relative mb-4">
+<img alt="Forest Mushroom Toast" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyve9VTs9sNlXX9bltA7--zMTDaVNM_4uVx-OAlPBsTt7200nAgm05La9MUloOFcaFdWUpnpmCi14h2q6Of9jadRqN5Gr_zeB8IZh0nJyaDs1HtwfhETBjpyjDzH1IKsu9m9Xn5g8h3tMvsDSo5ZOfhuGhr--OafPVYAK7qaBi0HuJP-7Y7pyz7caTDsVOsNX0gE_86J3-ROpQc4vjxAZ0MaLirzXv2mGqEfTAFK_rV3_5iTL6WRfUjlmcC9Z8KHKXRRgeQuAsSzw"/>
+<div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-bold shadow-sm">
+                        175 kr
+                    </div>
+</div>
+<h3 class="text-xl font-bold text-neutral-900 dark:text-white group-hover:text-primary transition-colors">Forest Mushroom Toast</h3>
+<p class="text-neutral-500 text-sm mt-1">Sourdough, chanterelles, västerbotten cheese.</p>
+</div>
+<div class="min-w-[200px] snap-center group cursor-pointer flex flex-col items-center justify-center bg-neutral-100 dark:bg-neutral-800 rounded-2xl border-2 border-dashed border-neutral-300 dark:border-neutral-700 hover:border-primary transition-colors">
+<div class="w-16 h-16 rounded-full bg-white dark:bg-neutral-900 flex items-center justify-center mb-4 text-primary">
+<span class="material-symbols-outlined text-3xl">restaurant_menu</span>
+</div>
+<h3 class="text-lg font-bold text-neutral-900 dark:text-white">View Full Menu</h3>
+</div>
+</div>
+</div>
+</section>
+<section class="relative py-24 px-4 md:px-10 bg-[#181112] overflow-hidden" id="reservation">
+<div class="absolute inset-0 opacity-20" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB9PprtpoQ3PCwW3-HWOwnylnfLXHjE1VSTycvCOcfxtCZ3dNiqxmbDwl71NahtoJaU7HqPuFJJqZtviCFJTBekNNmPfmIuqCy4HyYZgdSOhJWD83WqTD0wQBqb7-hjgapgSMMPrzJMBQJA4dI_qJqP-lcKcaS6bT6MizCdp_T92lgGZGqWvmuhzd76t1US-MGduhxjOf2huyUSN5_OXh0NmbNJXAxekD_mOzoJCOwNG1dZG-n5PZjMZ12s7jU4N_TZ7OBDrStnRA8"); background-size: cover;'></div>
+<div class="relative z-10 max-w-4xl mx-auto text-center space-y-8">
+<h2 class="text-white text-4xl md:text-6xl font-bold font-display">Reserve your spot</h2>
+<p class="text-white/60 text-lg font-light max-w-xl mx-auto">Experience the intersection of tradition and modernity. Booking is recommended for evening service and weekend buffets.</p>
+<div class="bg-white p-3 rounded-2xl flex flex-col md:flex-row gap-2 shadow-2xl max-w-3xl mx-auto transform translate-y-4">
+<div class="relative group flex-1">
+<div class="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400">
+<span class="material-symbols-outlined">calendar_month</span>
+</div>
+<input class="pl-12 pr-4 py-4 rounded-xl border-none bg-neutral-50 focus:ring-0 focus:bg-white w-full text-base font-medium placeholder-neutral-400" placeholder="Select Date" type="text"/>
+</div>
+<div class="h-px md:h-auto w-full md:w-px bg-neutral-200"></div>
+<div class="relative group flex-1">
+<div class="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400">
+<span class="material-symbols-outlined">schedule</span>
+</div>
+<select class="pl-12 pr-8 py-4 rounded-xl border-none bg-neutral-50 focus:ring-0 focus:bg-white w-full text-base font-medium appearance-none text-neutral-700">
+<option>18:00</option>
+<option>19:00</option>
+<option>20:00</option>
+</select>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+<div class="h-px md:h-auto w-full md:w-px bg-neutral-200"></div>
+<div class="relative group flex-1">
+<div class="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400">
+<span class="material-symbols-outlined">group</span>
+</div>
+<select class="pl-12 pr-8 py-4 rounded-xl border-none bg-neutral-50 focus:ring-0 focus:bg-white w-full text-base font-medium appearance-none text-neutral-700">
+<option>2 Guests</option>
+<option>3 Guests</option>
+<option>4 Guests</option>
+<option>Large Party</option>
+</select>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+<button class="bg-primary hover:bg-red-700 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg hover:shadow-primary/30 whitespace-nowrap">
+                Find Table
+            </button>
+</div>
+</div>
+</section>
+<footer class="bg-white dark:bg-[#0f0f0f] text-[#181112] dark:text-white pt-20 pb-10 px-4 md:px-10 border-t border-neutral-200 dark:border-neutral-800">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
+<div class="md:col-span-4 space-y-6">
+<div class="flex items-center gap-3">
+<div class="size-10 flex items-center justify-center bg-primary text-white rounded-full">
+<span class="material-symbols-outlined text-xl">restaurant</span>
+</div>
+<h3 class="text-2xl font-bold tracking-tight">Svenska Smaker</h3>
+</div>
+<p class="text-neutral-500 dark:text-neutral-400 max-w-xs leading-relaxed">
+                An homage to Swedish culinary traditions, reimagined for the modern palate in a sustainable way.
+            </p>
+<div class="flex gap-4 pt-2">
+<a class="w-10 h-10 rounded-full bg-neutral-100 dark:bg-neutral-800 hover:bg-primary hover:text-white flex items-center justify-center transition-all" href="#">
+<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg>
+</a>
+<a class="w-10 h-10 rounded-full bg-neutral-100 dark:bg-neutral-800 hover:bg-primary hover:text-white flex items-center justify-center transition-all" href="#">
+<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.85-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+</a>
+</div>
+</div>
+<div class="md:col-span-3 space-y-6">
+<h4 class="text-lg font-bold text-[#181112] dark:text-white">Visit Us</h4>
+<div class="space-y-4 text-neutral-500 dark:text-neutral-400">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-1">location_on</span>
+<p>Bondegatan 1<br/>116 23 Stockholm</p>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">call</span>
+<p>+46 8 555 123 45</p>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">mail</span>
+<p>hello@svenskasmaker.se</p>
+</div>
+</div>
+</div>
+<div class="md:col-span-3 space-y-6">
+<h4 class="text-lg font-bold text-[#181112] dark:text-white">Opening Hours</h4>
+<ul class="space-y-3 text-neutral-500 dark:text-neutral-400">
+<li class="flex justify-between border-b border-neutral-100 dark:border-neutral-800 pb-2">
+<span>Mon - Thu</span>
+<span class="text-[#181112] dark:text-white font-medium">17:00 - 23:00</span>
+</li>
+<li class="flex justify-between border-b border-neutral-100 dark:border-neutral-800 pb-2">
+<span>Fri - Sat</span>
+<span class="text-[#181112] dark:text-white font-medium">17:00 - 01:00</span>
+</li>
+<li class="flex justify-between">
+<span>Sunday</span>
+<span class="text-[#181112] dark:text-white font-medium">Closed</span>
+</li>
+</ul>
+</div>
+<div class="md:col-span-2">
+<div class="w-full h-40 rounded-2xl overflow-hidden bg-neutral-200 relative group cursor-pointer shadow-inner" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuANGosIfMXpuHqq57tR_3mr3bnOg6_YWvFYeHq8S9WqM252IiFfw15ro5ZbgA5He5LOMrw57TLodcEqPm6VT9VVujAU-5lxzs-eWvbUqwo09KOtQL_IQwSxYaVRF50YIWVvGjxFY-8GuOYH1K2QrfJtr6rfHufRdvKCNMtFHPcnMYO5QNUZ8VC2KMbM9gqUkeOwvAySuT-fc6LRfP91uZB46VZVsT1UsKp1GoLFAQ25dyMtPcVQXpr4VrMDl638ZS-tKpqQNKaB7mM"); background-size: cover; background-position: center;'>
+<div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors flex items-center justify-center">
+<div class="bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-sm">
+<span class="material-symbols-outlined text-primary">near_me</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="border-t border-neutral-200 dark:border-neutral-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-neutral-500">
+<p>© 2024 Svenska Smaker AB.</p>
+<div class="flex gap-6">
+<a class="hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms</a>
+</div>
+</div>
+</footer>
+</div>
+
+</body></html>

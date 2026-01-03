@@ -477,36 +477,30 @@ export function DayMenuCard({ day, theme, dishes, accentColor = 'from-primary/8 
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
         >
-            {/* Elegant Header with Enhanced Design */}
-            <div className={cn("relative px-5 py-6 bg-gradient-to-br text-center", accentColor)}>
-                {/* Decorative top accent */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-1 bg-primary/30 rounded-b-full" />
-
-                <h3 className="font-heading text-xl font-bold text-foreground tracking-tight mb-1">
+            {/* Elegant Header - Left Aligned & Compact */}
+            <div className={cn("relative px-5 py-4 bg-gradient-to-br text-left border-b border-border/5", accentColor)}>
+                <h3 className="font-heading text-xl font-bold text-foreground tracking-tight mb-0.5">
                     {day}
                 </h3>
                 {theme && (
-                    <p className="text-xs font-medium text-primary/80 italic">
+                    <p className="text-xs font-medium text-primary italic">
                         {theme}
                     </p>
                 )}
-
-                {/* Decorative divider */}
-                <div className="mt-3 mx-auto w-12 h-0.5 bg-primary/20 rounded-full" />
             </div>
 
-            {/* Menu List with Better Spacing */}
-            <div className="flex-1 px-5 py-4 space-y-3">
+            {/* Menu List - Compact Spacing */}
+            <div className="flex-1 px-5 py-3 space-y-2.5">
                 {dishes.map((dish, index) => (
                     <div
                         key={index}
-                        className="group/item pb-2.5 border-b border-dashed border-border/20 last:border-0 transition-colors hover:border-primary/30"
+                        className="group/item pb-1 border-b border-dashed border-border/10 last:border-0 transition-colors"
                     >
                         <p className="font-semibold text-sm text-foreground leading-snug mb-0.5 group-hover/item:text-primary transition-colors">
                             {dish.name}
                         </p>
                         {dish.description && (
-                            <p className="text-xs text-muted-foreground leading-relaxed">
+                            <p className="text-[11px] text-muted-foreground leading-tight">
                                 {dish.description}
                             </p>
                         )}
@@ -514,14 +508,13 @@ export function DayMenuCard({ day, theme, dishes, accentColor = 'from-primary/8 
                 ))}
             </div>
 
-            {/* Enhanced Footer */}
-            <div className="px-5 py-3 bg-gradient-to-r from-muted/20 to-muted/10 border-t border-border/10">
-                <div className="flex items-center justify-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-primary/40" />
-                    <p className="text-[10px] text-center text-muted-foreground font-semibold uppercase tracking-widest">
+            {/* Footer - Left Aligned */}
+            <div className="px-5 py-2.5 bg-gradient-to-r from-muted/20 to-muted/10 border-t border-border/10">
+                <div className="flex items-center justify-start gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
+                    <p className="text-[10px] text-muted-foreground font-semibold uppercase tracking-widest">
                         All Inclusive
                     </p>
-                    <div className="w-2 h-2 rounded-full bg-primary/40" />
                 </div>
             </div>
         </motion.article>
@@ -616,45 +609,51 @@ export function PricingCard({ title, price, description, features, highlighted =
     return (
         <div
             className={cn(
-                "relative flex flex-col p-5 md:p-6 rounded-lg transition-all duration-200",
-                "bg-card shadow-sm hover:shadow-md",
-                highlighted ? "ring-2 ring-primary/20" : "",
+                "relative p-5 rounded-lg transition-all duration-200",
+                "bg-card shadow-sm hover:shadow-md border border-border/40",
+                highlighted ? "ring-1 ring-primary/20 bg-primary/5" : "",
                 className
             )}
         >
             {highlighted && (
-                <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-3 py-0.5 bg-primary text-primary-foreground text-[10px] font-semibold rounded-full">
+                <span className="absolute -top-2.5 left-6 px-3 py-0.5 bg-primary text-primary-foreground text-[10px] font-semibold rounded-full shadow-sm">
                     Popular
                 </span>
             )}
 
-            <div className="text-center mb-4">
-                {icon && (
-                    <div className="mx-auto mb-3 flex items-center justify-center w-12 h-12 rounded-lg bg-primary/10 text-primary">
-                        {icon}
+            <div className="flex flex-col sm:flex-row items-center gap-6">
+                {/* Left Column: Icon, Title, Price */}
+                <div className="flex-shrink-0 text-center sm:text-left sm:w-1/3 border-b sm:border-b-0 sm:border-r border-border/10 pb-4 sm:pb-0 sm:pr-4">
+                    {icon && (
+                        <div className="mx-auto sm:mx-0 mb-3 flex items-center justify-center w-12 h-12 rounded-lg bg-primary/10 text-primary">
+                            {icon}
+                        </div>
+                    )}
+                    <h3 className="font-heading text-lg font-bold text-foreground mb-1">{title}</h3>
+                    <div className="flex items-baseline justify-center sm:justify-start gap-1">
+                        <span className="text-3xl font-bold text-primary">{price}</span>
+                    </div>
+                    {description && (
+                        <p className="mt-1 text-xs text-muted-foreground">{description}</p>
+                    )}
+                </div>
+
+                {/* Right Column: Features List */}
+                {features && features.length > 0 && (
+                    <div className="flex-1 w-full sm:w-auto">
+                        <ul className="grid grid-cols-1 gap-2">
+                            {features.map((feature, index) => (
+                                <li key={index} className="flex items-center gap-3 text-xs text-foreground/80">
+                                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                                    </span>
+                                    {feature}
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 )}
-                <h3 className="font-heading text-lg font-bold text-foreground mb-1">{title}</h3>
-                <div className="flex items-baseline justify-center gap-1">
-                    <span className="text-3xl md:text-4xl font-bold text-primary">{price}</span>
-                </div>
-                {description && (
-                    <p className="mt-1 text-xs text-muted-foreground">{description}</p>
-                )}
             </div>
-
-            {features && features.length > 0 && (
-                <ul className="space-y-1.5">
-                    {features.map((feature, index) => (
-                        <li key={index} className="flex items-center gap-2 text-xs text-foreground">
-                            <span className="flex-shrink-0 w-4 h-4 rounded-full bg-primary/15 flex items-center justify-center">
-                                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                            </span>
-                            {feature}
-                        </li>
-                    ))}
-                </ul>
-            )}
         </div>
     );
 }

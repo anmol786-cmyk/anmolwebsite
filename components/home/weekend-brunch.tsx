@@ -42,7 +42,7 @@ export function WeekendBrunch() {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="top-24"
+            className="top-24 sticky"
           >
             <div className="relative aspect-square rounded-2xl overflow-hidden bg-muted shadow-sm">
               <Image
@@ -55,12 +55,12 @@ export function WeekendBrunch() {
 
             {/* Info Cards Row */}
             <div className="grid grid-cols-2 gap-4 mt-6">
-              <div className="bg-white p-6 rounded-xl border border-border/50 text-center">
+              <div className="bg-[#F7F4EE] p-6 rounded-xl border border-border/50 text-center shadow-sm">
                 <p className="text-secondary font-bold uppercase tracking-wider text-xs mb-1">Time</p>
-                <p className="font-heading font-bold text-foreground">10:00 - 14:00</p>
+                <p className="font-heading font-bold text-foreground text-xl">10:00 - 14:00</p>
                 <p className="text-sm text-muted-foreground mt-1">Sat & Sun</p>
               </div>
-              <div className="bg-white p-6 rounded-xl border border-border/50 text-center">
+              <div className="bg-[#F7F4EE] p-6 rounded-xl border border-border/50 text-center shadow-sm">
                 <p className="text-secondary font-bold uppercase tracking-wider text-xs mb-1">Price</p>
                 <p className="font-heading font-bold text-primary text-xl">129 SEK</p>
                 <p className="text-sm text-muted-foreground mt-1">Per Person</p>
@@ -82,12 +82,12 @@ export function WeekendBrunch() {
                 Weekend Special
               </span>
 
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-foreground leading-tight">
+              <h2 className="text-4xl md:text-5xl font-heading font-bold text-foreground leading-tight">
                 Weekend Brunch <br />
                 <span className="text-primary">Buffet Experience</span>
               </h2>
 
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-lg text-muted-foreground font-light leading-relaxed">
                 Start your weekend right with our traditional Pakistani breakfast buffet featuring the famous
                 <span className="font-semibold text-foreground mx-1">Halwa Puri</span>
                 and over 12 delicious items.
@@ -96,14 +96,14 @@ export function WeekendBrunch() {
 
             {/* Menu Sections */}
             <div className="space-y-6">
-              <div className="bg-white rounded-2xl p-8 border border-border/60 hover:border-primary/20 transition-colors shadow-sm">
+              <div className="bg-[#F7F4EE] rounded-2xl p-8 border border-border/60 hover:border-primary/20 transition-colors shadow-sm">
                 <h3 className="text-xl font-heading font-bold text-foreground mb-4 flex items-center gap-2">
                   <span className="text-2xl">🍛</span>
                   Main Dishes
                 </h3>
                 <ul className="space-y-3">
                   {brunchMenu.mainDishes.map((dish, index) => (
-                    <li key={index} className="flex items-center gap-3 text-muted-foreground">
+                    <li key={index} className="flex items-center gap-3 text-muted-foreground text-sm font-medium">
                       <div className="w-1.5 h-1.5 rounded-full bg-primary/40 flex-shrink-0" />
                       {dish}
                     </li>
@@ -112,14 +112,14 @@ export function WeekendBrunch() {
               </div>
 
               <div className="grid sm:grid-cols-2 gap-6">
-                <div className="bg-white rounded-2xl p-6 border border-border/60 shadow-sm">
+                <div className="bg-[#F7F4EE] rounded-2xl p-6 border border-border/60 shadow-sm">
                   <h3 className="text-lg font-heading font-bold text-foreground mb-3 flex items-center gap-2">
                     <span className="text-xl">🥗</span>
                     Sides & Sweets
                   </h3>
                   <ul className="space-y-2">
                     {brunchMenu.sides.map((side, index) => (
-                      <li key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <li key={index} className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
                         <div className="w-1 h-1 rounded-full bg-secondary flex-shrink-0" />
                         {side}
                       </li>
@@ -127,14 +127,14 @@ export function WeekendBrunch() {
                   </ul>
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 border border-border/60 shadow-sm">
+                <div className="bg-[#F7F4EE] rounded-2xl p-6 border border-border/60 shadow-sm">
                   <h3 className="text-lg font-heading font-bold text-foreground mb-3 flex items-center gap-2">
                     <span className="text-xl">☕</span>
                     Beverages
                   </h3>
                   <ul className="space-y-2">
                     {brunchMenu.beverages.map((beverage, index) => (
-                      <li key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <li key={index} className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
                         <div className="w-1 h-1 rounded-full bg-secondary flex-shrink-0" />
                         {beverage}
                       </li>
@@ -147,7 +147,7 @@ export function WeekendBrunch() {
             {/* CTA */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Link href="/weekend-brunch-buffet">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-10 h-12 text-base font-semibold shadow-sm transition-transform hover:scale-105">
+                <Button size="lg" className="bg-[#9e1c1c] hover:bg-[#7f1616] text-white rounded-full px-10 h-12 text-base font-semibold shadow-sm transition-transform hover:scale-105">
                   View Full Brunch Menu
                 </Button>
               </Link>

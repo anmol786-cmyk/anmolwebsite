@@ -8,6 +8,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/com
 import { formatPrice } from '@/lib/woocommerce';
 import { Minus, Plus, X } from 'lucide-react';
 import { CartThresholdMessages } from './cart-threshold-messages';
+import { WhatsAppOrderButton } from '@/components/whatsapp/whatsapp-order-button';
 
 export function CartDrawer() {
   const { items, isOpen, closeCart, updateQuantity, removeItem, getTotalPrice, getTotalItems } = useCartStore();
@@ -28,6 +29,24 @@ export function CartDrawer() {
           </div>
         ) : (
           <>
+            {/* WhatsApp Order Button - Top of Cart */}
+            <div className="px-4 pt-4">
+              <WhatsAppOrderButton
+                context="cart"
+                cartItems={items}
+                cartTotal={getTotalPrice().toString()}
+                cartSubtotal={getTotalPrice().toString()}
+                requireCustomerInfo={true}
+                variant="outline"
+                size="sm"
+                className="w-full border-2 border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-950/20"
+                label="Order via WhatsApp"
+                onSuccess={() => {
+                  closeCart();
+                }}
+              />
+            </div>
+
             {/* Cart Items */}
             <div className="flex-1 overflow-y-auto py-4">
               <div className="space-y-4">

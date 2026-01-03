@@ -8,7 +8,7 @@ import { CheckCircle2, Clock, Users, Utensils, ArrowRight } from "lucide-react";
 
 export function LunchBuffetSection() {
   return (
-    <section className="w-full py-24 bg-white relative overflow-hidden">
+    <section className="w-full py-24 bg-card relative overflow-hidden">
       <div className="container px-4 md:px-6 relative z-10">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           {/* Content */}
@@ -85,7 +85,7 @@ export function LunchBuffetSection() {
               />
 
               {/* Floating Info Card */}
-              <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-border/10">
+              <div className="absolute bottom-6 left-6 right-6 bg-background/95 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-border/10">
                 <div className="flex justify-between items-center">
                   <div>
                     <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-1">Price per person</p>

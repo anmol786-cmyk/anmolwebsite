@@ -11,6 +11,7 @@ import { MenuItem } from '@/components/menu/menu-item';
 import { MenuNavigation } from '@/components/menu/menu-navigation';
 import Link from 'next/link';
 import { decodeHtmlEntities } from '@/lib/utils';
+import { CustomCakeForm } from '@/components/forms/custom-cake-form';
 import {
     Cake,
     Phone,
@@ -62,6 +63,16 @@ export default async function BakeryMenuPage() {
     // If no child categories found, fall back to all bakery-related categories
     const { bakery: allBakeryCategories } = getMenuSections(categories);
     const activeCategories = bakeryCategories.length > 0 ? bakeryCategories : allBakeryCategories;
+
+    // Explicitly add 'Biscuits' if found in all categories and not already in active list
+    const biscuitCategory = categories.find(c =>
+        c.name.toLowerCase().includes('biscuit') ||
+        c.slug.toLowerCase().includes('biscuit')
+    );
+
+    if (biscuitCategory && !activeCategories.some(c => c.id === biscuitCategory.id)) {
+        activeCategories.push(biscuitCategory);
+    }
 
     // Filter categories that have products
     const categoriesWithProducts = activeCategories.filter((cat) =>
@@ -147,13 +158,12 @@ export default async function BakeryMenuPage() {
                                     Custom Orders
                                 </h3>
                                 <p className="body-text-sm mb-3">
-                                    For custom cake designs, wedding cakes, or large orders, please call us to discuss your requirements.
+                                    For custom cake designs, wedding cakes, or large orders, please use our request form or call us directly.
                                 </p>
                                 <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground" asChild>
-                                    <a href={`tel:${restaurantConfig.phone}`}>
-                                        <Phone className="mr-2 h-4 w-4" />
-                                        Call {restaurantConfig.phone}
-                                    </a>
+                                    <Link href="#custom-cake-form">
+                                        Request Custom Cake
+                                    </Link>
                                 </Button>
                             </Card>
                         </div>
@@ -224,8 +234,19 @@ export default async function BakeryMenuPage() {
                 </div>
             </section>
 
+            {/* Custom Cake Form Section */}
+            <section id="custom-cake-form" className="py-12 bg-muted/30">
+                <div className="container mx-auto px-4 max-w-3xl">
+                    <div className="text-center section-header-gap mb-10">
+                        <h2 className="section-title">Design Your Dream Cake</h2>
+                        <p className="section-subtitle">Fill out the form below to request a quote for your custom cake</p>
+                    </div>
+                    <CustomCakeForm />
+                </div>
+            </section>
+
             {/* Occasions Section */}
-            <section className="py-12 bg-muted/30">
+            <section className="py-12">
                 <div className="container mx-auto px-4 max-w-7xl">
                     <div className="text-center section-header-gap">
                         <h2 className="section-title">Perfect for Every Occasion</h2>
@@ -272,7 +293,7 @@ export default async function BakeryMenuPage() {
                                 Call {restaurantConfig.phone}
                             </a>
                         </Button>
-                        <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10" asChild>
+                        <Button size="lg" variant="outline" className="bg-white text-primary border-white hover:bg-transparent hover:text-white shadow-sm" asChild>
                             <Link href="/menu/sweets">Explore Sweets Menu</Link>
                         </Button>
                     </div>

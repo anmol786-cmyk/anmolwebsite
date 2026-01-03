@@ -14,8 +14,9 @@
     --foreground: 20 10% 15%;
     /* #2B2625 - Dark charcoal with warm undertone */
 
-    /* Card: Pure White for subtle stacking effect on Cream background */
-    --card: 0 0% 100%;
+    /* Card: Soft Warm Cream (Replacing pure white) */
+    --card: 42 27% 95%;
+    /* #F7F4EE */
     --card-foreground: 20 10% 15%;
 
     /* Popover: White */

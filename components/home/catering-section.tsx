@@ -30,7 +30,7 @@ const cateringFeatures = [
 
 export function CateringSection() {
   return (
-    <section className="w-full py-24 bg-white relative overflow-hidden">
+    <section className="w-full py-24 bg-card relative overflow-hidden">
       <div className="container px-4 md:px-6 relative z-10">
         {/* Two Column Layout: Title/Description Left, Cards Right */}
         <div className="grid lg:grid-cols-2 gap-12 items-start mb-16">

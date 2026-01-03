@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { UserNav } from '@/components/layout/user-nav';
 import { CartIcon } from '@/components/cart/cart-icon';
+import { WishlistIcon } from '@/components/wishlist/wishlist-icon';
 import { SearchModal } from '@/components/search/search-modal';
 import { MobileMenu } from '@/components/layout/mobile-menu';
 import { MenuNavDropdown } from '@/components/layout/menu-nav-dropdown';
@@ -152,12 +153,13 @@ export function TransparentHeader({ categories, className }: TransparentHeaderPr
                 <TransparentNavLink href="/bookings" isTransparent={isTransparent}>Reservations</TransparentNavLink>
               </div>
 
-              {/* Extreme Right: Shop/Cart */}
+              {/* Extreme Right: Shop/Cart/Wishlist */}
               <div className={cn(
                 "col-span-1 flex justify-end items-center gap-3 transition-colors",
                 isTransparent && "[&_button]:text-white [&_svg]:text-white [&_a]:text-white"
               )}>
                 <UserNav />
+                <WishlistIcon />
                 <CartIcon />
               </div>
             </div>
@@ -216,6 +218,7 @@ export function TransparentHeader({ categories, className }: TransparentHeaderPr
                 "flex items-center gap-3 transition-colors",
                 isTransparent && "[&_button]:text-amber-100 [&_svg]:text-amber-100 [&_span]:text-amber-100"
               )}>
+                <WishlistIcon />
                 <CartIcon />
               </div>
             </div>

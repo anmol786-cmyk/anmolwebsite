@@ -229,7 +229,7 @@ export default async function RestaurantMenuPage() {
                                 Call {restaurantConfig.phone}
                             </a>
                         </Button>
-                        <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10" asChild>
+                        <Button size="lg" variant="outline" className="bg-white text-primary border-white hover:bg-transparent hover:text-white shadow-sm" asChild>
                             <a href={`mailto:${restaurantConfig.email}`}>Email Us</a>
                         </Button>
                     </div>

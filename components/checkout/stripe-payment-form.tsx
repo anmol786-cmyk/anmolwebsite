@@ -37,31 +37,54 @@ export function StripePaymentForm({
         setError(null);
 
         try {
-            // Confirm the payment
-            const { error: submitError, paymentIntent } = await stripe.confirmPayment({
-                elements,
-                confirmParams: {
-                    return_url: `${window.location.origin}/checkout/success`,
-                },
-                redirect: 'if_required',
-            });
-
+            // Submit the payment element first to validate
+            const { error: submitError } = await elements.submit();
             if (submitError) {
-                setError(submitError.message || 'Payment failed');
-                onError?.(submitError.message || 'Payment failed');
+                setError(submitError.message || 'Please check your payment details');
                 setIsProcessing(false);
                 return;
             }
 
+            // Build the return URL with order info for redirect-based payments (Klarna, etc.)
+            const returnUrl = new URL('/checkout/stripe-return', window.location.origin);
+
+            // Confirm the payment - this will redirect for Klarna/wallet payments
+            const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
+                elements,
+                confirmParams: {
+                    return_url: returnUrl.toString(),
+                },
+                // Always redirect for redirect-based methods (Klarna, etc.)
+                // For card payments, this will return immediately if 3DS is not needed
+                redirect: 'if_required',
+            });
+
+            if (confirmError) {
+                // This error can happen if:
+                // 1. Card was declined
+                // 2. 3DS failed
+                // 3. User cancelled the redirect
+                setError(confirmError.message || 'Payment failed');
+                onError?.(confirmError.message || 'Payment failed');
+                setIsProcessing(false);
+                return;
+            }
+
+            // If we get here with a paymentIntent, payment succeeded without redirect (cards usually)
             if (paymentIntent && paymentIntent.status === 'succeeded') {
                 onSuccess(paymentIntent.id);
+            } else if (paymentIntent && paymentIntent.status === 'processing') {
+                // Some payment methods (bank transfers) may still be processing
+                onSuccess(paymentIntent.id);
             } else if (paymentIntent && paymentIntent.status === 'requires_action') {
-                // 3D Secure or other authentication required
-                setError('Additional authentication required. Please complete the verification.');
+                // This shouldn't happen with redirect: 'if_required', but handle it
+                setError('Additional authentication required. Please try again.');
                 setIsProcessing(false);
-            } else {
-                setError('Payment processing. Please wait...');
-                setIsProcessing(false);
+            } else if (!paymentIntent) {
+                // Redirect happened (Klarna, Google Pay, etc.)
+                // The user will be redirected to the return_url after completing payment
+                // Don't do anything here - the redirect is happening
+                console.log('Redirect in progress...');
             }
         } catch (err) {
             console.error('Payment error:', err);
@@ -95,8 +118,38 @@ export function StripePaymentForm({
                     <div className="rounded-lg border border-neutral-200 p-4 dark:border-neutral-800">
                         <PaymentElement
                             options={{
-                                layout: 'tabs',
-                                paymentMethodOrder: ['card', 'klarna', 'apple_pay', 'google_pay'],
+                                layout: {
+                                    type: 'accordion',
+                                    defaultCollapsed: false,
+                                    radios: true,
+                                    spacedAccordionItems: true,
+                                },
+                                // Prioritize wallets first for better UX
+                                paymentMethodOrder: ['apple_pay', 'google_pay', 'link', 'klarna', 'card'],
+                                // Wallet configuration
+                                wallets: {
+                                    applePay: 'auto', // Shows on Safari/iOS automatically
+                                    googlePay: 'auto', // Shows on Chrome with Google account
+                                },
+                                // Business info for wallet payments
+                                business: {
+                                    name: 'Anmol Sweets & Restaurant',
+                                },
+                                // Fields configuration - collect all required billing details
+                                fields: {
+                                    billingDetails: {
+                                        name: 'auto',      // Collect name for wallet payments
+                                        email: 'auto',     // Collect email
+                                        phone: 'auto',     // Collect phone number
+                                        address: 'auto',   // Collect billing address (required for some payment methods)
+                                    },
+                                },
+                                // Terms display
+                                terms: {
+                                    card: 'never',         // Don't show terms for cards
+                                    applePay: 'never',     // Apple Pay has its own
+                                    googlePay: 'never',    // Google Pay has its own
+                                },
                             }}
                         />
                     </div>

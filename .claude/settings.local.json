@@ -64,7 +64,8 @@
       "Bash(npx tsc:*)",
       "Bash(del \"D:\\Visual codes\\Anmol Project\\headlessworpressrestaurant-production\\app\\api\\stripe\\create-payment-intent\\route.ts\")",
       "Bash(pnpm remove:*)",
-      "Bash(pnpm list:*)"
+      "Bash(pnpm list:*)",
+      "Bash(git config:*)"
     ],
     "deny": [],
     "ask": []

@@ -7,8 +7,9 @@ import { WeekendBrunch } from "@/components/home/weekend-brunch";
 import { CateringSection } from "@/components/home/catering-section";
 import { Sparkles } from "lucide-react";
 import { SocialFeed } from "@/components/home/social-feed";
+import { CategoryCarousel } from "@/components/home/category-carousel";
 import { getHomepage, extractHeroContent } from "@/lib/fourlines-mcp";
-import { getProducts } from "@/lib/woocommerce/products-direct";
+import { getProducts, getProductCategories } from "@/lib/woocommerce/products-direct";
 import type { Metadata } from "next";
 import {
   anmolOrganizationSchemaFull,
@@ -79,15 +80,19 @@ export default async function HomePage() {
 
   // Fetch data in parallel for better performance
   let topProducts: any[] = [];
+  let categories: any[] = [];
 
   try {
-    const [homepage, featuredResult] = await Promise.all([
+    const [homepage, featuredResult, categoriesResult] = await Promise.all([
       getHomepage().catch(() => null),
       getProducts({
         per_page: 12,
-        featured: true,
         orderby: 'popularity',
-      }).catch(() => ({ data: [] }))
+      }).catch(() => ({ data: [] })),
+      getProductCategories({
+        hide_empty: true,
+        per_page: 50
+      }).catch(() => [])
     ]);
 
     // Process WordPress homepage content
@@ -104,6 +109,7 @@ export default async function HomePage() {
 
     // Process products
     topProducts = featuredResult.data;
+    categories = categoriesResult;
 
     // If no featured products, get popular products instead
     if (topProducts.length === 0) {
@@ -141,6 +147,8 @@ export default async function HomePage() {
           subtitle={heroContent.subtitle}
           badge={heroContent.badge}
         />
+
+        <CategoryCarousel categories={categories} />
 
         <Marquee
           items={[

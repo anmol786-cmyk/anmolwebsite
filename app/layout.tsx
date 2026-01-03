@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { HeaderProvider } from "@/components/layout/header-provider";
 import { Footer } from "@/components/layout/footer";
 import { CartDrawer } from "@/components/cart/cart-drawer";
+import { WishlistDrawer } from "@/components/wishlist/wishlist-drawer";
 import { siteConfig } from "@/site.config";
 import { cn } from "@/lib/utils";
 import { RestaurantSchema } from "@/components/seo/restaurant-schema";
@@ -62,6 +63,7 @@ export default function RootLayout({
             <main className="flex-1">{children}</main>
             <Footer />
             <CartDrawer />
+            <WishlistDrawer />
           </div>
         </ThemeProvider>
         <Analytics />

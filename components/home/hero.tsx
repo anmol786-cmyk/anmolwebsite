@@ -17,7 +17,7 @@ export function Hero({
     badge = "Stockholm's #1 Sweets & Restaurant"
 }: HeroProps) {
     return (
-        <section className="relative w-full h-screen flex items-end justify-center overflow-hidden pb-20">
+        <section className="relative h-[95vh] w-full flex items-center justify-center overflow-hidden">
             {/* Video Background */}
             <div className="absolute inset-0 z-0">
                 <video
@@ -26,41 +26,40 @@ export function Hero({
                     muted
                     playsInline
                     preload="auto"
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="absolute inset-0 w-full h-full object-cover scale-105"
                     style={{
-                        filter: 'brightness(0.85)', // Slightly clearer video
+                        filter: 'brightness(0.85)',
                     }}
                 >
                     <source src="https://anmolsweets.se/wp-content/uploads/2025/12/Anmol-Sweets-Restaurant-Stockholm.webm" type="video/webm" />
                 </video>
 
-                {/* Clean minimal overlay for text legibility */}
-                <div className="absolute inset-0 bg-black/40" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/50" />
             </div>
 
-            <div className="container relative z-10 px-4 md:px-6 flex flex-col items-center text-center space-y-8">
+            <div className="relative z-20 flex flex-col items-center text-center px-4 max-w-5xl mx-auto space-y-6">
 
-                {/* Minimal Static Badge */}
+                {/* Badge */}
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
-                    className="inline-flex items-center space-x-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full"
+                    className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/30 bg-white/10 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider mb-2"
                 >
-                    <Star className="w-3.5 h-3.5 text-primary fill-primary" />
-                    <span className="text-primary font-bold text-xs tracking-wider uppercase">{badge}</span>
+                    <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                    {badge}
                 </motion.div>
 
-                {/* Main Heading - Clean White Text */}
+                {/* Main Heading */}
                 <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                    className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-white leading-tight tracking-tight max-w-5xl"
+                    className="text-white text-3xl md:text-5xl font-bold leading-tight tracking-tight"
                 >
-                    Authentic Indo-Pakistani Cuisine in Stockholm
-                    <span className="block mt-4 text-white/90 italic font-serif text-3xl md:text-5xl lg:text-6xl">
+                    Authentic Indo-Pakistani <br className="hidden md:block" /> Cuisine in Stockholm
+                    <span className="block mt-2 italic font-light text-white/90 text-2xl md:text-4xl">
                         {title}
                     </span>
                 </motion.h1>
@@ -70,12 +69,12 @@ export function Hero({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
-                    className="text-base md:text-xl text-white/90 max-w-2xl leading-relaxed font-light"
+                    className="text-white/80 text-base font-light max-w-xl mx-auto leading-relaxed pt-4"
                 >
                     {subtitle}
                 </motion.p>
 
-                {/* Clean Buttons */}
+                {/* Buttons */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -83,34 +82,34 @@ export function Hero({
                     className="flex flex-col sm:flex-row gap-4 pt-6"
                 >
                     <Button
-                        size="lg"
-                        className="bg-primary hover:bg-primary/90 text-white border-none rounded-full px-10 h-14 text-lg font-semibold transition-transform hover:scale-105"
+                        size="default"
+                        className="bg-primary hover:bg-primary/90 text-white border-none rounded-full px-8 h-11 text-base font-semibold transition-transform hover:scale-105"
                         asChild
                     >
                         <Link href="/shop">
-                            <ShoppingBag className="mr-2 w-5 h-5" />
+                            <ShoppingBag className="mr-2 w-4 h-4" />
                             Order Online
                         </Link>
                     </Button>
                     <Button
                         variant="outline"
-                        size="lg"
-                        className="bg-white/10 backdrop-blur-md border-white/40 text-white hover:bg-white hover:text-primary hover:border-white rounded-full px-10 h-14 text-lg font-semibold transition-all hover:scale-105"
+                        size="default"
+                        className="bg-white/10 backdrop-blur-md border-white/40 text-white hover:bg-white hover:text-primary hover:border-white rounded-full px-8 h-11 text-base font-semibold transition-all hover:scale-105"
                         asChild
                     >
                         <Link href="/menu">
                             View Menu
-                            <ArrowRight className="ml-2 w-5 h-5" />
+                            <ArrowRight className="ml-2 w-4 h-4" />
                         </Link>
                     </Button>
                 </motion.div>
 
-                {/* Minimal Trust Indicators */}
+                {/* Trust Indicators */}
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 0.8 }}
-                    className="flex flex-wrap items-center justify-center gap-6 pt-6 text-white/80 text-sm font-medium tracking-wide"
+                    className="flex flex-wrap items-center justify-center gap-6 pt-2 text-white/80 text-sm font-medium tracking-wide"
                 >
                     <span>100% Halal Certified</span>
                     <span className="hidden sm:inline opacity-50">•</span>

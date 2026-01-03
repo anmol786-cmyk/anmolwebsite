@@ -3,6 +3,7 @@ import { CateringQuoteData } from '@/app/actions/catering';
 
 /**
  * Generate a professional kitchen instruction PDF for catering orders
+ * Modern, clean, and printer-friendly design
  */
 export async function generateCateringInstructionPDF(catering: CateringQuoteData): Promise<Buffer> {
     return new Promise((resolve, reject) => {
@@ -15,7 +16,8 @@ export async function generateCateringInstructionPDF(catering: CateringQuoteData
                     bottom: 50,
                     left: 50,
                     right: 50
-                }
+                },
+                bufferPages: true
             });
 
             const buffers: Buffer[] = [];
@@ -28,217 +30,162 @@ export async function generateCateringInstructionPDF(catering: CateringQuoteData
             });
             doc.on('error', reject);
 
-            // Define colors
+            // Styling Constants
             const primaryColor = '#8B1538';
-            const goldColor = '#f3d7a0';
-            const darkGray = '#2c3e50';
-            const lightGray = '#95a5a6';
+            const darkText = '#333333';
+            const lightText = '#666666';
+            const borderColor = '#EEEEEE';
 
-            // Page header - Restaurant branding
+            // --- Header ---
             doc
-                .rect(0, 0, doc.page.width, 120)
-                .fillAndStroke(primaryColor, primaryColor);
-
-            doc
-                .fontSize(28)
-                .fillColor('#ffffff')
-                .font('Helvetica-Bold')
-                .text('ANMOL SWEETS & RESTAURANT', 50, 30, { align: 'center' });
-
-            doc
-                .fontSize(12)
-                .fillColor(goldColor)
-                .font('Helvetica')
-                .text('Authentic Pakistani & Indian Cuisine', 50, 65, { align: 'center' });
-
-            // Document title banner
-            doc
-                .rect(0, 120, doc.page.width, 60)
-                .fill(goldColor);
-
-            doc
-                .fontSize(24)
+                .fontSize(20)
                 .fillColor(primaryColor)
                 .font('Helvetica-Bold')
-                .text('🍽️  CATERING ORDER - KITCHEN INSTRUCTION', 50, 140, { align: 'center' });
-
-            // Reset position after header
-            let currentY = 200;
-
-            // Order ID and Priority
-            doc
-                .fontSize(10)
-                .fillColor(lightGray)
-                .font('Helvetica')
-                .text(`Order ID: CAT-${new Date(catering.submittedAt).getTime().toString().slice(-8)}`, 50, currentY);
+                .text('ANMOL SWEETS & RESTAURANT', 50, 50);
 
             doc
                 .fontSize(10)
-                .fillColor(primaryColor)
+                .fillColor(lightText)
+                .font('Helvetica')
+                .text('KITCHEN INSTRUCTION SHEET', 50, 75);
+
+            // Order ID / Date on right
+            doc
+                .fontSize(10)
+                .fillColor(darkText)
+                .text(`Date: ${new Date().toLocaleDateString()}`, 400, 50, { align: 'right' });
+
+            doc
+                .text(`Order REF: CAT-${new Date(catering.submittedAt).getTime().toString().slice(-6)}`, 400, 65, { align: 'right' });
+
+            // Divider
+            doc.moveTo(50, 95).lineTo(545, 95).strokeColor(borderColor).stroke();
+
+            // --- Event Details Grid ---
+            let y = 115;
+
+            doc
+                .fontSize(14)
+                .fillColor(darkText)
                 .font('Helvetica-Bold')
-                .text('⚠️ HIGH PRIORITY', doc.page.width - 150, currentY, { width: 100, align: 'right' });
+                .text('EVENT DETAILS', 50, y);
 
-            currentY += 40;
+            y += 25;
 
-            // Section: Event Details
-            drawSectionHeader(doc, '🎉 EVENT DETAILS', currentY, primaryColor);
-            currentY += 35;
+            // Row 1
+            drawField(doc, 'Customer', catering.name, 50, y);
+            drawField(doc, 'Event Date', catering.eventDate, 200, y);
+            drawField(doc, 'Guests', catering.guestCount, 350, y);
+            y += 40;
 
-            const eventDetails = [
-                { label: 'Customer Name', value: catering.name, icon: '👤' },
-                { label: 'Event Date', value: catering.eventDate, icon: '📅' },
-                { label: 'Event Type', value: catering.eventType, icon: '🎊' },
-                { label: 'Guest Count', value: catering.guestCount, icon: '👥' },
-            ];
+            // Row 2
+            drawField(doc, 'Event Type', catering.eventType, 50, y);
+            drawField(doc, 'Phone', catering.phone, 200, y);
+            drawField(doc, 'Email', catering.email, 350, y);
+            y += 50; // Extra spacing
 
-            eventDetails.forEach((detail, index) => {
-                drawDetailRow(doc, detail.icon, detail.label, detail.value, currentY, index % 2 === 0);
-                currentY += 35;
-            });
+            // --- Menu Section ---
+            doc
+                .fontSize(14)
+                .fillColor(darkText)
+                .font('Helvetica-Bold')
+                .text('MENU REQUIREMENTS', 50, y);
 
-            currentY += 10;
+            y += 25;
 
-            // Section: Contact Information
-            drawSectionHeader(doc, '📞 CONTACT INFORMATION', currentY, primaryColor);
-            currentY += 35;
+            // Header for menu table
+            doc.rect(50, y, 495, 25).fill(primaryColor);
+            doc.fillColor('#FFFFFF').fontSize(10).text('ITEM NAME', 65, y + 8);
+            doc.text('CHECK', 500, y + 8);
+            y += 25;
 
-            const contactDetails = [
-                { label: 'Phone Number', value: catering.phone, icon: '📱' },
-                { label: 'Email Address', value: catering.email, icon: '📧' },
-            ];
-
-            contactDetails.forEach((detail, index) => {
-                drawDetailRow(doc, detail.icon, detail.label, detail.value, currentY, index % 2 === 0);
-                currentY += 35;
-            });
-
-            // Menu Items Section
-            currentY += 10;
-            drawSectionHeader(doc, '🍽️  MENU ITEMS TO PREPARE', currentY, primaryColor);
-            currentY += 35;
-
+            // Content
+            let hasItems = false;
             Object.entries(catering.selectedMenu).forEach(([category, items]) => {
                 if (items.length > 0) {
-                    // Category name
-                    doc
-                        .fontSize(13)
-                        .fillColor(primaryColor)
-                        .font('Helvetica-Bold')
-                        .text(category.toUpperCase(), 50, currentY);
+                    hasItems = true;
+                    // Category Header
+                    if (y > 700) { doc.addPage(); y = 50; }
 
-                    currentY += 25;
+                    doc.rect(50, y, 495, 20).fill('#F9F9F9');
+                    doc.fillColor(primaryColor).fontSize(10).font('Helvetica-Bold').text(category.toUpperCase(), 60, y + 5);
+                    y += 20;
 
                     // Items
-                    items.forEach((item) => {
-                        doc
-                            .rect(50, currentY, 15, 15)
-                            .stroke(primaryColor);
+                    items.forEach(item => {
+                        if (y > 720) { doc.addPage(); y = 50; }
+
+                        doc.rect(50, y, 495, 30).fillAndStroke('#FFFFFF', borderColor);
 
                         doc
-                            .fontSize(11)
-                            .fillColor(darkGray)
+                            .fillColor(darkText)
+                            .fontSize(12)
                             .font('Helvetica')
-                            .text(item, 75, currentY + 2, {
-                                width: doc.page.width - 125
-                            });
+                            .text(item, 70, y + 10);
 
-                        currentY += 25;
+                        // Checkbox square
+                        doc.rect(500, y + 8, 14, 14).stroke(lightText);
+
+                        y += 30;
                     });
-
-                    currentY += 10;
                 }
             });
 
-            // Special Instructions (if any)
-            if (catering.message && catering.message.trim()) {
-                currentY += 10;
-                drawSectionHeader(doc, '⚠️  SPECIAL INSTRUCTIONS', currentY, primaryColor);
-                currentY += 35;
+            if (!hasItems) {
+                doc.fontSize(12).fillColor(lightText).font('Helvetica-Oblique').text('No menu items selected.', 60, y + 10);
+                y += 30;
+            }
+
+            y += 20;
+
+            // --- Special Instructions ---
+            if (catering.message) {
+                if (y > 650) { doc.addPage(); y = 50; }
 
                 doc
-                    .rect(50, currentY, doc.page.width - 100, 80)
-                    .fillAndStroke('#fff5e6', goldColor);
-
-                doc
-                    .fontSize(12)
-                    .fillColor(darkGray)
+                    .fontSize(14)
+                    .fillColor(darkText)
                     .font('Helvetica-Bold')
-                    .text(catering.message, 65, currentY + 15, {
-                        width: doc.page.width - 130,
-                        align: 'left',
-                        lineGap: 5
-                    });
+                    .text('NOTES / SPECIAL REQUESTS', 50, y);
+                y += 20;
 
-                currentY += 90;
-            }
-
-            // Kitchen Preparation Checklist
-            currentY += 10;
-
-            // Check if we need a new page
-            if (currentY > doc.page.height - 250) {
-                doc.addPage();
-                currentY = 50;
-            }
-
-            drawSectionHeader(doc, '✓ KITCHEN PREPARATION CHECKLIST', currentY, primaryColor);
-            currentY += 35;
-
-            const checklistItems = [
-                'Verify event date and guest count',
-                'Check all menu items and ingredients availability',
-                'Review any dietary restrictions or allergies mentioned',
-                'Prepare cooking schedule based on event date',
-                'Coordinate with catering service team',
-                'Ensure proper packaging and transport containers',
-                'Schedule final quality check before delivery',
-            ];
-
-            checklistItems.forEach((item, index) => {
                 doc
-                    .rect(50, currentY + (index * 28), 15, 15)
+                    .rect(50, y, 495, 80)
                     .stroke(primaryColor);
 
                 doc
                     .fontSize(11)
-                    .fillColor(darkGray)
+                    .fillColor(darkText)
                     .font('Helvetica')
-                    .text(item, 75, currentY + (index * 28) + 2, {
-                        width: doc.page.width - 125
-                    });
+                    .text(catering.message, 60, y + 10, { width: 475 });
+
+                y += 100;
+            }
+
+            // --- Kitchen Checks ---
+            if (y > 650) { doc.addPage(); y = 50; }
+
+            y += 20;
+            doc.fontSize(14).fillColor(darkText).font('Helvetica-Bold').text('KITCHEN CHECKS', 50, y);
+            y += 25;
+
+            const checks = ['Ingredients Checked', 'Prep Started', 'Quality Check', 'Ready for Dispatch'];
+            checks.forEach(check => {
+                doc.rect(50, y, 15, 15).stroke(darkText);
+                doc.fontSize(11).fillColor(darkText).font('Helvetica').text(check, 75, y + 2);
+                y += 25;
             });
 
-            currentY += (checklistItems.length * 28) + 20;
-
-            // Footer section
-            const footerY = doc.page.height - 80;
-
-            doc
-                .rect(0, footerY, doc.page.width, 80)
-                .fill('#f8f9fa');
-
-            doc
-                .fontSize(10)
-                .fillColor(lightGray)
-                .font('Helvetica')
-                .text('Generated on ' + new Date().toLocaleString('en-US', {
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    timeZone: 'Europe/Stockholm'
-                }) + ' (Stockholm time)', 50, footerY + 15, { align: 'center' });
-
+            // --- Footer ---
+            const bottomY = doc.page.height - 50;
             doc
                 .fontSize(9)
-                .fillColor(primaryColor)
-                .font('Helvetica-Bold')
-                .text('Anmol Sweets & Restaurant | Fagerstagatan 13, 163 53 Spånga | +46 8 88 66 79',
-                    50, footerY + 40, { align: 'center' });
+                .fillColor(lightText)
+                .font('Helvetica')
+                .text('Anmol Sweets & Restaurant - Internal Kitchen Document', 50, bottomY, { align: 'center' });
 
-            // Finalize the PDF
+
+            // Finalize
             doc.end();
 
         } catch (error) {
@@ -247,53 +194,8 @@ export async function generateCateringInstructionPDF(catering: CateringQuoteData
     });
 }
 
-/**
- * Helper function to draw section headers
- */
-function drawSectionHeader(doc: PDFKit.PDFDocument, title: string, y: number, color: string) {
-    doc
-        .rect(50, y, doc.page.width - 100, 25)
-        .fillAndStroke(color, color);
-
-    doc
-        .fontSize(14)
-        .fillColor('#ffffff')
-        .font('Helvetica-Bold')
-        .text(title, 60, y + 6);
+function drawField(doc: PDFKit.PDFDocument, label: string, value: string, x: number, y: number) {
+    doc.fontSize(9).fillColor('#666666').font('Helvetica').text(label.toUpperCase(), x, y);
+    doc.fontSize(12).fillColor('#333333').font('Helvetica-Bold').text(value, x, y + 15);
 }
 
-/**
- * Helper function to draw detail rows with alternating backgrounds
- */
-function drawDetailRow(
-    doc: PDFKit.PDFDocument,
-    icon: string,
-    label: string,
-    value: string,
-    y: number,
-    alternate: boolean
-) {
-    if (alternate) {
-        doc
-            .rect(50, y, doc.page.width - 100, 30)
-            .fill('#f8f9fa');
-    }
-
-    doc
-        .fontSize(18)
-        .fillColor('#2c3e50')
-        .font('Helvetica')
-        .text(icon, 60, y + 5);
-
-    doc
-        .fontSize(11)
-        .fillColor('#7f8c8d')
-        .font('Helvetica-Bold')
-        .text(label, 90, y + 8);
-
-    doc
-        .fontSize(12)
-        .fillColor('#2c3e50')
-        .font('Helvetica-Bold')
-        .text(value, 250, y + 8);
-}

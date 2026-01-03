@@ -60,7 +60,7 @@ export function SocialFeed() {
     };
 
     return (
-        <section className="py-16 md:py-24 bg-background dark:bg-neutral-950">
+        <section className="py-16 md:py-24 bg-card dark:bg-neutral-950">
             <div className="container px-4 md:px-6 mb-12">
                 <div className="flex flex-col items-center text-center space-y-4">
                     <div className="flex items-center gap-2 text-secondary-500 font-medium">
@@ -88,7 +88,7 @@ export function SocialFeed() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1 }}
-                                className="group relative flex-shrink-0 w-40 aspect-[9/16] overflow-hidden rounded-xl bg-neutral-100 dark:bg-neutral-800 shadow-lg"
+                                className="group relative aspect-[9/16] overflow-hidden rounded-xl bg-background dark:bg-neutral-800 shadow-lg"
                             >
                                 {!imageErrors[post.id] ? (
                                     <Image
@@ -133,7 +133,7 @@ export function SocialFeed() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
-                            className="group relative aspect-[9/16] overflow-hidden rounded-xl bg-neutral-100 dark:bg-neutral-800 shadow-lg"
+                            className="group relative aspect-[9/16] overflow-hidden rounded-xl bg-background dark:bg-neutral-800 shadow-lg"
                         >
                             {!imageErrors[post.id] ? (
                                 <Image

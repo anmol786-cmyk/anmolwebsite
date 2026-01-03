@@ -12,7 +12,8 @@ import { useCartStore } from '@/store/cart-store';
 import { ShippingForm, type ShippingFormData } from '@/components/checkout/shipping-form';
 import { BillingForm, type BillingFormData } from '@/components/checkout/billing-form';
 import { PaymentMethodSelector } from '@/components/checkout/payment-method-selector';
-import { ShippingMethodSelector, type ShippingMethod } from '@/components/checkout/shipping-method-selector';
+import { ShippingMethodSelector } from '@/components/checkout/shipping-method-selector';
+import type { ShippingMethod } from '@/lib/shipping-service';
 import { OrderSummary } from '@/components/checkout/order-summary';
 import { createOrderAction } from '@/app/actions/order';
 import { validateCartStockAction } from '@/app/actions/cart';
@@ -25,6 +26,9 @@ import { Separator } from '@/components/ui/separator';
 import { motion, AnimatePresence } from 'framer-motion';
 import { StripeProvider } from '@/components/providers/stripe-provider';
 import { StripePaymentForm } from '@/components/checkout/stripe-payment-form';
+import { StripeExpressCheckout } from '@/components/checkout/stripe-express-checkout';
+import { PaymentRequestButton } from '@/components/checkout/payment-request-button';
+import { WhatsAppOrderButton } from '@/components/whatsapp/whatsapp-order-button';
 
 type CheckoutStep = 'shipping' | 'shipping-method' | 'billing' | 'payment' | 'review';
 
@@ -133,6 +137,7 @@ export default function CheckoutPage() {
         ...data,
         email: data.email, // Use email from shipping form
         phone: data.phone,
+        state: data.state || '', // Ensure state is always a string
       });
     }
     setCurrentStep('shipping-method');
@@ -159,7 +164,7 @@ export default function CheckoutPage() {
       // Create WooCommerce order with payment details
       const result = await createOrderAction({
         billing: billingData,
-        shipping: shippingData,
+        shipping: { ...shippingData, state: shippingData.state || '' },
         line_items: items.map((item) => ({
           product_id: item.productId,
           variation_id: item.variationId,
@@ -168,7 +173,7 @@ export default function CheckoutPage() {
         shipping_lines: [
           {
             method_id: shippingMethod.method_id,
-            method_title: shippingMethod.title,
+            method_title: shippingMethod.label,
             total: shippingCost.toString(),
           },
         ],
@@ -305,7 +310,7 @@ export default function CheckoutPage() {
       // For non-Stripe payments (COD, etc.), create order immediately
       const result = await createOrderAction({
         billing: billingData,
-        shipping: shippingData,
+        shipping: { ...shippingData, state: shippingData.state || '' },
         line_items: items.map((item) => ({
           product_id: item.productId,
           variation_id: item.variationId,
@@ -314,7 +319,7 @@ export default function CheckoutPage() {
         shipping_lines: [
           {
             method_id: shippingMethod.method_id,
-            method_title: shippingMethod.title,
+            method_title: shippingMethod.label,
             total: shippingCost.toString(),
           },
         ],
@@ -478,6 +483,22 @@ export default function CheckoutPage() {
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.3 }}
                 >
+                  {/* Express Checkout - Shows Link, Apple Pay, Google Pay BEFORE forms */}
+                  <StripeExpressCheckout
+                    amount={getTotalPrice()}
+                    currency="SEK"
+                    showDebug={false}
+                    onSuccess={async (result) => {
+                      console.log('Express checkout success:', result);
+                      // Payment was processed via Express Checkout
+                      // The page will redirect to stripe-return for order creation
+                    }}
+                    onError={(error) => {
+                      console.error('Express checkout error:', error);
+                      setError(`Express checkout failed: ${error}`);
+                    }}
+                  />
+
                   <ShippingForm
                     onSubmit={handleShippingSubmit}
                     defaultValues={shippingData || undefined}
@@ -506,13 +527,7 @@ export default function CheckoutPage() {
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <ShippingMethodSelector
-                    postcode={shippingData.postcode}
-                    cartTotal={getTotalPrice()}
-                    selectedMethod={shippingMethod?.id}
-                    onMethodChange={setShippingMethod}
-                    onShippingCostChange={setShippingCost}
-                  />
+                  <ShippingMethodSelector />
 
                   <div className="mt-6 flex justify-between">
                     <Button
@@ -576,6 +591,7 @@ export default function CheckoutPage() {
                             ...shippingData,
                             email: billingData?.email || '',
                             phone: shippingData.phone || '',
+                            state: shippingData.state || '',
                           });
                           setCurrentStep('payment');
                         } else {
@@ -732,6 +748,18 @@ export default function CheckoutPage() {
                         Complete Payment
                       </h3>
                       <StripeProvider clientSecret={stripeClientSecret}>
+                        {/* Payment Request Button (Apple Pay / Google Pay) */}
+                        <PaymentRequestButton
+                          amount={getTotalPrice() + shippingCost - calculateDiscount()}
+                          currency="SEK"
+                          onSuccess={handleStripeSuccess}
+                          onError={(error) => {
+                            console.error('Wallet payment failed:', error);
+                            setError(`Wallet payment failed: ${error}`);
+                          }}
+                        />
+
+                        {/* Regular Payment Form (Card, Klarna, Link) */}
                         <StripePaymentForm
                           amount={getTotalPrice() + shippingCost - calculateDiscount()}
                           currency="SEK"
@@ -751,7 +779,26 @@ export default function CheckoutPage() {
 
           {/* Order Summary Sidebar */}
           <div className="lg:col-span-1">
-            <div className="sticky top-24">
+            <div className="sticky top-24 space-y-6">
+              {/* WhatsApp Order Button */}
+              <div className="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
+                <WhatsAppOrderButton
+                  context="cart"
+                  cartItems={items}
+                  cartTotal={getTotalPrice().toString()}
+                  cartSubtotal={getTotalPrice().toString()}
+                  requireCustomerInfo={true}
+                  variant="outline"
+                  size="lg"
+                  className="w-full border-2 border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-950/20"
+                  label="Order via WhatsApp"
+                  onSuccess={() => {
+                    clearCart();
+                    router.push('/');
+                  }}
+                />
+              </div>
+
               <OrderSummary
                 shippingCost={shippingCost}
                 taxRate={25}
